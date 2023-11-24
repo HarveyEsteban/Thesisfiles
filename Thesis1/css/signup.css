@@ -1,0 +1,78 @@
+/* TOP BAR CSS */
+body{
+    background-color: grey;
+}
+#Logo{
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+
+#name{
+    font-size: 40px;
+    color: gold;
+    font-style: italic ;
+}
+
+#tagline{
+    font-size: 25px;
+     color: white;
+}
+
+.selection{
+    padding: 70px;
+    font-size: 25px;
+    color: white;
+}
+.selection>a{
+    padding: 30px;
+}
+
+
+/* END OF TOP BAR CSS */
+
+.container-login{
+    border-radius: 50px;
+    padding: 70px 0;
+    align-content: center;
+    margin: auto;
+    text-align: center;
+    width: 400px;
+    height: 300px;
+    background-color: rgb(87, 84, 84);
+}
+
+.label{
+    font-size: 20px;
+    color: white;
+}
+
+
+.input{
+    font-size: 20px;
+    color: black;
+}
+
+#signin-btn{
+    background-color: gray;
+    margin: 10px;
+    font-size: 30px;
+    border-radius: 20px;
+    color: gold;
+
+}
+
+#login-btn{
+    background-color: gray;
+    margin: 10px;
+    font-size: 30px;
+    border-radius: 20px;
+    color: gold;
+}
+
+.container{
+    padding-top: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

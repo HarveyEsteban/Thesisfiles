@@ -1,0 +1,75 @@
+/* TOP BAR CSS */
+body{
+    background-color: grey;
+}
+#Logo{
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+
+#name{
+    font-size: 40px;
+    color: gold;
+    font-style: italic ;
+}
+
+#tagline{
+    font-size: 25px;
+     color: white;
+}
+
+.selection{
+    padding: 70px;
+    font-size: 25px;
+    color: white;
+}
+.selection>a{
+    padding: 30px;
+}
+
+/* END OF TOP BAR CSS */
+
+.Contentpage{
+    width: auto;
+    height: auto;
+}
+
+#contentpic{
+    width: 1090px;
+    height: 500px;
+    top: 30%;
+    left: 50%;
+}
+
+#container-aboutus{
+    padding: 100px;
+    display: block;
+    text-align: center;
+    font-size: 40px;
+}
+
+#button-reserve{
+    padding: 20px;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 43%;
+    font-size: 35px;
+    border-radius: 40px;
+    background-color: grey;
+    color: gold;
+}
+#container-aboutus > h2{
+    color: black;
+}
+
+
+#container-aboutus > p{
+    color: white;
+}
+
+.selection a{
+    color: white;
+    text-decoration: none;
+}

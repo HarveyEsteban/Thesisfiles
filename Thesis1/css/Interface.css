@@ -1,0 +1,62 @@
+/* TOP BAR CSS */
+body{
+    background-color: grey;
+}
+#Logo{
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+
+#name{
+    font-size: 40px;
+    color: gold;
+    font-style: italic ;
+}
+
+#tagline{
+    font-size: 25px;
+     color: white;
+}
+
+.selection{
+    padding: 70px;
+    font-size: 25px;
+    color: white;
+}
+
+.selection>a{
+    padding: 30px;
+}
+
+
+.changePassword{
+    background-color: rgb(87, 84, 84);
+    align-content: center;
+    width: 300;
+    height: 200;
+    margin: auto;
+    padding: 70px 0px;
+    text-align: center;
+    border-radius: 50px;
+
+    
+}
+.containerCpass{
+    padding-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+label{
+    color: gold;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.changepassbtn{
+    border-radius: 50px;
+}
+/* END OF TOP BAR CSS */
