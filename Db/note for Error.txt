@@ -1,0 +1,15 @@
+
+     // To fix the Error of call to undefine function
+    //  Locate the php.ini file:
+
+    //  Open your XAMPP control panel.
+    //  Click on the "Config" button next to the Apache server.
+    //  Select "PHP (php.ini)".
+    //  Enable the GD extension:
+     
+    //  Search for the line ;extension=gd in the php.ini file.
+    //  Remove the semicolon (;) at the beginning of the line to uncomment it.
+    //  Save the php.ini file.
+    //  Restart Apache:
+     
+    //  Restart the Apache server in the XAMPP control panel.
