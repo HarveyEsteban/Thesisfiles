@@ -8,6 +8,63 @@
      $userID = $_SESSION['UserID'];
 
 
+
+     if(isset($_POST['btn-ChangePic'])){
+
+        $file = $_FILES['image'];
+
+        $fileName = $_FILES['image']['name'];
+        $fileTmpName = $_FILES['image']['tmp_name'];
+        $fileSize = $_FILES['image']['size'];
+        $fileError = $_FILES['image']['error'];
+        $fileType = $_FILES['image']['type'];
+
+        
+        $allowed = array('jpg', 'jpeg','png');
+
+        $fileExt = explode('.', $fileName);
+        $fileActualExt = strtolower(end($fileExt));
+
+        if ($fileName == null) {
+            echo '<script>alert("Please Upload a picture for the Service")</script>'; 
+        }
+        else{
+            // $stmtinsert = "INSERT INTO `servicetbl`(`serviceName`, `price`, `estTime`) VALUES ('$serviceName','$servicePrice','$serviceDuration')";
+            // $exequerry = mysqli_query($con, $stmtinsert);
+            // echo '<script>alert("Service Succesfully Uploaded")</script>'; 
+
+            if(in_array($fileActualExt, $allowed))
+            {
+                if($fileError === 0)
+                {
+                    if($fileSize < 5000000000)
+                    {
+                        $fileNameNew = uniqid('', true). "." . $fileActualExt;
+                        $fileDestination = 'upload/' . $fileNameNew;
+                        move_uploaded_file($fileTmpName, $fileDestination);
+
+    
+                        $sqlStmtImg = "UPDATE `patients_user` SET `profilePic`='$fileDestination' WHERE userID = $userID";
+                        $exeStmt = $con -> query($sqlStmtImg);
+                        echo '<script>alert("Profile Uploaded")</script>'; 
+                    }
+                    else{
+                        echo "<script>alert('Your file is too big!')</script>" ;
+                    }
+                }
+                else
+                {
+                    echo "There was an error uploading the file";
+                }
+            }
+            else{
+                echo "You cannot upload files of this type";
+            }
+
+        }
+     }
+
+
     if(isset($_POST['Change'])){
 
         $currentpass = $_POST['CurrentPass'];
@@ -152,6 +209,11 @@
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+  <style>
+        .hidden-column {
+            display: none;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -184,76 +246,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
+                           
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
@@ -270,8 +263,19 @@
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <div class="card mb-3">
-                                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/avatars/avatar1.jpeg" width="176" height="177">
-                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button" style="background: rgb(159,152,117);border-radius: 5px;border-color: rgb(159,152,117);">Change Photo</button></div><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modal-1" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-radius: 5px;height: 33px;width: 140.828px;font-size: 14px;">Change Password</button>
+                                <?php
+                                    $profilestmt = "SELECT profilePic FROM patients_user WHERE userID = $userID";
+                                    $exeProfile = $con->query($profilestmt);
+                                    $row = $exeProfile->fetch_assoc();
+
+                                    if($row){
+                                        $profPic = $row['profilePic'];
+                                        echo "<div class='card-body text-center shadow'><img class='rounded-circle mb-3 mt-4' src='".$profPic."' width='176' height='177'>";
+                                    }
+
+                                ?>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#modal-2"  style="background: rgb(159,152,117);border-radius: 5px;border-color: rgb(159,152,117);">Change Photo</button></div><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modal-1" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-radius: 5px;height: 33px;width: 140.828px;font-size: 14px;">Change Password</button>
                                 </div>
                             </div>
                             <div class="card shadow mb-4">
@@ -283,10 +287,10 @@
                                 <table class="table" id="dataTable">
                                     <thead >
                                         <tr>
-                                        <th>ID</th>
+                                        
                                         <th>Service</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
+                                        <th>date</th>
+                                        <th>Time</th>
                                         <th>Status</th>
                                         </tr>
                                     </thead>
@@ -294,22 +298,22 @@
                                     <tbody>
                                         <?php
                                             
-                                        $retrieveQuery = "SELECT `reservationID`, `serviceName`, `start_date`, `end_date`, `status` FROM reservation WHERE userID = '$userID'";
+                                        $retrieveQuery = "SELECT `resID`, `serviceName`, `Date`, `status`,`timeslot` FROM bookinglog WHERE userID = '$userID'";
                                         $result =  $con -> query($retrieveQuery);
                                         
                                         while($row = mysqli_fetch_assoc($result)){
 
-                                            $ID = $row['reservationID'];
+                                            $ID = $row['resID'];
                                             $service = $row['serviceName'];
-                                            $startDate = $row['start_date'];
-                                            $endDate = $row['end_date'];
+                                            $startDate = $row['Date'];
+                                            $timeslot = $row['timeslot'];
                                             $status = $row['status'];
                                         echo '<tr>
                                             
-                                        <td>'.$ID.'</td>
+                                        <td class="hidden-column">'.$ID.'</td>
                                         <td>'.$service.'</td>
                                         <td>'.$startDate.'</td>
-                                        <td>'.$endDate.'</td>
+                                        <td>'.$timeslot.'</td>
                                         <td>'.$status.'</td>
                                         </tr>';
                                         }
@@ -321,6 +325,7 @@
                             </div>
                             </div>
                         </div>
+
                         <div class="col-lg-8">
                             <div class="row mb-3 d-none">
                                 <div class="col">
@@ -383,6 +388,41 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top" style="background: rgb(159,152,117);"><i class="fas fa-angle-up"></i></a>
     </div>
+
+
+    <!-- Modal for Change Pic -->
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="modal-header" style="height: 104px;">
+                    <h4 class="modal-title mb-0" style="font-weight: bold;color: rgb(72,72,72);margin-left: 128px;">Change Password</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="height: 283px;">
+               
+                <div class = "form-group">
+                <input required type="file" name="image" id="image">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+                </div>
+
+
+                <button type="submit" class="btn btn-primary btn-lg btn-block" name="btn-ChangePic" id="btn-ChangePic">Change Picture</button>
+                    
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Change Pass -->
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

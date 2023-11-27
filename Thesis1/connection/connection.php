@@ -5,7 +5,7 @@
         $host = "localhost";
         $username = "root";
         $password = "Thesis1";
-        $database = "bookingsysystem";
+        $database = "patientsdb";
         
          $con = new mysqli($host, $username, $password, $database);
 

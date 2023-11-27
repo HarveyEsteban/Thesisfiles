@@ -85,7 +85,7 @@
     
                 $totalBookings =checkSlots($mysqli,$date);
                 if($totalBookings == 12){
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slot Avaiable</a>";
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
     
                 }else{
                     $avaislots = 12 - $totalBookings;
@@ -130,7 +130,8 @@
                     return $totalBookings;
                 }
     }
-        
+
+
 ?>
 
 
@@ -213,8 +214,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-  <style>
-       @media only screen and (max-width: 768px),
+      <style>
+       @media only screen and (max-width: 760px),
         (min-device-width: 802px) and (max-device-width: 1020px) {
 
             /* Force table to not be like tables anymore */
@@ -313,7 +314,7 @@
         }
 
     </style>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
 </head>
 
 <body id="page-top">
@@ -348,76 +349,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
+
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
@@ -430,26 +362,104 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <div style="position: relative;display: flex;">
+                    <div class="container alert alert-default" style="background:#fff">
                     <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" style="background:#9f9875;border:none;color:#fff">
-                        <h1>Calendar</h1>
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" style="background:#9f9875;border:none;color:#fff">
+                                <h1>Online Booking System</h1>
+                                </div>
+                                <?php
+                                    $dateComponents = getdate();
+                                    if(isset($_GET['month']) && isset($_GET['year'])){
+                                        $month = $_GET['month'];
+                                        $year = $_GET['year'];
+                                    }else{
+                                        $month = $dateComponents['mon'];
+                                        $year = $dateComponents['year'];
+                                    }
+                                    echo build_calendar($month, $year);
+                                ?>
                         </div>
-                        <?php
-                            $dateComponents = getdate();
-                            if(isset($_GET['month']) && isset($_GET['year'])){
-                                $month = $_GET['month'];
-                                $year = $_GET['year'];
-                            }else{
-                                $month = $dateComponents['mon'];
-                                $year = $dateComponents['year'];
-                            }
-                            echo build_calendar($month, $year);
-                        ?>
-                    
+                    </div>
                 </div>
-            </div>
+                    <div style="position: relative;display: flex;">
+                        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1" style="border-radius: 0px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+
+                                <!-- NM -->
+                                <form action="" method="post">
+                                    <div class="modal-header" style="height: 80px;border-radius: 12px 7px 0px 0px;">
+                                        <h4 class="modal-title mb-0" style="font-weight: bold;color: rgb(77,77,77);">RESERVE</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" style="height: 312px;width: 498px;background: #ffffff;">
+                                    
+
+                                        <label for="datepicker">Please Select a date and time</label>
+                                        <input type="date" id="datepicker" name="datepicker"> <br>
+
+                                        <br>
+
+                                        <select name="serviceOpt" id="">
+                                        <?php
+                                            $sqlquery = "SELECT serviceName FROM servicetbl";  
+                                            $result = $con->query($sqlquery);
+                                            if($result -> num_rows> 0)
+                                            {
+                                                while($optionData = $result->fetch_assoc())
+                                                {
+                                                    $option = $optionData['serviceName'];
+                                                    
+
+                                        ?>
+
+                                        <option value="<?php echo $option?>"> <?php echo $option?></option>
+
+                                        <<?php
+                                            }}
+                                        ?>
+                                        </select>
+                                       
+                                        <br>
+
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="08:00:00,08:30:00">08:00:00,08:30:00</button>
+                                       
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="08:30:00,09:00:00">08:30:00,09:00:00</button>
+                                       
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="09:00:00,09:30:00">09:00:00,09:30:00</button>
+                                        <br>
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="09:30:00,10:00:00">09:30:00,10:00:00</button>
+                                       
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="10:00:00,10:30:00">10:00:00,10:30:00</button>
+                                     
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="10:30:00,11:00:00">10:30:00,11:00:00</button>
+                                        <br>
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="11:00:00,11:30:00">11:00:00,11:30:00</button>
+                                       
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="11:30:00,12:00:00">11:30:00,12:00:00</button>
+                                       
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="01:00:00,01:30:00">01:00:00,01:30:00</button>
+                                      
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="01:30:00,02:00:00">01:30:00,02:00:00</button>
+                                     
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="02:00:00,02:30:00">02:00:00,02:30:00</button>
+                                    
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="02:30:00,03:00:00">02:30:00,03:00:00</button>
+                                        <br>
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="03:00:00,03:30:00">03:00:00,03:30:00</button>
+                                  
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="03:30:00,04:00:00">03:30:00,04:00:00</button>
+                                     
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="04:00:00,04:30:00">04:00:00,04:30:00</button>
+                                   
+                                        <button style="background-color: #60be25 ;" name="TimeSlot" type="submit" value="04:30:00,05:00:00">04:30:00,05:00:00</button>
+                                        <br>
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-primary" name = "Reserve" type="submit" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-radius: 5px;">Reserve</button></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     </form>
                     <div class="row">

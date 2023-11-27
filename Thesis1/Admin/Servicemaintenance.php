@@ -10,7 +10,20 @@
     if (isset($_POST['submit-btn'])) {
         $serviceName = $_POST['nametxt'];
         $servicePrice = $_POST['pricetxt'];
-        $serviceDuration = $_POST['durationtxt'];
+        $serviceDescription = $_POST['descriptiontxt'];
+
+        $file = $_FILES['image'];
+
+        $fileName = $_FILES['image']['name'];
+        $fileTmpName = $_FILES['image']['tmp_name'];
+        $fileSize = $_FILES['image']['size'];
+        $fileError = $_FILES['image']['error'];
+        $fileType = $_FILES['image']['type'];
+
+        $fileExt = explode('.', $fileName);
+        $fileActualExt = strtolower(end($fileExt));
+
+        $allowed = array('jpg', 'jpeg','png');
     
         $stmtCheckDup = "SELECT * FROM `servicetbl` WHERE serviceName = '$serviceName'";
         $exestmt = $con->query($stmtCheckDup) or die($con->error);
@@ -18,15 +31,50 @@
 
         $total = $exestmt->num_rows;
 
+        
+
         if($total > 0 ){
             echo '<script>alert("Service Already exist")</script>';       
         
         }
-        else{
-            $stmtinsert = "INSERT INTO `servicetbl`(`serviceName`, `price`, `estTime`) VALUES ('$serviceName','$servicePrice','$serviceDuration')";
-            $exequerry = mysqli_query($con, $stmtinsert);
-            echo '<script>alert("Service Succesfully inserted")</script>'; 
+        elseif ($fileName == null) {
+            echo '<script>alert("Please Upload a picture for the Service")</script>'; 
         }
+        else{
+            // $stmtinsert = "INSERT INTO `servicetbl`(`serviceName`, `price`, `estTime`) VALUES ('$serviceName','$servicePrice','$serviceDuration')";
+            // $exequerry = mysqli_query($con, $stmtinsert);
+            // echo '<script>alert("Service Succesfully Uploaded")</script>'; 
+
+            if(in_array($fileActualExt, $allowed))
+            {
+                if($fileError === 0)
+                {
+                    if($fileSize < 500000)
+                    {
+                        $fileNameNew = uniqid('', true). "." . $fileActualExt;
+                        $fileDestination = 'upload/' . $fileNameNew;
+                        move_uploaded_file($fileTmpName, $fileDestination);
+                        echo "Sucess";
+    
+                        $sqlStmtImg = "INSERT INTO `servicetbl`(`serviceName`, `price`, `filename`, `description`) VALUES ('$serviceName','$servicePrice','$fileDestination','$serviceDescription')";
+                        $exeStmt = $con -> query($sqlStmtImg);
+                        echo '<script>alert("Service Succesfully Uploaded")</script>'; 
+                    }
+                    else{
+                        echo "Your file is too big!" ;
+                    }
+                }
+                else
+                {
+                    echo "There was an error uploading the file";
+                }
+            }
+            else{
+                echo "You cannot upload files of this type";
+            }
+
+        }
+
     }
 
 
@@ -61,7 +109,7 @@
                     echo '<script>alert("Emal already have an account")</script>';
                 }
                 else{
-
+                    
                     $stmtinserUser = "INSERT INTO `patients_user`(`Email`, `Name`,`Password`,`Access`, `Active`) VALUES ('$emailUser','$nameUser','$password','$optAccess','1')";
                     $exequery = $con -> query($stmtinserUser);
                     echo '<script>alert("Succesfully created an account")</script>';
@@ -150,76 +198,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
+                           
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">Dr. Charry Tubiera</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
@@ -234,10 +213,11 @@
                         <h3 class="text-dark mb-0" style="font-weight: bold;">Service Maintenance</h3>
                     </div>
                 </div>
-                <form action="" method="post">
-                <div class="container"><label class="form-label" style="margin-right: 23px;">Name&nbsp;</label><input name="nametxt" id="nametxt" type="text" style="margin-bottom: 8px;"><button class="btn btn-primary" name="submit-btn" id="submit-btn" type="submit" style="background: rgb(225,218,191);color: var(--bs-black);transform: translate(119px);">Sumbit</button></div>
+                <form action="" method="post" enctype="multipart/form-data">
+                <div class="container"><label class="form-label" style="margin-right: 23px;">Name&nbsp;</label><input name="nametxt" id="nametxt" type="text" style="margin-bottom: 8px;"><button class="btn btn-primary" name="submit-btn" id="submit-btn" type="submit" style="background: rgb(225,218,191);color: var(--bs-black);transform: translate(119px);">Add Service</button></div>
                 <div class="container"><label class="form-label" style="margin-right: 22px;">Price&nbsp; &nbsp;</label><input name="pricetxt" id="pricetxt" type="text" style="padding-top: 1px;margin-bottom: 8px;"></div>
-                <div class="container"><label class="form-label" style="margin-right: 3px;">Duration&nbsp;</label><input name="durationtxt" id="durationtxt" type="text" style="margin-top: 1px;">
+                <div class="container"><label class="form-label" style="margin-right: 3px;">Description&nbsp;</label><input name="descriptiontxt" id="descriptiontxt" type="text" style="margin-top: 1px;">
+                <input required type="file" name="image" id="image">
                 </form>    
                 <div class="col">
                         <div style="margin-bottom: 36px;"></div>
@@ -251,6 +231,8 @@
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Duration</th>
+                                    <th></th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -262,7 +244,8 @@
                                     // $serviceID = $row['ServiceID'];
                                     $name = $row['serviceName'];
                                     $price = $row['price'];
-                                    $est = $row['estTime'];
+                                    $est = $row['description'];
+                                    $pic = $row['filename'];
 
 
 
@@ -270,6 +253,7 @@
                                     <td>'.$name.'</td>    
                                     <td>'.$price.'</td>
                                     <td>'.$est.'</td>
+                                    <td><img src="'.$pic.'" alt="'.$name.'" style="max-width: 100px; max-height: 100px;"></td>
                                     </tr>';
                                 }
 

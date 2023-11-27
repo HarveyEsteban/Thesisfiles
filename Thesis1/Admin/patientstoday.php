@@ -73,6 +73,11 @@
     <link rel="stylesheet" href="assets/css/Feature-Section-MD.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+    <style>
+        .hidden-column {
+            display: none;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -108,73 +113,10 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
+                                
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
+                                
                                 <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
@@ -189,69 +131,114 @@
                 <div class="container-fluid" style="background: rgb(255,255,255);">
                     <h3 class="text-dark mb-0" style="font-weight: bold;">Today's Patient</h3>
                     <div class="card shadow">
-                        <div class="card-body" style="height: 296px;">
+                        <div class="card-body" style="height: 1000px;">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
-                                </div>
+
                             </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 221px;">
-                                <table class="table my-0" id="dataTable">
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 1000px;">
+                            <table class="table my-0" id="dataTable">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>ID</th>
                                             <th>Name</th>
                                             <th>Services</th>
                                             <th>Phone Number</th>
                                             <th>Address</th>
-                                            <th>Start Date</th>
-                                            
+                                            <th>Email</th>
+                                            <th>Date</th>
+                                            <th>Add Remarks</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                        <?php
 
 
 
-                                        $retrieveQuery = "SELECT reservation.serviceName, patients_user.Name, reservation.start_date, reservation.reservationID, patients_user.PhoneNumber,patients_user.Address
-                                        FROM reservation
-                                        INNER JOIN patients_user ON reservation.userID=patients_user.userID WHERE status = 'Pending' AND DATE(start_date) >= '$todaysDate' ";
-                                        $result =  $con -> query($retrieveQuery);
+                                            $retrieveQuery = "SELECT bookinglog.resID,bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber,patients_user.Email,patients_user.Address
+                                            FROM bookinglog
+                                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID WHERE status = 'Pending' AND DATE(date) >= $todaysDate";
+                                            $result =  $con -> query($retrieveQuery);
 
-                                        if(isset($_GET['delID'])){
-                                            $usID = $_GET['delID'];
+
                                             
-                                            $changeStatus = "UPDATE `reservation` SET `status`='Done' WHERE reservationID = '$usID'";
-                                            $exeQuery = mysqli_query($con,$changeStatus);
-
-                                        }
-
-                                        while($row = mysqli_fetch_assoc($result)){
-
-                                            $id = $row['reservationID'];
-                                            $name = $row['Name'];
-                                            $service = $row['serviceName'];
-                                            $start = $row['start_date'];
-                                            $phoneNumber = $row['PhoneNumber'];
-                                            $address = $row['Address'];
-
-                                        echo '<tr>
-                                        <td>'.$id.'</td>    
-                                        <td>'.$name.'</td>
-                                        <td>'.$service.'</td>
-                                        <td>'.$phoneNumber.'</td>
-                                        <td>'.$address.'</td>
-                                        <td>'.$start.'</td>
-                                        <td>
-                                            <button"><a href = "patientstoday.php?delID='.$id.'" class ="btn btn-danger">Done</a></button>
-                                        </td>
-                                        </tr>';
 
 
-                                        }
+                                            if (isset($_GET['doneID'])) {
+                                                $usID = $_GET['doneID'];
+                                            
+                                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                                                $execheck = $con->query($checkRemarksStmt);
+                                            
+                                                if ($execheck) {
+                                                    $row = $execheck->fetch_assoc();
+                                                    $total = $row['count'];
+                                            
+                                                    if ($total > 0) {
+                                                        $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
+                                                        $exeQuery = mysqli_query($con, $changeStatus);
+                                                    } else {
+                                                        echo "<script>alert('Please add a remark')</script>";
+                                                    }
+                                                } else {
+                                                    echo "Error executing query: " . $con->error;
+                                                }
+                                            } elseif (isset($_GET['canID'])) {
+                                                $usID = $_GET['canID'];
+                                            
+                                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                                                $execheck = $con->query($checkRemarksStmt);
+                                            
+                                                if ($execheck) {
+                                                    $row = $execheck->fetch_assoc();
+                                                    $total = $row['count'];
+                                            
+                                                    if ($total > 0) {
+                                                        $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
+                                                        $exeQuery2 = mysqli_query($con, $changeStatusCan);
+                                                        echo "<script>alert('Remarks successfully added')</script>";
+
+                                                    } else {
+                                                        echo "<script>alert('Please add a remark')</script>";
+                                                    }
+                                                } else {
+                                                    echo "Error executing query: " . $con->error;
+                                                }
+                                            }
+                                            
+
+
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    $id = $row['resID'];
+                                                    $name = $row['Name'];
+                                                    $service = $row['serviceName'];
+                                                    $date = $row['date'];
+                                                    $phoneNumber = $row['PhoneNumber'];
+                                                    $address = $row['Address'];
+                                                    $email = $row['Email'];
+                                                
+                                                    echo '<tr>
+                                                            <td class="hidden-column">'.$id.'</td>    
+                                                            <td>'.$name.'</td>   
+                                                            <td>'.$service.'</td>
+                                                            <td>'.$phoneNumber.'</td>
+                                                            <td>'.$address.'</td>   
+                                                            <td>'.$email.'</td>
+                                                            <td>'.$date.'</td>
+                                                            <td>
+                                                                <input type="text" class="inputField" id="inputField'.$id.'">
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" id="resID'.$id.'" name="resID" value="'.$id.'">
+                                                                <button"><a href="receptionistUI.php?doneID='.$id.'" class="btn btn-danger">Done</a></button>
+                                                                <button"><a href="receptionistUI.php?canID='.$id.'" class="btn btn-warning">Cancel</a></button>
+                                                            </td>
+                                                          </tr>';
+                                                }
+                                                
                                     ?>
                                     </tbody>
                                     <tfoot>

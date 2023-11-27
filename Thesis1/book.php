@@ -44,26 +44,42 @@ if ( isset( $_POST['submit'] ) ) {
 $duration = 30;
 $cleanup = 0;
 $start = "09:00";
-$end = "15:00";
+$end = "17:00";
+$excludeEnd = "13:00";
+$excludeStart = "12:00";
 
-function timeslots( $duration, $cleanup, $start, $end ) {
-    $start = new DateTime( $start );
-    $end = new DateTime( $end );
-    $interval = new DateInterval( "PT".$duration."M" );
-    $cleanupInterval = new DateInterval( "PT".$cleanup."M" );
+function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd) {
+    $start = new DateTime($start);
+    $end = new DateTime($end);
+    $interval = new DateInterval("PT" . $duration . "M");
+    $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
     $slot = array();
 
-    for ( $intStart = $start; $intStart<$end; $intStart->add( $interval )->add( $cleanupInterval ) ) {
+    $excludeStartTime = new DateTime($excludeStart);
+    $excludeEndTime = new DateTime($excludeEnd);
+
+    for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
         $endPeriod = clone $intStart;
-        $endPeriod->add( $interval );
-        if ( $endPeriod>$end ) {
+        $endPeriod->add($interval);
+
+        // Check if the entire slot is within the excluded range
+        if ($intStart >= $excludeStartTime && $endPeriod <= $excludeEndTime) {
+            continue; // Skip this slot
+        }
+
+        // Check if the slot partially overlaps with the excluded range
+        if ($intStart < $excludeEndTime && $endPeriod > $excludeStartTime) {
+            continue; // Skip this slot
+        }
+
+        if ($endPeriod > $end) {
             break;
         }
-        $slot[] = $intStart-> format( "H:iA" )."-".$endPeriod->format( "H:iA" );
+
+        $slot[] = $intStart->format("h:i A") . " - " . $endPeriod->format("h:i A");
     }
 
     return $slot;
-
 }
 ?>
 
@@ -115,7 +131,7 @@ function timeslots( $duration, $cleanup, $start, $end ) {
             <h1 class="text-center">Book for Date: <?php echo date('m/d/y', strtotime($date)); ?></h1>
             <div class="row">
                 <?php
-                $timeslots = timeslots($duration, $cleanup, $start, $end);
+                $timeslots = timeslots($duration, $cleanup, $start, $end,$excludeStart,$excludeEnd);
                 foreach ($timeslots as $ts) {
                 ?>
                     <div class="col-md-2">

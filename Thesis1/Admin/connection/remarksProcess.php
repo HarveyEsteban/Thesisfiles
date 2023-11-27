@@ -12,7 +12,7 @@ if(isset($_POST['inputValue']) && isset($_POST['resID'])) {
     $processedValue = $inputValue;
     $porcessID = $resID;
 
-    $sql = "UPDATE `reservation` SET `remarks`='$processedValue' WHERE reservationID =  $porcessID";
+    $sql = "UPDATE `bookinglog` SET `remarks`='$processedValue' WHERE resID =  $porcessID";
     $exestmt = $con->query($sql);
 
     echo "sucessfully inserted remarks";

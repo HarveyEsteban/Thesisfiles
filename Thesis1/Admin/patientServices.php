@@ -114,76 +114,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
+
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">
@@ -203,202 +134,29 @@
                     <div class="col">
                         <div class="row">
                             <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card" style="width: 100%;height: 100%;"><a href="#"><img class="img-fluid card-img-top" style="height: 200px;border-top-left-radius: 7.6px;" src="assets/img/tratamento1.png" width="289" height="200"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Consultation</strong></h5>
-                                        <p>&nbsp;₱200</p>
-                                        <p>Estimated Time: 15 minutes</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        <div style="background: #d31c1c;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Scaling%20and%20Root%20planing.jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Scaling and Root Planing</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 30 minutes</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/download.jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Gum Depigmentation</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 30 minutes and up</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card" style="width: 100%;height: 100%;"><a href="#"><img class="img-fluid card-img-top" style="height: 200px;" src="assets/img/soft%20tissue%20surgery.jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Soft Tissue Surgery</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 30 minutes and up</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Braces%20Removal.jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Braces Removal</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 30 minutes</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Ortho%20Adjustment.jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Ortho Adjustment</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 15 minutes</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Flouride%20Application.jpg" width="289" height="200"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Flouride Application</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 30 minutes</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Vanners.jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Veneers</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 60 minutes and up</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Orthodox%20Braces%20(1).jpg"></a>
-                                    <div class="card-body">
-                                        <h5><strong>Orthodox Braces</strong></h5>
-                                        <p>Price varies</p>
-                                        <p>Estimated Time: 30 minutes and up</p>
-                                        <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-xl-12">
-                            <div class="row">
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card" style="width: 100%;height: 100%;"><a href="#"><img class="img-fluid card-img-top" style="height: 200px;" src="assets/img/odontectomy-2%20(1).jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Odontectomy/Soft Tissue Surgery</strong></h5>
-                                            <p>Price varies</p>
-                                            <p>Estimated Time: 60 minutes</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/bunot.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Tooth Extraction</strong></h5>
-                                            <p>Starting at ₱600</p>
-                                            <p>Estimated Time: 15 minutes and up</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/teeth%20whitening.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Teeth Whitening</strong></h5>
-                                            <p></p>
-                                            <p>₱12,000</p>
-                                            <p>Estimated Time: 30 minutes</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Root%20canal.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Root Canal Therapy</strong></h5>
-                                            <p>Starting at&nbsp;₱6,500</p>
-                                            <p>Estimated Time: 30 minutes</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/complete%20denture.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Complete Denture</strong></h5>
-                                            <p>Price varies</p>
-                                            <p>Estimated Time: 30 minutes</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/Fixed%20Bridge%20%20Porcelain%20jacket.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Fixed Bridge/Porcelain Jacket Crown</strong></h5>
-                                            <p>Price varies</p>
-                                            <p>Estimated Time: 60 minutes</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="row">
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card" style="width: 100%;height: 100%;"><a href="#"><img class="img-fluid card-img-top" style="height: 200px;" src="assets/img/removable%20partial%20denture.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Removable Partial Denture</strong></h5>
-                                            <p>Price varies</p>
-                                            <p>Estimated Time: 30 minutes</p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/tooth%20colored%20fillings.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Tooth Colored Fillings(Pasta)</strong></h5>
-                                            <p>Starting at&nbsp;₱600</p>
-                                            <p>Estimated Time: 30 minutes</p>
-                                            <p></p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-                                    <div class="card"><a href="#"><img class="card-img-top" style="height: 200px;" src="assets/img/oral-prophylaxis.jpg"></a>
-                                        <div class="card-body">
-                                            <h5><strong>Oral Prophylaxis(Cleaning)</strong></h5>
-                                            <p>Starting at&nbsp;₱600</p>
-                                            <p>Estimated Time: 15 minutes</p>
-                                            <p></p>
-                                            <div><button class="btn btn-primary" type="button" style="background: rgb(186,187,150);border-color: rgb(186,187,150);border-radius: 8px;">Reserve</button></div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                    <?php
+                                         $getImagestmt = "SELECT * FROM `servicetbl`";
+                                         $exegetstmt = $con -> query($getImagestmt);
+                                        
+                                         if ($exegetstmt->num_rows > 0) {
+                                            echo "<div class='row'>";
+                                            while ($row = $exegetstmt->fetch_assoc()) {
+                                                echo "<div class='col-md-6 mb-4'>";
+                                                echo "<div class='card' style='width: 100%; height: 100%;'>";
+                                                echo "<img class='img-fluid card-img-top' style='height: 300px; object-fit: ; border-top-left-radius: 7.6px;' src='" . $row['filename'] . "' alt='".$row['serviceName']."' width='600' height='300'>";
+                                                echo "<div class='card-body'>";
+                                                echo "<h5 class='card-title'><strong>" . $row['serviceName'] . "</strong></h5>";
+                                                echo "<p class='card-text'>&nbsp;" . $row['price'] . "</p>";
+                                                echo "<p class='card-text'>" . $row['description'] . "</p>";
+                                                echo "</div>"; // card-body
+                                                echo "</div>"; // card
+                                                echo "</div>"; // col-md-6
+                                            }
+                                            echo "</div>"; // row
+                                        }
+                                    ?>
+                                       
                             </div>
                         </div>
                     </div>

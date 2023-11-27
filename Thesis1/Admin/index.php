@@ -5,6 +5,131 @@
      $con = connection();
      session_start();
 
+     function build_calendar($month, $year) {
+        $mysqli = new mysqli('localhost', 'root', 'Thesis1', 'patientsdb');
+        // $stmt = $mysqli->prepare("SELECT * FROM bookrecords WHERE MONTH(date) = ? AND YEAR(date) = ?");
+        // $stmt->bind_param('ss', $month, $year);
+        // $bookings = array();
+        // if($stmt->execute()){
+        //     $result = $stmt->get_result();
+        //     if($result->num_rows>0){
+        //         while($row = $result->fetch_assoc()){
+        //             $bookings[] = $row['date'];
+        //         }
+                
+        //         $stmt->close();
+        //     }
+        // }
+        
+        
+        
+         $daysOfWeek = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+         $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
+         $numberDays = date('t',$firstDayOfMonth);
+         $dateComponents = getdate($firstDayOfMonth);
+         $monthName = $dateComponents['month'];
+         $dayOfWeek = $dateComponents['wday'];
+    
+        $datetoday = date('Y-m-d');
+       
+        $calendar = "<table class='table table-bordered'>";
+        $calendar .= "<center><h2>$monthName $year</h2>";
+        $calendar.= "<a class='btn btn-xs btn-success' href='?month=".date('m', mktime(0, 0, 0, $month-1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, $month-1, 1, $year))."'>Previous Month</a> ";
+        $calendar.= " <a class='btn btn-xs btn-danger' href='?month=".date('m')."&year=".date('Y')."'>Current Month</a> ";
+        $calendar.= "<a class='btn btn-xs btn-primary' href='?month=".date('m', mktime(0, 0, 0, $month+1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, $month+1, 1, $year))."'>Next Month</a></center><br>";
+        
+       
+          $calendar .= "<tr>";
+         foreach($daysOfWeek as $day) {
+              $calendar .= "<th  class='header'>$day</th>";
+         } 
+    
+         $currentDay = 1;
+         $calendar .= "</tr><tr>";
+    
+    
+         if ($dayOfWeek > 0) { 
+             for($k=0;$k<$dayOfWeek;$k++){
+                    $calendar .= "<td  class='empty'></td>"; 
+    
+             }
+         }
+        
+         $month = str_pad($month, 2, "0", STR_PAD_LEFT);
+      
+         while ($currentDay <= $numberDays) {
+    
+              if ($dayOfWeek == 7) {
+    
+                   $dayOfWeek = 0;
+                   $calendar .= "</tr><tr>";
+    
+              }
+              
+              $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
+              $date = "$year-$month-$currentDayRel";
+              
+                $dayname = strtolower(date('l', strtotime($date)));
+                $eventNum = 0;
+                $today = $date==date('Y-m-d')? "today" : "";
+      
+             if($dayname == 'saturday' || $dayname == 'sunday'){
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>Holliday</button>";
+    
+             }elseif ($date<date('Y-m-d')) {
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>";
+             }
+             else{
+    
+                $totalBookings =checkSlots($mysqli,$date);
+                if($totalBookings == 12){
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
+    
+                }else{
+                    $avaislots = 12 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
+    
+                }
+             }
+                
+              $calendar .="</td>";
+              $currentDay++;
+              $dayOfWeek++;
+         }
+    
+         if ($dayOfWeek != 7) { 
+         
+              $remainingDays = 7 - $dayOfWeek;
+                for($l=0;$l<$remainingDays;$l++){
+                    $calendar .= "<td class='empty'></td>"; 
+             }
+         }
+         
+         $calendar .= "</tr>";
+         $calendar .= "</table>";
+         echo $calendar;
+    
+    }
+    
+    
+    function checkSlots($mysqli, $date){
+            $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ?");
+                $stmt->bind_param('s',$date);
+                $totalBookings = 0;
+                if($stmt->execute()){
+                    $result = $stmt->get_result();
+                    if($result->num_rows>0){
+                        while($row = $result->fetch_assoc()){
+                           $totalBookings++;
+                        }
+                        
+                        $stmt->close();
+                    }
+                    return $totalBookings;
+                }
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -81,39 +206,108 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-  <script>
-   
-   $(document).ready(function() {
-   var calendar = $('#calendar').fullCalendar({
-    editable:true,
-    header:{
-     left:'prev,next today',
-     center:'title',
-     right:'month,agendaWeek,agendaDay'
-    },
-    events: 'connection/load.php',
-    selectable:true,
-    selectHelper:true,
-    eventResize:function(event)
-    {
-     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-     var title = event.title;
-     var id = event.id;
-     $.ajax({
-      url:"update.php",
-      type:"POST",
-      data:{title:title, start:start, end:end, id:id},
-      success:function(){
-       calendar.fullCalendar('refetchEvents');
-       alert('Event Update');
-      }
-     })
-    },
-   });
-  });
-   
-  </script>
+  <style>
+       @media only screen and (max-width: 760px),
+        (min-device-width: 802px) and (max-device-width: 1020px) {
+
+            /* Force table to not be like tables anymore */
+            table, thead, tbody, th, td, tr {
+                display: block;
+
+            }
+            
+            
+
+            .empty {
+                display: none;
+            }
+
+            /* Hide table headers (but not display: none;, for accessibility) */
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                border: 1px solid #ccc;
+            }
+
+            td {
+                /* Behave  like a "row" */
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+
+
+
+            /*
+		Label the data
+		*/
+            td:nth-of-type(1):before {
+                content: "Sunday";
+            }
+            td:nth-of-type(2):before {
+                content: "Monday";
+            }
+            td:nth-of-type(3):before {
+                content: "Tuesday";
+            }
+            td:nth-of-type(4):before {
+                content: "Wednesday";
+            }
+            td:nth-of-type(5):before {
+                content: "Thursday";
+            }
+            td:nth-of-type(6):before {
+                content: "Friday";
+            }
+            td:nth-of-type(7):before {
+                content: "Saturday";
+            }
+
+
+        }
+
+        /* Smartphones (portrait and landscape) ----------- */
+
+        @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        /* iPads (portrait and landscape) ----------- */
+
+        @media only screen and (min-device-width: 802px) and (max-device-width: 1020px) {
+            body {
+                width: 495px;
+            }
+        }
+
+        @media (min-width:641px) {
+            table {
+                table-layout: fixed;
+            }
+            td {
+                width: 33%;
+            }
+        }
+        
+        .row{
+            margin-top: 20px;
+        }
+        
+        .today{
+            background:#eee;
+        }
+
+    </style>
+
+  
 </head>
 
 <body id="page-top">
@@ -168,76 +362,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
+                          
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">Dr. Charry Tubiera</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
@@ -248,22 +373,28 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <div class="container">
-                        <div id="calendar"></div>
-                        </div>
-                    </div>
-                    <div><a class="btn btn-primary" role="button" style="background: rgb(159,152,117);border-radius: 5px;border-color: rgb(162,154,115);" href="reservationpage.php">Reserve</a></div>
+                    <div class="container alert alert-default" style="background:#fff">
                     <div class="row">
-                        <div class="col-md-12 col-xl-12"></div>
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" style="background:#9f9875;border:none;color:#fff">
+                                <h1>Online Booking System</h1>
+                                </div>
+                                <?php
+                                    $dateComponents = getdate();
+                                    if(isset($_GET['month']) && isset($_GET['year'])){
+                                        $month = $_GET['month'];
+                                        $year = $_GET['year'];
+                                    }else{
+                                        $month = $dateComponents['mon'];
+                                        $year = $dateComponents['year'];
+                                    }
+                                    echo build_calendar($month, $year);
+                                ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"></div>
-                </div>
-            </footer>
+            
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

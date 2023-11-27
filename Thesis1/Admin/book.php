@@ -8,6 +8,12 @@ session_start();
 $user = $_SESSION['UserLogin'];
 $userID = $_SESSION['UserID'];
 
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $famName = $_POST['familyMembersName'];
+
+    global $famName;
+}
+
 if ( isset( $_GET['date'] ) ) {
     $date = $_GET['date'];
     global $date;
@@ -28,9 +34,9 @@ if ( isset( $_GET['date'] ) ) {
 }
 
 if ( isset( $_POST['submit'] ) ) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
     $timeslot = $_POST['timeslot'];
+    $optservices = $_POST['serviceOpt'];
+    
     $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ?");
     $stmt->bind_param( 'ss', $date, $timeslot);
 
@@ -40,8 +46,10 @@ if ( isset( $_POST['submit'] ) ) {
            echo '<script>alert("Already have a reservation")</script>';
            
         }else{
-            $stmt = "INSERT INTO `bookinglog`(`name`, `email`, `date`, `timeslot`) VALUES ('$name','$email','$date','$timeslot')";
+            $stmt = "INSERT INTO `bookinglog`(`userID`, `serviceName`, `date`, `timeslot`,`status`, `FamMemberName`) VALUES ('$userID','$optservices','$date','$timeslot','Pending','$famName')";
+            
             $exe = $con -> query( $stmt );
+            echo '<script>alert("Sucessfully Reserved")</script>';
             $bookings [] = $timeslot;
         }
     }
@@ -50,27 +58,43 @@ if ( isset( $_POST['submit'] ) ) {
 
 $duration = 30;
 $cleanup = 0;
-$start = "09:00";
-$end = "15:00";
+$start = "08:00";
+$end = "17:00";
+$excludeEnd = "13:00";
+$excludeStart = "12:00";
 
-function timeslots( $duration, $cleanup, $start, $end ) {
-    $start = new DateTime( $start );
-    $end = new DateTime( $end );
-    $interval = new DateInterval( "PT".$duration."M" );
-    $cleanupInterval = new DateInterval( "PT".$cleanup."M" );
+function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd) {
+    $start = new DateTime($start);
+    $end = new DateTime($end);
+    $interval = new DateInterval("PT" . $duration . "M");
+    $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
     $slot = array();
 
-    for ( $intStart = $start; $intStart<$end; $intStart->add( $interval )->add( $cleanupInterval ) ) {
+    $excludeStartTime = new DateTime($excludeStart);
+    $excludeEndTime = new DateTime($excludeEnd);
+
+    for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
         $endPeriod = clone $intStart;
-        $endPeriod->add( $interval );
-        if ( $endPeriod>$end ) {
+        $endPeriod->add($interval);
+
+        // Check if the entire slot is within the excluded range
+        if ($intStart >= $excludeStartTime && $endPeriod <= $excludeEndTime) {
+            continue; // Skip this slot
+        }
+
+        // Check if the slot partially overlaps with the excluded range
+        if ($intStart < $excludeEndTime && $endPeriod > $excludeStartTime) {
+            continue; // Skip this slot
+        }
+
+        if ($endPeriod > $end) {
             break;
         }
-        $slot[] = $intStart-> format( "H:iA" )."-".$endPeriod->format( "H:iA" );
+
+        $slot[] = $intStart->format("h:i A") . " - " . $endPeriod->format("h:i A");
     }
 
     return $slot;
-
 }
 ?>
 
@@ -122,13 +146,13 @@ function timeslots( $duration, $cleanup, $start, $end ) {
             <h1 class="text-center">Book for Date: <?php echo date('m/d/y', strtotime($date)); ?></h1>
             <div class="row">
                 <?php
-                $timeslots = timeslots($duration, $cleanup, $start, $end);
+                $timeslots = timeslots($duration, $cleanup, $start, $end,$excludeStart,$excludeEnd);
                 foreach ($timeslots as $ts) {
                 ?>
                     <div class="col-md-2">
                         <div class="form-group">
                             <?php if (in_array($ts, $bookings)) { ?>
-                                <button class="btn btn-danger book"><?php echo $ts; ?></button>
+                                <button class="btn btn-danger book" disabled><?php echo $ts; ?></button>
                             <?php } else { ?>
                                 <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
                             <?php } ?>
@@ -145,9 +169,8 @@ function timeslots( $duration, $cleanup, $start, $end ) {
     <!-- Modal content-->
     <div class = "modal-content">
     <div class = "modal-header">
-    <button type = "button" class = "close" data-dismiss = "modal">&times;
-    </button>
-    <h4 class = "modal-title">Booking <span id = "slot"></span></h4>
+    <h4 class = "modal-title">Booking</h4>
+    <button type = "button" class = "close" data-dismiss = "modal">&times;</button>
     </div>
     <div class = "modal-body">
     <div class = "row">
@@ -157,14 +180,43 @@ function timeslots( $duration, $cleanup, $start, $end ) {
     <label for = "">Timeslot</label>
     <input required type = "text" readonly name = "timeslot" id = "timeslot" class = "form-control">
     </div>
+
     <div class = "form-group">
-    <label for = "">Name</label>
-    <input required type = "text" readonly class = "form-control" name = "name">
+    <select name="serviceOpt" id="">
+                                        <?php
+                                            $sqlquery = "SELECT serviceName FROM servicetbl";  
+                                            $result = $con->query($sqlquery);
+                                            if($result -> num_rows> 0)
+                                            {
+                                                while($optionData = $result->fetch_assoc())
+                                                {
+                                                    $option = $optionData['serviceName'];
+                                                    
+
+                                        ?>
+
+                                        <option value="<?php echo $option?>"> <?php echo $option?></option>
+
+                                        <<?php
+                                            }}
+                                        ?>
+                                        </select>
     </div>
+
+    <div class = "form-check">
+    <input  type = "checkbox" name = "checkbox-fam" id = "checkbox-fam" class="form-check-input">
+    <label for = "checkbox-user">Check if Reservation is for Family Members</label>
+    </div>
+
     <div class = "form-group">
-    <label for = "">Email</label>
-    <input required type = "email" class = "form-control" name = "email">
-    </div>
+    <label for = "">Family Members Name</label>
+    <?php
+    $readOnlyAttribute = isset($_POST['checkbox-fam']) ? '' : 'readonly';
+    ?>
+    <input required readonly type = "text"  class = "form-control" name = "familyMembersName">
+    </div> 
+  
+
     <div class = "form-group pull-right">
     <button class = "btn btn-primary" type = "submit" name = "submit">Submit</button>
     </div>
@@ -189,7 +241,15 @@ function timeslots( $duration, $cleanup, $start, $end ) {
         $( "#timeslot" ).val( timeslot );
         $( "#myModal" ).modal( "show" );
     }
+
+    
 )
+</script>
+<script>
+    document.getElementById('checkbox-fam').addEventListener('change', function() {
+        var inputField = document.getElementsByName('familyMembersName')[0];
+        inputField.readOnly = !this.checked;
+    });
 </script>
 </body>
 </html>

@@ -249,7 +249,6 @@ function checkSlots($mysqli, $date){
                             }
                             echo build_calendar($month, $year);
                         ?>
-                    
                 </div>
             </div>
         </div>

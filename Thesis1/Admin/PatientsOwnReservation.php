@@ -1,11 +1,30 @@
 <?php
      include_once("connection/connection.php");
+     require_once 'phpqrcode/qrlib.php';
      $con = connection();
      session_start();
+
+     // To fix the Error of call to undefine function
+    //  Locate the php.ini file:
+
+    //  Open your XAMPP control panel.
+    //  Click on the "Config" button next to the Apache server.
+    //  Select "PHP (php.ini)".
+    //  Enable the GD extension:
+     
+    //  Search for the line ;extension=gd in the php.ini file.
+    //  Remove the semicolon (;) at the beginning of the line to uncomment it.
+    //  Save the php.ini file.
+    //  Restart Apache:
+     
+    //  Restart the Apache server in the XAMPP control panel.
+     
 
 
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +53,9 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/aguilaraldo1_section_contact.css">
+    <!-- Include qrious library -->
+<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+
     <link rel="stylesheet" href="assets/css/Availability---Manage-availability-bookings-appointments_v1.css">
     <link rel="stylesheet" href="assets/css/Basic-Footer.css">
     <link rel="stylesheet" href="assets/css/Black-Navbar.css">
@@ -47,6 +69,24 @@
     <link rel="stylesheet" href="https://djpsoftwarecdn.azureedge.net/availabilitycss-v1/availability.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+    <style>
+        .hidden-column {
+            display: none;
+        }
+
+        #qrcode {
+        text-align: center;
+        margin: auto;
+        padding: 20px;
+    }
+
+    #qrcode img {
+        width: 200px; /* Adjust the width as needed */
+        height: 200px; /* Adjust the height as needed */
+        display: block;
+        margin: auto;
+    }
+    </style>
 </head>
 
 <body id="page-top">
@@ -79,76 +119,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a><a class="dropdown-item" href="#">Menu Item</a><span class="dropdown-item-text">Text Item</span>
-                                        <h6 class="dropdown-header">Header</h6>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
+                           
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
@@ -168,7 +139,6 @@
                         <div class="modal fade" role="dialog" tabindex="-1" id="modal-1" style="border-radius: 0px;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header" style="height: 80px;border-radius: 12px 7px 0px 0px;"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
                                     <div class="modal-body" style="height: 312px;width: 498px;background: #ffffff;">
                                         <div class="col"></div>
                                         <div class="col">
@@ -186,11 +156,12 @@
                                 <table class="table">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>Reservation ID</th>
+                                            <th class="hidden-column">Reservation ID</th>
                                             <th>Service Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
                                             <th>Status</th>
+                                            <th>Family member Name</th>
                                             <th></th>
 
                                         </tr>
@@ -199,7 +170,7 @@
                                       <?php
 
 
-                                          $sqlstmt = "SELECT `reservationID`, `serviceName`, `start_date`, `end_date`,`status` FROM `reservation` WHERE userID = '$userID' AND status = 'Pending'";
+                                          $sqlstmt = "SELECT `resID`,`serviceName`, `date`, `timeslot`, `status`, `FamMemberName` FROM `bookinglog` WHERE userID = '$userID' AND status = 'Pending'";
                                           $exe = $con-> query($sqlstmt);
 
 
@@ -214,7 +185,7 @@
                                           {
                                             $cancelID = $_GET['cancelID'];
                                             
-                                            $stmtCheckcancel = "SELECT * FROM `reservation` WHERE reservationID = $cancelID AND CURDATE() <= DATE_SUB(start_date, INTERVAL 2 DAY)";
+                                            $stmtCheckcancel = "SELECT * FROM `bookinglog` WHERE resID = '$cancelID' AND CURDATE() <= DATE_SUB(date, INTERVAL 2 DAY)";
                                             $runstmt = $con -> query($stmtCheckcancel);
                                             $row = $runstmt -> fetch_assoc();
 
@@ -222,7 +193,7 @@
 
                                             if($totalNum > 0)
                                             {
-                                                $sqlcancelstmt = "UPDATE `reservation` SET `status`='Cancel' WHERE reservationID = $cancelID";
+                                                $sqlcancelstmt = "UPDATE `bookinglog` SET `status`='Cancel' WHERE resID = $cancelID";
                                                 $runcancelstmt = $con -> query($sqlcancelstmt);
                                                 echo "<script>alert('Successfully Canceled')</script>";
 
@@ -237,25 +208,28 @@
 
                                             
                                             
-                                            $resID = $row['reservationID'];
+                                            $resID = $row['resID'];
                                             $serviceNAme = $row['serviceName'];
-                                            $sdate = $row['start_date'];
-                                            $edate = $row['end_date'];
+                                            $sdate = $row['date'];
+                                            $tslot = $row['timeslot'];
                                             $stat = $row['status'];
+                                            $famMember = $row['FamMemberName'];
 
 
 
 
                                             echo '<tr>
                                             
-                                        <td>'.$resID.'</td>
+                                        <td class="hidden-column">'.$resID.'</td>
                                         <td>'.$serviceNAme.'</td>
                                         <td>'.$sdate.'</td>
-                                        <td>'.$edate.'</td>
+                                        <td>'.$tslot.'</td>
                                         <td>'.$stat.'</td>
+                                        <td>'.$famMember.'</td>
                                         <td>
                                         <button"><a href = "TemporaryUpdatePatient.php?updateID='.$resID.'" class ="btn btn-danger">Update</a></button>
-                                        <button"><a href = "PatientsOwnReservation.php?cancelID='.$resID.'" class ="btn btn-danger">Cancel</a></button>
+                                        <button"><a href = "PatientsOwnReservation.php?cancelID='.$resID.'" class ="btn btn-warning">Cancel</a></button>
+                                        <button"><a href = "patientsQrcode.php?qrID='.$resID.'" class ="btn btn-primary">Qr Code</a></button>
                                         </td>
                                         </tr>';
 
@@ -266,8 +240,10 @@
                             </div>
                         </div>
                     </div>
-                </div><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modal-1" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-radius: 6px;">Button</button>
+                </div>
             </div>
+
+           
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright"></div>
@@ -299,6 +275,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 
     <script>
