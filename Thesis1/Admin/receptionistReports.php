@@ -149,8 +149,8 @@
                                     <tbody>
                                     <?php
                                         $weeklyService = "SELECT serviceName, COUNT(*) as Total_Acquired
-                                        FROM reservation
-                                        WHERE start_date >= CURDATE() - INTERVAL 1 WEEK
+                                        FROM bookinglog
+                                        WHERE date >= CURDATE() - INTERVAL 1 WEEK
                                         GROUP BY serviceName
                                         ORDER BY Total_Acquired
                                         ";
@@ -186,7 +186,7 @@
                                     <tbody>
                                        <?php
                                            //Use this code to get the total user weekly
-                                            $getWeeklyUser = "SELECT COUNT(*) as row_count FROM reservation WHERE start_date >= CURDATE() - INTERVAL 1 WEEK";
+                                            $getWeeklyUser = "SELECT COUNT(*) as row_count FROM bookinglog WHERE date >= CURDATE() - INTERVAL 1 WEEK";
                                             $resultUser = $con -> query($getWeeklyUser);
 
                                             while ($rowUser = mysqli_fetch_assoc($resultUser)) {
@@ -256,9 +256,9 @@
                                 <div class="px-3">
                                     <?php
                                         $salesperweekSTMT = "SELECT SUM(servicetbl.price) AS TotalSales
-                                        FROM reservation
-                                        JOIN servicetbl ON reservation.serviceName = servicetbl.serviceName
-                                        WHERE status = 'Done' AND start_date >= CURDATE() - INTERVAL 1 WEEK
+                                        FROM bookinglog
+                                        JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
+                                        WHERE status = 'Done' AND date >= CURDATE() - INTERVAL 1 WEEK
                                         ";
                                         $exesalesperWeek = $con-> query($salesperweekSTMT);
                                         $row3 = mysqli_fetch_assoc($exesalesperWeek);

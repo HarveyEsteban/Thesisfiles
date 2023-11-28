@@ -251,7 +251,17 @@
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
                                   echo  $user;
-                                ?></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
+                                  $profilestmt = "SELECT profilePic FROM patients_user WHERE userID = $userID";
+                                    $exeProfile = $con->query($profilestmt);
+                                    $row = $exeProfile->fetch_assoc();
+
+                                    if($row)
+                                    {
+                                        $profilePic = $row['profilePic'];
+
+                                        echo '</span><img class="border rounded-circle img-profile" src="'.$profilePic.'"></a>';
+                                    }
+                                ?>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="Landingpage.html"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
@@ -274,8 +284,7 @@
                                     }
 
                                 ?>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#modal-2"  style="background: rgb(159,152,117);border-radius: 5px;border-color: rgb(159,152,117);">Change Photo</button></div><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modal-1" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-radius: 5px;height: 33px;width: 140.828px;font-size: 14px;">Change Password</button>
+                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#modal-2"  style="background: rgb(159,152,117);border-radius: 5px;border-color: rgb(159,152,117);">Change Photo</button></div><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modal-1" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-radius: 5px;height: 33px;width: 140.828px;font-size: 14px;">Change Password</button>
                                 </div>
                             </div>
                             <div class="card shadow mb-4">
