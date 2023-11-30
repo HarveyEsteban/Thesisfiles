@@ -31,6 +31,8 @@
          $dateComponents = getdate($firstDayOfMonth);
          $monthName = $dateComponents['month'];
          $dayOfWeek = $dateComponents['wday'];
+         $tomorrow = date('Y-m-d', strtotime('+1 day'));
+
     
         $datetoday = date('Y-m-d');
        
@@ -76,20 +78,22 @@
                 $today = $date==date('Y-m-d')? "today" : "";
       
              if($dayname == 'saturday' || $dayname == 'sunday'){
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>Holliday</button>";
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>Closed</button>";
     
-             }elseif ($date<date('Y-m-d')) {
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>";
+
+                // Change the  date('Y-m-d') to $tomorrow to only allow use to book for tom schedule and not on the same day
+             }elseif ($date<$tomorrow) {
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>&nbsp</button>";
              }
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
                 if($totalBookings == 12){
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-lg'>No Slots</a>";
     
                 }else{
                     $avaislots = 12 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }
              }

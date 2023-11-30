@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 09:06 PM
+-- Generation Time: Nov 30, 2023 at 06:53 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -57,8 +57,9 @@ INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, 
 (12, 1, 'Cleaning', '2023-11-24', '14:00PM-14:30PM', '', 'Pending', ''),
 (13, 1, 'Root canal theraphy', '2023-11-24', '14:30PM-15:00PM', '', 'Pending', 'asdasdasdasd'),
 (14, 1, 'Braces', '2023-11-27', '01:00 PM - 01:30 PM', '', 'Canceled', ''),
-(15, 2, 'Cleaning', '2023-11-27', '08:30 AM - 09:00 AM', '', 'Pending', ''),
-(18, 2, 'Root canal theraphy', '2023-11-27', '09:30 AM - 10:00 AM', '', 'Pending', '');
+(15, 2, 'Cleaning', '2023-11-27', '08:30 AM - 09:00 AM', 'Baho ng bibig', 'Done', ''),
+(18, 2, 'Root canal theraphy', '2023-11-27', '09:30 AM - 10:00 AM', '', 'Pending', ''),
+(19, 1, 'Braces', '2023-11-30', '09:00 AM - 09:30 AM', '', 'Pending', 'Francis');
 
 -- --------------------------------------------------------
 
@@ -87,6 +88,40 @@ INSERT INTO `bookings_record` (`ID`, `FIRSTNAME`, `MIDDLENAME`, `LASTNAME`, `PHO
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chat_message`
+--
+
+CREATE TABLE `chat_message` (
+  `chat_message_id` int(11) NOT NULL,
+  `to_user_id` int(11) NOT NULL,
+  `from_user_id` int(11) NOT NULL,
+  `chat_message` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chat_message`
+--
+
+INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
+(0, 1, 0, 'aaa', '2023-11-30 17:05:49', 1),
+(0, 1, 0, 'aaaa', '2023-11-30 17:06:21', 1),
+(0, 1, 0, 'aaaa', '2023-11-30 17:14:19', 1),
+(0, 2, 0, 'hello\n', '2023-11-30 17:14:35', 1),
+(0, 1, 0, 'Hello', '2023-11-30 17:18:02', 1),
+(0, 2, 0, 'sss', '2023-11-30 17:18:14', 1),
+(0, 1, 2, 'aaaa', '2023-11-30 17:21:19', 1),
+(0, 2, 1, 'Yow', '2023-11-30 17:21:58', 1),
+(0, 3, 2, 'Hello Its me', '2023-11-30 17:37:35', 0),
+(0, 2, 3, 'Omg what a fucking stupid shit', '2023-11-30 17:37:53', 0),
+(0, 3, 2, 'Yeah', '2023-11-30 17:45:52', 0),
+(0, 2, 3, 'Hey there fucking shit', '2023-11-30 17:49:47', 0),
+(0, 2, 3, 'Yow', '2023-11-30 17:50:28', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `patients_user`
 --
 
@@ -100,25 +135,26 @@ CREATE TABLE `patients_user` (
   `Hash` varchar(255) NOT NULL,
   `Access` varchar(25) NOT NULL,
   `Active` int(11) NOT NULL DEFAULT 0,
-  `profilePic` varchar(255) NOT NULL
+  `profilePic` varchar(255) NOT NULL,
+  `last_activity` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patients_user`
 --
 
-INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`) VALUES
-(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'lee', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, ''),
-(2, 'Hello@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg'),
-(3, 'admin@admin', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, ''),
-(4, 'Jologs@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'pass123', 'asfhwewdgwsf', 'User', 1, ''),
-(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, ''),
-(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, ''),
-(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, ''),
-(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, ''),
-(11, 'harveybucod21@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3772', '48ab2f9b45957ab574cf005eb8a76760', 'User', 1, ''),
-(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, ''),
-(13, 'Kkksl@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Panda123', '', 'Receptionist', 1, '');
+INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`) VALUES
+(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'lee', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-11-29 16:01:00'),
+(2, 'Hello@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-11-30 15:36:48'),
+(3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34'),
+(4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48'),
+(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48'),
+(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48'),
+(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48'),
+(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48'),
+(11, 'harveybucod21@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3772', '48ab2f9b45957ab574cf005eb8a76760', 'User', 1, '', '2023-11-30 15:36:48'),
+(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48'),
+(13, 'Kkksl@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Panda123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48');
 
 -- --------------------------------------------------------
 
@@ -193,6 +229,7 @@ CREATE TABLE `servicetbl` (
 INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`) VALUES
 ('Braces', 25000, 'upload/6562352146f467.76015121.jpg', 'These help your teeth to straight'),
 ('Cleaning', 700, '', '30-Minutes'),
+('Gum Depigmentation', 800, 'upload/656601709ada52.14428633.jpg', 'Para sa maitim na gilagid'),
 ('Root canal theraphy', 1000, '', '30-minutes');
 
 -- --------------------------------------------------------
@@ -289,7 +326,7 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`

@@ -63,6 +63,46 @@ $end = "17:00";
 $excludeEnd = "13:00";
 $excludeStart = "12:00";
 
+// function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd) {
+//     $start = new DateTime($start);
+//     $end = new DateTime($end);
+//     $interval = new DateInterval("PT" . $duration . "M");
+//     $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
+//     $slot = array();
+
+//     $excludeStartTime = new DateTime($excludeStart);
+//     $excludeEndTime = new DateTime($excludeEnd);
+//     $now = new DateTime();
+
+//     for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
+//         $endPeriod = clone $intStart;
+//         $endPeriod->add($interval);
+
+//         // Check if the entire slot is within the excluded range
+//         if ($intStart >= $excludeStartTime && $endPeriod <= $excludeEndTime) {
+//             continue; // Skip this slot
+//         }
+
+//         // Check if the slot partially overlaps with the excluded range
+//         if ($intStart < $excludeEndTime && $endPeriod > $excludeStartTime) {
+//             continue; // Skip this slot
+//         }
+        
+//         if ($intStart < $now && $endPeriod > $now) {
+//             continue; // Skip this slot
+//         }
+
+
+//         if ($endPeriod > $end) {
+//             break;
+//         }
+
+//         $slot[] = $intStart->format("h:i A") . " - " . $endPeriod->format("h:i A");
+//     }
+
+//     return $slot;
+// }
+
 function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd) {
     $start = new DateTime($start);
     $end = new DateTime($end);
@@ -72,6 +112,7 @@ function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd
 
     $excludeStartTime = new DateTime($excludeStart);
     $excludeEndTime = new DateTime($excludeEnd);
+    $now = new DateTime(); // Get the current time
 
     for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
         $endPeriod = clone $intStart;
@@ -87,15 +128,21 @@ function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd
             continue; // Skip this slot
         }
 
+
         if ($endPeriod > $end) {
             break;
         }
 
+
         $slot[] = $intStart->format("h:i A") . " - " . $endPeriod->format("h:i A");
+
+
     }
 
     return $slot;
 }
+
+
 ?>
 
 
