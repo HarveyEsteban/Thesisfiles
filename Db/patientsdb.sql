@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2023 at 06:53 PM
+-- Generation Time: Dec 03, 2023 at 07:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -35,31 +35,37 @@ CREATE TABLE `bookinglog` (
   `timeslot` varchar(255) NOT NULL,
   `remarks` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
-  `FamMemberName` varchar(255) NOT NULL DEFAULT 'N/A'
+  `FamMemberName` varchar(255) NOT NULL DEFAULT 'N/A',
+  `confirmationHash` varchar(255) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bookinglog`
 --
 
-INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `status`, `FamMemberName`) VALUES
-(1, 1, 'Root canal theraphy', '2023-11-24', '09:00AM-09:30AM', '', 'Cancel', 'Melvin'),
-(2, 1, 'Root canal theraphy', '2023-11-24', '09:30AM-10:00AM', '', 'Cancel', ''),
-(3, 1, 'Cleaning', '2023-11-29', '09:00AM-09:30AM', 'Test', 'Cancel', ''),
-(4, 1, 'Cleaning', '2023-11-24', '10:00AM-10:30AM', '', 'Done', ''),
-(5, 1, 'Root canal theraphy', '2023-11-24', '10:30AM-11:00AM', 'mabaho bibig Shet', 'Done', ''),
-(6, 1, 'Root canal theraphy', '2023-11-24', '11:00AM-11:30AM', '', 'Done', 'asdasdasdasd'),
-(7, 1, 'Root canal theraphy', '2023-11-24', '11:30AM-12:00PM', '', 'Cancel', 'aaaaa'),
-(8, 1, 'Root canal theraphy', '2023-11-24', '12:00PM-12:30PM', '', 'Cancel', 'sssssss'),
-(9, 1, 'Root canal theraphy', '2023-11-24', '12:30PM-13:00PM', '', 'Cancel', 'aaaaaaa'),
-(10, 1, 'Root canal theraphy', '2023-11-24', '13:00PM-13:30PM', 'Fucking shit amoy tae bibig', 'Done', 'asdasdasdasdasd'),
-(11, 1, 'Cleaning', '2023-11-24', '13:30PM-14:00PM', '', 'Done', ''),
-(12, 1, 'Cleaning', '2023-11-24', '14:00PM-14:30PM', '', 'Pending', ''),
-(13, 1, 'Root canal theraphy', '2023-11-24', '14:30PM-15:00PM', '', 'Pending', 'asdasdasdasd'),
-(14, 1, 'Braces', '2023-11-27', '01:00 PM - 01:30 PM', '', 'Canceled', ''),
-(15, 2, 'Cleaning', '2023-11-27', '08:30 AM - 09:00 AM', 'Baho ng bibig', 'Done', ''),
-(18, 2, 'Root canal theraphy', '2023-11-27', '09:30 AM - 10:00 AM', '', 'Pending', ''),
-(19, 1, 'Braces', '2023-11-30', '09:00 AM - 09:30 AM', '', 'Pending', 'Francis');
+INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
+(1, 1, 'Root canal theraphy', '2023-11-24', '09:00AM-09:30AM', '', 'Cancel', 'Melvin', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(2, 1, 'Root canal theraphy', '2023-11-24', '09:30AM-10:00AM', '', 'Cancel', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(3, 1, 'Cleaning', '2023-11-29', '09:00AM-09:30AM', 'Test', 'Cancel', '', '', '2023-12-02 19:55:39'),
+(4, 1, 'Cleaning', '2023-11-24', '10:00AM-10:30AM', '', 'Done', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(5, 1, 'Root canal theraphy', '2023-11-24', '10:30AM-11:00AM', 'mabaho bibig Shet', 'Done', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(6, 1, 'Root canal theraphy', '2023-11-24', '11:00AM-11:30AM', '', 'Done', 'asdasdasdasd', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(7, 1, 'Root canal theraphy', '2023-11-24', '11:30AM-12:00PM', '', 'Cancel', 'aaaaa', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(8, 1, 'Root canal theraphy', '2023-11-24', '12:00PM-12:30PM', '', 'Cancel', 'sssssss', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(9, 1, 'Root canal theraphy', '2023-11-24', '12:30PM-13:00PM', '', 'Cancel', 'aaaaaaa', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(10, 1, 'Root canal theraphy', '2023-11-24', '13:00PM-13:30PM', 'Fucking shit amoy tae bibig', 'Done', 'asdasdasdasdasd', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(11, 1, 'Cleaning', '2023-11-24', '13:30PM-14:00PM', '', 'Done', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(12, 1, 'Cleaning', '2023-11-24', '14:00PM-14:30PM', '', 'Pending', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(13, 1, 'Root canal theraphy', '2023-11-24', '14:30PM-15:00PM', '', 'Pending', 'asdasdasdasd', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
+(14, 1, 'Braces', '2023-11-27', '01:00 PM - 01:30 PM', '', 'Canceled', '', '', '2023-12-02 19:55:39'),
+(15, 2, 'Cleaning', '2023-11-27', '08:30 AM - 09:00 AM', 'Baho ng bibig', 'Done', '', '', '2023-12-02 19:55:39'),
+(18, 2, 'Root canal theraphy', '2023-11-27', '09:30 AM - 10:00 AM', '', 'Pending', '', '', '2023-12-02 19:55:39'),
+(19, 1, 'Braces', '2023-11-30', '09:00 AM - 09:30 AM', '', 'Pending', 'Francis', '', '2023-12-02 19:55:39'),
+(25, 11, 'Braces', '2023-12-06', '08:00 AM - 08:30 AM', '', 'Pending', '', '', '2023-12-02 19:55:39'),
+(26, 11, 'Braces', '2023-12-05', '08:30 AM - 09:00 AM', '', 'Pending', '', '', '2023-12-02 19:55:39'),
+(27, 2, 'Braces', '2023-12-05', '09:00 AM - 09:30 AM', '', 'Pending', '', '', '2023-12-02 20:01:29'),
+(28, 11, 'Braces', '2023-12-06', '11:00 AM - 11:30 AM', '', 'Pending', 'Bogart', '', '2023-12-02 20:55:47');
 
 -- --------------------------------------------------------
 
@@ -117,7 +123,23 @@ INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `ch
 (0, 2, 3, 'Omg what a fucking stupid shit', '2023-11-30 17:37:53', 0),
 (0, 3, 2, 'Yeah', '2023-11-30 17:45:52', 0),
 (0, 2, 3, 'Hey there fucking shit', '2023-11-30 17:49:47', 0),
-(0, 2, 3, 'Yow', '2023-11-30 17:50:28', 0);
+(0, 2, 3, 'Yow', '2023-11-30 17:50:28', 0),
+(0, 3, 2, 'putang ina', '2023-11-30 17:58:31', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `confirmation_data`
+--
+
+CREATE TABLE `confirmation_data` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `hash_code` varchar(64) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `expiration_timestamp` timestamp NULL DEFAULT NULL,
+  `confirmed` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -145,7 +167,7 @@ CREATE TABLE `patients_user` (
 
 INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`) VALUES
 (1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'lee', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-11-29 16:01:00'),
-(2, 'Hello@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-11-30 15:36:48'),
+(2, 'mobs.dominiquemartinez@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-02 20:00:02'),
 (3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34'),
 (4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48'),
 (5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48'),
@@ -169,24 +191,25 @@ CREATE TABLE `reservation` (
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `remarks` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL
+  `status` varchar(255) NOT NULL,
+  `confirmationHash` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`reservationID`, `userID`, `serviceName`, `start_date`, `end_date`, `remarks`, `status`) VALUES
-(53, 1, 'Root canal theraphy', '2023-11-10 09:30:00', '2023-11-10 10:00:00', 'ssasddssdd', 'Done'),
-(54, 1, 'Cleaning', '2023-11-09 11:00:00', '2023-11-09 11:30:00', 'ssasddssdd', 'Done'),
-(55, 1, 'Cleaning', '2023-11-07 01:30:00', '2023-11-07 02:00:00', 'ssasddssdd', 'Pending'),
-(56, 1, 'Root canal theraphy', '2023-11-07 09:00:00', '2023-11-07 09:30:00', 'ssasddssdd', 'Pending'),
-(57, 1, 'Cleaning', '2023-11-07 08:30:00', '2023-11-07 09:00:00', 'ssasddssdd', 'Pending'),
-(58, 1, 'Root canal theraphy', '2023-11-07 10:30:00', '2023-11-07 11:00:00', 'ssasddssdd', 'Pending'),
-(59, 1, 'Root canal theraphy', '2023-11-06 11:00:00', '2023-11-06 11:30:00', 'ssasddssdd', 'Cancel'),
-(64, 1, 'Root canal theraphy', '2023-11-18 11:30:00', '2023-11-18 12:00:00', '', 'Cancel'),
-(65, 1, 'Cleaning', '2023-11-15 08:30:00', '2023-11-15 09:00:00', 'sssss', 'Cancel'),
-(66, 1, 'Cleaning', '2023-11-15 11:00:00', '2023-11-15 11:30:00', '', 'Cancel');
+INSERT INTO `reservation` (`reservationID`, `userID`, `serviceName`, `start_date`, `end_date`, `remarks`, `status`, `confirmationHash`) VALUES
+(53, 1, 'Root canal theraphy', '2023-11-10 09:30:00', '2023-11-10 10:00:00', 'ssasddssdd', 'Done', ''),
+(54, 1, 'Cleaning', '2023-11-09 11:00:00', '2023-11-09 11:30:00', 'ssasddssdd', 'Done', ''),
+(55, 1, 'Cleaning', '2023-11-07 01:30:00', '2023-11-07 02:00:00', 'ssasddssdd', 'Pending', ''),
+(56, 1, 'Root canal theraphy', '2023-11-07 09:00:00', '2023-11-07 09:30:00', 'ssasddssdd', 'Pending', ''),
+(57, 1, 'Cleaning', '2023-11-07 08:30:00', '2023-11-07 09:00:00', 'ssasddssdd', 'Pending', ''),
+(58, 1, 'Root canal theraphy', '2023-11-07 10:30:00', '2023-11-07 11:00:00', 'ssasddssdd', 'Pending', ''),
+(59, 1, 'Root canal theraphy', '2023-11-06 11:00:00', '2023-11-06 11:30:00', 'ssasddssdd', 'Cancel', ''),
+(64, 1, 'Root canal theraphy', '2023-11-18 11:30:00', '2023-11-18 12:00:00', '', 'Cancel', ''),
+(65, 1, 'Cleaning', '2023-11-15 08:30:00', '2023-11-15 09:00:00', 'sssss', 'Cancel', ''),
+(66, 1, 'Cleaning', '2023-11-15 11:00:00', '2023-11-15 11:30:00', '', 'Cancel', '');
 
 -- --------------------------------------------------------
 
@@ -287,6 +310,12 @@ ALTER TABLE `bookings_record`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `confirmation_data`
+--
+ALTER TABLE `confirmation_data`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `patients_user`
 --
 ALTER TABLE `patients_user`
@@ -326,13 +355,19 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`
 --
 ALTER TABLE `bookings_record`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `confirmation_data`
+--
+ALTER TABLE `confirmation_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `patients_user`

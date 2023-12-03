@@ -30,6 +30,8 @@ if(isset($_GET['date'])){
 
         return $slot;
 
+        
+
     }
 
 ?>

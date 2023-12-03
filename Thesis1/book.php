@@ -20,6 +20,7 @@ if ( isset( $_GET['date'] ) ) {
     }
 }
 
+
 if ( isset( $_POST['submit'] ) ) {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -125,6 +126,8 @@ function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd
 </div>
 </div>
 </div> -->
+
+
 
 <div class="container container-center">
         <div class="timeslot-container">

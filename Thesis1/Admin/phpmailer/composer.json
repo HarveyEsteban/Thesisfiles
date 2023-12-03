@@ -36,6 +36,7 @@
         "ext-filter": "*",
         "ext-hash": "*"
     },
+
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
         "doctrine/annotations": "^1.2.6 || ^1.13.3",
@@ -75,4 +76,6 @@
             "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . --show-deprecated -e php,phps --exclude vendor --exclude .git --exclude build"
         ]
     }
+
+
 }
