@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2023 at 07:59 AM
+-- Generation Time: Dec 06, 2023 at 03:51 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,33 +39,6 @@ CREATE TABLE `bookinglog` (
   `confirmationHash` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `bookinglog`
---
-
-INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
-(1, 1, 'Root canal theraphy', '2023-11-24', '09:00AM-09:30AM', '', 'Cancel', 'Melvin', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(2, 1, 'Root canal theraphy', '2023-11-24', '09:30AM-10:00AM', '', 'Cancel', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(3, 1, 'Cleaning', '2023-11-29', '09:00AM-09:30AM', 'Test', 'Cancel', '', '', '2023-12-02 19:55:39'),
-(4, 1, 'Cleaning', '2023-11-24', '10:00AM-10:30AM', '', 'Done', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(5, 1, 'Root canal theraphy', '2023-11-24', '10:30AM-11:00AM', 'mabaho bibig Shet', 'Done', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(6, 1, 'Root canal theraphy', '2023-11-24', '11:00AM-11:30AM', '', 'Done', 'asdasdasdasd', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(7, 1, 'Root canal theraphy', '2023-11-24', '11:30AM-12:00PM', '', 'Cancel', 'aaaaa', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(8, 1, 'Root canal theraphy', '2023-11-24', '12:00PM-12:30PM', '', 'Cancel', 'sssssss', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(9, 1, 'Root canal theraphy', '2023-11-24', '12:30PM-13:00PM', '', 'Cancel', 'aaaaaaa', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(10, 1, 'Root canal theraphy', '2023-11-24', '13:00PM-13:30PM', 'Fucking shit amoy tae bibig', 'Done', 'asdasdasdasdasd', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(11, 1, 'Cleaning', '2023-11-24', '13:30PM-14:00PM', '', 'Done', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(12, 1, 'Cleaning', '2023-11-24', '14:00PM-14:30PM', '', 'Pending', '', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(13, 1, 'Root canal theraphy', '2023-11-24', '14:30PM-15:00PM', '', 'Pending', 'asdasdasdasd', 'jkahsdiujhasidhauis223123124123', '2023-12-02 19:55:39'),
-(14, 1, 'Braces', '2023-11-27', '01:00 PM - 01:30 PM', '', 'Canceled', '', '', '2023-12-02 19:55:39'),
-(15, 2, 'Cleaning', '2023-11-27', '08:30 AM - 09:00 AM', 'Baho ng bibig', 'Done', '', '', '2023-12-02 19:55:39'),
-(18, 2, 'Root canal theraphy', '2023-11-27', '09:30 AM - 10:00 AM', '', 'Pending', '', '', '2023-12-02 19:55:39'),
-(19, 1, 'Braces', '2023-11-30', '09:00 AM - 09:30 AM', '', 'Pending', 'Francis', '', '2023-12-02 19:55:39'),
-(25, 11, 'Braces', '2023-12-06', '08:00 AM - 08:30 AM', '', 'Pending', '', '', '2023-12-02 19:55:39'),
-(26, 11, 'Braces', '2023-12-05', '08:30 AM - 09:00 AM', '', 'Pending', '', '', '2023-12-02 19:55:39'),
-(27, 2, 'Braces', '2023-12-05', '09:00 AM - 09:30 AM', '', 'Pending', '', '', '2023-12-02 20:01:29'),
-(28, 11, 'Braces', '2023-12-06', '11:00 AM - 11:30 AM', '', 'Pending', 'Bogart', '', '2023-12-02 20:55:47');
 
 -- --------------------------------------------------------
 
@@ -124,7 +97,18 @@ INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `ch
 (0, 3, 2, 'Yeah', '2023-11-30 17:45:52', 0),
 (0, 2, 3, 'Hey there fucking shit', '2023-11-30 17:49:47', 0),
 (0, 2, 3, 'Yow', '2023-11-30 17:50:28', 0),
-(0, 3, 2, 'putang ina', '2023-11-30 17:58:31', 0);
+(0, 3, 2, 'putang ina', '2023-11-30 17:58:31', 0),
+(0, 3, 1, 'Hello', '2023-12-04 17:27:49', 0),
+(0, 3, 1, 'Hey', '2023-12-04 17:47:35', 0),
+(0, 3, 1, 'yow', '2023-12-04 17:49:12', 0),
+(0, 3, 1, 'hey', '2023-12-04 17:49:15', 0),
+(0, 3, 1, 'hey', '2023-12-04 17:49:16', 0),
+(0, 3, 1, 'Hello', '2023-12-04 17:58:13', 0),
+(0, 1, 3, 'Hello', '2023-12-05 09:56:47', 0),
+(0, 3, 1, 'asd', '2023-12-05 09:57:03', 0),
+(0, 1, 3, 'asd', '2023-12-05 09:57:12', 0),
+(0, 3, 1, 'Hello motherfucker', '2023-12-05 10:00:52', 0),
+(0, 1, 3, 'Yow Stupid', '2023-12-05 10:02:02', 0);
 
 -- --------------------------------------------------------
 
@@ -135,11 +119,32 @@ INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `ch
 CREATE TABLE `confirmation_data` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `hash_code` varchar(64) NOT NULL,
+  `hash_code` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `expiration_timestamp` timestamp NULL DEFAULT NULL,
   `confirmed` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `confirmation_data`
+--
+
+INSERT INTO `confirmation_data` (`id`, `email`, `hash_code`, `timestamp`, `expiration_timestamp`, `confirmed`) VALUES
+(21, 'harveybucod21@gmail.com', '3e2f49b14394926b9d5b33c5e672bf2457f8126cf310c9fa1fd3ce044a613806', '2023-12-03 17:09:51', '2023-12-04 17:09:51', 0),
+(22, 'Sample@gmail.com', '8551509ad75f752df6b1ba8d652a2aa875a6a30cb7b86542c07b2fdb1698ff4c', '2023-12-03 17:09:53', '2023-12-04 17:09:53', 0),
+(23, 'harveybucod21@gmail.com', 'aecd1d39c461eaf1e15ce2d8461705f9152939992a884df6bf6a41c6cab263e4', '2023-12-03 17:10:47', '2023-12-04 17:10:47', 1),
+(24, 'Sample@gmail.com', 'd7ae1c8da4c3228ac4671a160bdd204c563303401bfafcd7e4160b7b6c3ca142', '2023-12-03 17:10:50', '2023-12-04 17:10:50', 0),
+(25, 'harveybucod21@gmail.com', 'fe69107d28b7c5260da40500c7fe55c8b2fe89192c710c0260ddf6fefb380bbf', '2023-12-03 17:22:08', '2023-12-04 17:22:08', 1),
+(26, 'Sample@gmail.com', '1d4446081c3d89b3ed8c3a4dad6461b753999b8e96637f1bf05602d25e9198f7', '2023-12-03 17:22:10', '2023-12-04 17:22:10', 0),
+(27, 'harveybucod21@gmail.com', 'a36bccc904957d78b33640852af67ea452fc58ded2a1600154fea84b9cf620c8', '2023-12-03 17:38:59', '2023-12-04 17:38:59', 0),
+(28, 'Sample@gmail.com', '2811c83f184849c0e3561c0c49830ef58814faee960dea4f282ce45cbd734273', '2023-12-03 17:39:01', '2023-12-04 17:39:01', 0),
+(29, 'harveybucod21@gmail.com', 'f18088b473369c92a2330de86188708644eaec1f649597f7ebdd068013403a04', '2023-12-03 17:48:45', '2023-12-04 17:48:45', 0),
+(30, 'harveybucod21@gmail.com', '9fa82ea6847e972108640588ae0f4fb5cf33d328456eca50e163bcf354a50ccc', '2023-12-04 16:00:01', '2023-12-05 16:00:01', 1),
+(31, 'harveybucod21@gmail.com', 'df3df203f658f54ccff96ea7a8ad5296dca15434fa8dc6f14d35367525571966', '2023-12-04 21:00:02', '2023-12-05 21:00:02', 0),
+(32, 'harveybucod21@gmail.com', '6643578f156a9a9c78901f9c7c71ae5b6f5e1de0bf5db8dbb13c3b674757d704', '2023-12-05 16:00:02', '2023-12-06 16:00:02', 0),
+(33, 'harveybucod21@gmail.com', '313a8fe328a76c4d3c6c3a3151655c98e9ec5820be026435f6e098b47aff9ff5', '2023-12-05 17:51:29', '2023-12-06 17:51:29', 0),
+(34, 'harveybucod21@gmail.com', '21903f0e57eba10b9414639c247f413e9834b103a837804f59b67c3f26b56b03', '2023-12-05 18:57:41', '2023-12-06 18:57:41', 0),
+(35, 'Sample@gmail.com', 'f633660e3b8f7ffe73716d1f21c04e499331f84b95d5f5754a2bc78e342883a9', '2023-12-05 19:39:10', '2023-12-06 19:39:10', 0);
 
 -- --------------------------------------------------------
 
@@ -355,7 +360,7 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`
@@ -367,7 +372,7 @@ ALTER TABLE `bookings_record`
 -- AUTO_INCREMENT for table `confirmation_data`
 --
 ALTER TABLE `confirmation_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `patients_user`

@@ -58,16 +58,17 @@ while ($row = $exe->fetch_assoc()) {
         If the reservation is not confirm it will automatically be canceled
 
 
-        Thank you for understanding Have a good day ahead '.$nameUser.'
+        Thank you for understanding Have a good day ahead $nameUser
 
 
         Please click this link to activate your account:
-        http://localhost:8080/THESIS1/Admin/verify.php?hashCode=$hashCode.'&email='.$email.'
+        http://localhost:8080/THESIS1/Admin/confirmation.php?email=$email&hashCode=$hashCode 
 
     ";
     $mail->Subject = $subject;
     $mail->Body = $message;
     $mail->addAddress($email);
+
 
     if (!$mail->send()) {
         echo 'Error sending email to ' . $email . ': ' . $mail->ErrorInfo . '<br>';

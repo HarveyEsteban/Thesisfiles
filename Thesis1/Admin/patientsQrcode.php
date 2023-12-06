@@ -7,7 +7,7 @@
     if(isset($_GET['qrID'])){
         $qrID = $_GET['qrID'];
 
-        $sqlQrstmt = "SELECT bookinglog.resID, bookinglog.serviceName, bookinglog.date,bookinglog.timeslot, patients_user.Name,patients_user.PhoneNumber
+        $sqlQrstmt = "SELECT bookinglog.resID, bookinglog.serviceName, bookinglog.date,bookinglog.timeslot, patients_user.Name,patients_user.PhoneNumber,bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID where status = 'Pending' AND resID = $qrID";
         $exe = $con->query($sqlQrstmt);
@@ -15,6 +15,7 @@
         $row = $exe->fetch_assoc();
 
         if($row){
+            $famMemberNAme = $row['FamMemberName'];
             $ResID = $row['resID'];
             $serviceName = $row['serviceName'];
             $date = $row['date'];
@@ -26,9 +27,10 @@
             // Filename
             $file = $path.date("Y-m-d-h-i-s").'.png';
 
-            // Our text: here we will use concat
-            $text = "Reservation ID: ". $ResID . "\n";
-            $text .= "Patients Name: ". $name. "\n";
+            // Our text: here we will use concat\
+            $text = "Patients Name: ". $name. "\n";
+            $text .= "Family Member Name:: ". $name. "\n";
+            $text .= "Reservation ID: ". $ResID . "\n";
             $text .= "Service Name: ". $serviceName. "\n";
             $text .= "Reservation Date: ". $date. "\n";
             $text .= "Reservation Timeslot: ". $timeslot. "\n";

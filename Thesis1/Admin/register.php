@@ -94,7 +94,7 @@
                     ------------------------ 
         
                     Please click this link to activate your account: 
-                    http://localhost/THESIS1/Admin/verify.php?email='.$email.'&hash='.$hash.' 
+                    http://localhost:8080/THESIS1/Admin/verify.php?email='.$email.'&hash='.$hash.' 
   
         
                     '; // Our message above including the link (Remember to change the port of localhost depns on laptop or computer)

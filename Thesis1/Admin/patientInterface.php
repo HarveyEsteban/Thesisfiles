@@ -88,11 +88,11 @@
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 12){
+                if($totalBookings == 16){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-lg'>No Slots</a>";
     
                 }else{
-                    $avaislots = 12 - $totalBookings;
+                    $avaislots = 16 - $totalBookings;
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }
@@ -119,7 +119,8 @@
     
     
     function checkSlots($mysqli, $date){
-            $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ?");
+        $pending = "Pending";
+            $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ? AND status = 'Pending'");
                 $stmt->bind_param('s',$date);
                 $totalBookings = 0;
                 if($stmt->execute()){
@@ -319,6 +320,7 @@
 
     </style>
 
+
 </head>
 
 <body id="page-top">
@@ -330,9 +332,7 @@
                     <li class="nav-item"><a class="nav-link" href="patientInterface.php" style="background: #ffffff;border-radius: 8px;margin-top: 13px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;"><i class="far fa-calendar" style="color: #3e3d1a;"></i><span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Calendar</span></a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientServices.php"><i class="fas fa-hands" style="color: #3e3d1a;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Services</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="PatientsOwnReservation.php"><i class="icon ion-ios-paper-outline" style="color: #3e3d1a;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">My Reservation</span></a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
+
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button" style="background: rgb(159,152,117);"></button></div>
             </div>
@@ -343,7 +343,10 @@
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button" style="color: rgb(159,152,117);--bs-primary: #000000;--bs-primary-rgb: 0,0,0;"><i class="fas fa-bars"></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         </form>
+
+
                         <ul class="navbar-nav flex-nowrap ms-auto">
+                             <li class="nav-item dropdown no-arrow mx-1"><a class="nav-link" href="ChatsystemPatient.php"><i class="icon ion-email" style="font-size: 30px;color: #a6a263;margin-top: 8px;"></i></a></li>
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
                                     <form class="me-auto navbar-search w-100">
@@ -371,6 +374,7 @@
                                 ?>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="Landingpage.html"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
+                                
                             </li>
                         </ul>
                     </div>

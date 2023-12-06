@@ -36,20 +36,26 @@ if ( isset( $_GET['date'] ) ) {
 if ( isset( $_POST['submit'] ) ) {
     $timeslot = $_POST['timeslot'];
     $optservices = $_POST['serviceOpt'];
-    
-    $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ?");
-    $stmt->bind_param( 'ss', $date, $timeslot);
+    $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ? AND status = ?");
+    $stmt->bind_param( 'sss', $date, $timeslot, $pending);
 
     if ( $stmt->execute() ) {
         $result = $stmt->get_result();
         if ( $result->num_rows>0 ) {
-           echo '<script>alert("Already have a reservation")</script>';
-           
+
+            echo '<div class="alert alert-danger" role="alert">
+                  Cannot be reserve slot is already taken!
+                </div>';
+
         }else{
+
+            $famName = empty($famName) ? 'None' : $famName;
             $stmt = "INSERT INTO `bookinglog`(`userID`, `serviceName`, `date`, `timeslot`,`status`, `FamMemberName`) VALUES ('$userID','$optservices','$date','$timeslot','Pending','$famName')";
             
             $exe = $con -> query( $stmt );
-            echo '<script>alert("Sucessfully Reserved")</script>';
+                        echo '<div class="alert alert-success" role="alert">
+                  Successfuly Reserve the slot!
+                </div>';
             $bookings [] = $timeslot;
         }
     }
@@ -63,45 +69,16 @@ $end = "17:00";
 $excludeEnd = "13:00";
 $excludeStart = "12:00";
 
-// function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd) {
-//     $start = new DateTime($start);
-//     $end = new DateTime($end);
-//     $interval = new DateInterval("PT" . $duration . "M");
-//     $cleanupInterval = new DateInterval("PT" . $cleanup . "M");
-//     $slot = array();
+function isCancelled($timeslot)
+{
+      global $con; // Make sure to use the global connection object
 
-//     $excludeStartTime = new DateTime($excludeStart);
-//     $excludeEndTime = new DateTime($excludeEnd);
-//     $now = new DateTime();
+    $checkisCancel = "SELECT * FROM `bookinglog` WHERE timeslot = '$timeslot' AND status = 'Cancel'";
+    $exe = $con->query($checkisCancel);
+    $total = $exe->num_rows;
 
-//     for ($intStart = $start; $intStart < $end; $intStart->add($interval)->add($cleanupInterval)) {
-//         $endPeriod = clone $intStart;
-//         $endPeriod->add($interval);
-
-//         // Check if the entire slot is within the excluded range
-//         if ($intStart >= $excludeStartTime && $endPeriod <= $excludeEndTime) {
-//             continue; // Skip this slot
-//         }
-
-//         // Check if the slot partially overlaps with the excluded range
-//         if ($intStart < $excludeEndTime && $endPeriod > $excludeStartTime) {
-//             continue; // Skip this slot
-//         }
-        
-//         if ($intStart < $now && $endPeriod > $now) {
-//             continue; // Skip this slot
-//         }
-
-
-//         if ($endPeriod > $end) {
-//             break;
-//         }
-
-//         $slot[] = $intStart->format("h:i A") . " - " . $endPeriod->format("h:i A");
-//     }
-
-//     return $slot;
-// }
+    return ($total > 0);
+}
 
 function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd) {
     $start = new DateTime($start);
@@ -154,61 +131,81 @@ function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd
 <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
 <title>Document</title>
 <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity = "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin = "anonymous">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style>
-        .container-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    .modal-footer {
+        text-align: center;
+    }
+</style>
 
-        .timeslot-container {
-            text-align: center;
-        }
-    </style>
+
+<style>
+
+    
+
+
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column; /* Set the main axis to be vertical */
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f0d2;
+    }
+
+    .container-center {
+        background-color: #e9e4d0;
+        padding: 20px; /* Adjust the padding as needed */
+        border-radius: 10px; /* Optional: Add border-radius for rounded corners */
+        background-image: url(assets/img/cover.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center; /* Center the background image both horizontally and vertically */
+    }  
+    .space-below {
+
+        padding: 20px;
+        height: 20px; /* Adjust the height of the space below as needed */
+    }
+</style>
 </head>
 <body>
-<!-- <div class = "container">
-<h1 class = "text-center">Book for Date:<?php echo date( 'F d,Y', strtotime( $date ) );
-?></h1><hr>
-<div class = "row">
-<div class = "col-md-6">
-<form action = "" method = "post">
-<div class = "form-group">
-<label for = "">Name</label>
-<input type = "text" class = "form-control" name = "name">
-</div>
-<div class = "form-group">
-<label for = "">Email</label>
-<input type = "text" class = "form-control" name = "email">
-</div>
-<button class = "btn btn-primary" type = "submit" name = "submit">Submit</button>
-</form>
-</div>
-</div>
-</div> -->
 
 <div class="container container-center">
-        <div class="timeslot-container">
-            <h1 class="text-center">Book for Date: <?php echo date('m/d/y', strtotime($date)); ?></h1>
-            <div class="row">
-                <?php
-                $timeslots = timeslots($duration, $cleanup, $start, $end,$excludeStart,$excludeEnd);
-                foreach ($timeslots as $ts) {
-                ?>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <?php if (in_array($ts, $bookings)) { ?>
-                                <button class="btn btn-danger book" disabled><?php echo $ts; ?></button>
-                            <?php } else { ?>
-                                <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
-                            <?php } ?>
-                        </div>
+    <div class="timeslot-container">
+        <h1 class="text-center"><?php echo date('m/d/y', strtotime($date)); ?></h1>
+        <div class="row">
+            <?php
+            $timeslots = timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd);
+            foreach ($timeslots as $ts) {
+            ?>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <?php if (in_array($ts, $bookings) && isCancelled($ts)) { ?>
+                               <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
+
+                        <?php } else if (in_array($ts, $bookings)) { ?>
+                            <button class="btn btn-danger book" disabled>
+                                <?php echo $ts; ?>
+                            </button>
+                        <?php } else { ?>
+                            <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
+                        <?php } ?>
                     </div>
-                <?php } ?>
-            </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
+</div>
+
+
+<div class="space-below">
+    <a href="patientInterface.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
+</div>
+
+    <div id="user_model_details"></div>
+
 
     <div id = "myModal" class = "modal fade" role = "dialog">
     <div class = "modal-dialog">
@@ -271,15 +268,18 @@ function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd
     </div>
     </div>
     </div>
-    <div class = "modal-footer">
-    </div>
+
     </div>
 
     </div>
     </div>
     <script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
     <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>
-    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous">
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
     <script>
     $( ".book" ).click( function() {
