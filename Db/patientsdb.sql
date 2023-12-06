@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2023 at 03:51 AM
+-- Generation Time: Dec 06, 2023 at 08:37 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,6 +39,21 @@ CREATE TABLE `bookinglog` (
   `confirmationHash` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookinglog`
+--
+
+INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
+(110, 1, 'Braces', '2023-12-07', '08:00 AM - 08:30 AM', '', 'Pending', 'None', '', '2023-12-06 13:30:24'),
+(111, 1, 'Braces', '2023-12-07', '09:00 AM - 09:30 AM', '', 'Cancel', 'None', '', '2023-12-06 13:30:34'),
+(112, 1, 'Braces', '2023-12-07', '09:00 AM - 09:30 AM', '', 'Pending', 'None', '', '2023-12-06 13:30:47'),
+(113, 1, 'Braces', '2023-12-07', '08:30 AM - 09:00 AM', '', 'Cancel', 'None', '', '2023-12-06 14:05:22'),
+(114, 1, 'Braces', '2023-12-07', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-06 14:05:37'),
+(115, 1, 'Braces', '2023-12-07', '09:30 AM - 10:00 AM', '', 'Cancel', 'None', '', '2023-12-06 14:58:37'),
+(116, 1, 'Braces', '2023-12-07', '09:30 AM - 10:00 AM', '', 'Cancel', 'None', '', '2023-12-06 14:58:51'),
+(117, 1, 'Braces', '2023-12-08', '08:00 AM - 08:30 AM', '', 'Cancel', 'None', '', '2023-12-06 18:54:50'),
+(118, 1, 'Braces', '2023-12-08', '09:00 AM - 09:30 AM', '', 'Cancel', 'None', '', '2023-12-06 18:54:50');
 
 -- --------------------------------------------------------
 
@@ -144,7 +159,8 @@ INSERT INTO `confirmation_data` (`id`, `email`, `hash_code`, `timestamp`, `expir
 (32, 'harveybucod21@gmail.com', '6643578f156a9a9c78901f9c7c71ae5b6f5e1de0bf5db8dbb13c3b674757d704', '2023-12-05 16:00:02', '2023-12-06 16:00:02', 0),
 (33, 'harveybucod21@gmail.com', '313a8fe328a76c4d3c6c3a3151655c98e9ec5820be026435f6e098b47aff9ff5', '2023-12-05 17:51:29', '2023-12-06 17:51:29', 0),
 (34, 'harveybucod21@gmail.com', '21903f0e57eba10b9414639c247f413e9834b103a837804f59b67c3f26b56b03', '2023-12-05 18:57:41', '2023-12-06 18:57:41', 0),
-(35, 'Sample@gmail.com', 'f633660e3b8f7ffe73716d1f21c04e499331f84b95d5f5754a2bc78e342883a9', '2023-12-05 19:39:10', '2023-12-06 19:39:10', 0);
+(35, 'Sample@gmail.com', 'f633660e3b8f7ffe73716d1f21c04e499331f84b95d5f5754a2bc78e342883a9', '2023-12-05 19:39:10', '2023-12-06 19:39:10', 0),
+(36, 'Sample@gmail.com', 'cf32a2041ab13db9f4e03297a10a649de812413c98ebded62b8f22bcd62ec3fa', '2023-12-06 18:13:42', '2023-12-07 18:13:42', 0);
 
 -- --------------------------------------------------------
 
@@ -263,6 +279,58 @@ INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`) VAL
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `teeth`
+--
+
+CREATE TABLE `teeth` (
+  `tooth_id` int(11) NOT NULL,
+  `tooth_type` varchar(50) NOT NULL,
+  `tooth_number` int(11) NOT NULL,
+  `status` enum('Present','Pulled') DEFAULT 'Present',
+  `position` enum('Upper','Lower') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teeth`
+--
+
+INSERT INTO `teeth` (`tooth_id`, `tooth_type`, `tooth_number`, `status`, `position`) VALUES
+(1, 'Incisor', 1, 'Present', 'Upper'),
+(2, 'Canine', 2, 'Pulled', 'Upper'),
+(3, 'Incisor', 3, 'Present', 'Upper'),
+(4, 'Canine', 4, 'Present', 'Upper'),
+(5, 'Premolar', 5, 'Present', 'Upper'),
+(6, 'Molar', 6, 'Pulled', 'Upper'),
+(7, 'Incisor', 7, 'Present', 'Upper'),
+(8, 'Canine', 8, 'Present', 'Upper'),
+(9, 'Premolar', 9, 'Present', 'Upper'),
+(10, 'Molar', 10, 'Present', 'Upper'),
+(11, 'Incisor', 11, 'Present', 'Upper'),
+(12, 'Canine', 12, 'Present', 'Upper'),
+(13, 'Premolar', 13, 'Present', 'Upper'),
+(14, 'Molar', 14, 'Present', 'Upper'),
+(15, 'Incisor', 15, 'Present', 'Upper'),
+(16, 'Canine', 16, 'Present', 'Upper'),
+(17, 'Incisor', 1, 'Present', 'Lower'),
+(18, 'Canine', 2, 'Present', 'Lower'),
+(19, 'Incisor', 3, 'Present', 'Lower'),
+(20, 'Canine', 4, 'Present', 'Lower'),
+(21, 'Premolar', 5, 'Present', 'Lower'),
+(22, 'Molar', 6, 'Present', 'Lower'),
+(23, 'Incisor', 7, 'Present', 'Lower'),
+(24, 'Canine', 8, 'Present', 'Lower'),
+(25, 'Premolar', 9, 'Present', 'Lower'),
+(26, 'Molar', 10, 'Present', 'Lower'),
+(27, 'Incisor', 11, 'Present', 'Lower'),
+(28, 'Canine', 12, 'Present', 'Lower'),
+(29, 'Premolar', 13, 'Present', 'Lower'),
+(30, 'Molar', 14, 'Present', 'Lower'),
+(31, 'Incisor', 15, 'Present', 'Lower'),
+(32, 'Canine', 16, 'Pulled', 'Lower');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `timeslot`
 --
 
@@ -347,6 +415,12 @@ ALTER TABLE `servicetbl`
   ADD PRIMARY KEY (`serviceName`);
 
 --
+-- Indexes for table `teeth`
+--
+ALTER TABLE `teeth`
+  ADD PRIMARY KEY (`tooth_id`);
+
+--
 -- Indexes for table `timeslot`
 --
 ALTER TABLE `timeslot`
@@ -360,7 +434,7 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`
@@ -372,7 +446,7 @@ ALTER TABLE `bookings_record`
 -- AUTO_INCREMENT for table `confirmation_data`
 --
 ALTER TABLE `confirmation_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `patients_user`
@@ -391,6 +465,12 @@ ALTER TABLE `reservation`
 --
 ALTER TABLE `services`
   MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `teeth`
+--
+ALTER TABLE `teeth`
+  MODIFY `tooth_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `timeslot`

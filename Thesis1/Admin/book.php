@@ -36,12 +36,12 @@ if ( isset( $_GET['date'] ) ) {
 if ( isset( $_POST['submit'] ) ) {
     $timeslot = $_POST['timeslot'];
     $optservices = $_POST['serviceOpt'];
-    $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ? AND status = ?");
-    $stmt->bind_param( 'sss', $date, $timeslot, $pending);
+    $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ? AND status = 'Pending'");
+    $stmt->bind_param( 'ss', $date, $timeslot);
 
     if ( $stmt->execute() ) {
         $result = $stmt->get_result();
-        if ( $result->num_rows>0 ) {
+        if ( $result->num_rows > 0 ) {
 
             echo '<div class="alert alert-danger" role="alert">
                   Cannot be reserve slot is already taken!
@@ -69,12 +69,25 @@ $end = "17:00";
 $excludeEnd = "13:00";
 $excludeStart = "12:00";
 
+
 function isCancelled($timeslot)
 {
-      global $con; // Make sure to use the global connection object
+    global $con;
+    global $date;
 
-    $checkisCancel = "SELECT * FROM `bookinglog` WHERE timeslot = '$timeslot' AND status = 'Cancel'";
+    $checkisCancel = "SELECT * FROM `bookinglog` WHERE timeslot = '$timeslot' AND status = 'Cancel' AND date = '$date'";
     $exe = $con->query($checkisCancel);
+    $total = $exe->num_rows;
+
+    return ($total > 0);
+}
+
+function isPending($timeslot){
+    global $con;
+    global $date;
+
+    $checkifPending = "SELECT * FROM `bookinglog` WHERE timeslot = '$timeslot' AND status = 'Pending' AND date = '$date'";
+    $exe = $con->query($checkifPending);
     $total = $exe->num_rows;
 
     return ($total > 0);
@@ -178,23 +191,28 @@ function timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd
         <div class="row">
             <?php
             $timeslots = timeslots($duration, $cleanup, $start, $end, $excludeStart, $excludeEnd);
-            foreach ($timeslots as $ts) {
-            ?>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <?php if (in_array($ts, $bookings) && isCancelled($ts)) { ?>
-                               <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
 
-                        <?php } else if (in_array($ts, $bookings)) { ?>
-                            <button class="btn btn-danger book" disabled>
-                                <?php echo $ts; ?>
-                            </button>
-                        <?php } else { ?>
-                            <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
-                        <?php } ?>
-                    </div>
-                </div>
+foreach ($timeslots as $ts) {
+    ?>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?php
+            // echo "Timeslot: $ts | isCancelled: " . (isCancelled($ts) ? 'true' : 'false') . " | isPending: " . (isPending($ts) ? 'true' : 'false') . " | Booked: " . (in_array($ts, $bookings) ? 'true' : 'false') . "<br>";
+            if (in_array($ts, $bookings)) {
+                ?>
+                <?php if (isCancelled($ts) && isPending($ts)) { ?>
+                    <button class="btn btn-danger book" disabled><?php echo $ts; ?></button>
+                <?php } else if(isPending($ts)) { ?>
+                    <button class="btn btn-danger book" disabled><?php echo $ts; ?></button>
+                <?php } else { ?>
+                    <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
+                <?php } ?>
+            <?php } else { ?>
+                <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
             <?php } ?>
+        </div>
+    </div>
+<?php } ?>
         </div>
     </div>
 </div>

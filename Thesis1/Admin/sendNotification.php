@@ -16,7 +16,7 @@ $reminderDate = date('Y-m-d', strtotime($currentDate . ' + 2 days'));
 
 
 
-$sql = "SELECT DISTINCT patients_user.Email,patients_user.Name,bookinglog.serviceName,bookinglog.date,bookinglog.timeslot,bookinglog.resID
+$sql = "SELECT patients_user.Email,patients_user.Name,bookinglog.serviceName,bookinglog.date,bookinglog.timeslot,bookinglog.resID
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
         WHERE date = '$reminderDate'";
