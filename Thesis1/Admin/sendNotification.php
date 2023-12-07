@@ -29,8 +29,8 @@ while ($row = $exe->fetch_assoc()) {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'asddqqwerasdr@gmail.com';
-    $mail->Password = 'yluqnmartlvrkhkw';
+    $mail->Username = 'TheDentalPod@gmail.com';
+    $mail->Password = 'nndcoqvggmmlenhq';
     $mail->SMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,

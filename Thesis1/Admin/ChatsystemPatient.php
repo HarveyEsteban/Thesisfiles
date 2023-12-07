@@ -5,6 +5,11 @@ session_start();
 $user = $_SESSION['UserLogin'];
 $con = connection();
 
+if(isset($_GET['logout_code'])){
+        session_unset();
+        header("Location: Landingpage.php");
+    }
+
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
 
@@ -114,7 +119,7 @@ $con = connection();
                                     }
 
                                 ?>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="ChatsystemPatient.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>

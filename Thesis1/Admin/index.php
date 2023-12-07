@@ -73,21 +73,18 @@
                 $eventNum = 0;
                 $today = $date==date('Y-m-d')? "today" : "";
       
-             if($dayname == 'saturday' || $dayname == 'sunday'){
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>Holliday</button>";
-    
-             }elseif ($date<date('Y-m-d')) {
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>";
+           if ($date<date('Y-m-d')) {
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>&nbsp</button>";
              }
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 12){
+                if($totalBookings == 16){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
     
                 }else{
-                    $avaislots = 12 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
+                    $avaislots = 16 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookAdmin.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
     
                 }
              }
@@ -112,22 +109,41 @@
     }
     
     
-    function checkSlots($mysqli, $date){
-            $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ?");
-                $stmt->bind_param('s',$date);
-                $totalBookings = 0;
-                if($stmt->execute()){
-                    $result = $stmt->get_result();
-                    if($result->num_rows>0){
-                        while($row = $result->fetch_assoc()){
-                           $totalBookings++;
-                        }
+    // function checkSlots($mysqli, $date){
+    //         $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ? AND status = 'Pending'");
+    //             $stmt->bind_param('s',$date);
+    //             $totalBookings = 0;
+    //             if($stmt->execute()){
+    //                 $result = $stmt->get_result();
+    //                 if($result->num_rows>0){
+    //                     while($row = $result->fetch_assoc()){
+    //                        $totalBookings++;
+    //                     }
                         
-                        $stmt->close();
-                    }
-                    return $totalBookings;
-                }
+    //                     $stmt->close();
+    //                 }
+    //                 return $totalBookings;
+    //             }
+    // }
+
+    function checkSlots($mysqli, $date)
+{
+    $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ? AND status = 'Pending'");
+    $stmt->bind_param('s', $date);
+    $totalBookings = 0;
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $totalBookings++;
+            }
+
+            $stmt->close();
+        }
+        return $totalBookings;
     }
+}
 
 
 ?>

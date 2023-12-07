@@ -29,9 +29,9 @@
 
             // Our text: here we will use concat\
             $text = "Patients Name: ". $name. "\n";
-            $text .= "Family Member Name:: ". $name. "\n";
+            $text .= "Family Member Name:: ". $famMemberNAme. "\n";
             $text .= "Reservation ID: ". $ResID . "\n";
-            $text .= "Service Name: ". $serviceName. "\n";
+            $text .= "Service Name: ". $serviceName. "\n"; 
             $text .= "Reservation Date: ". $date. "\n";
             $text .= "Reservation Timeslot: ". $timeslot. "\n";
             $text .= "Patients Phone number: ". $phoneNum;

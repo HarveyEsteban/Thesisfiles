@@ -6,6 +6,12 @@
 
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
+
+
+         if(isset($_GET['logout_code'])){
+        session_unset();
+        header("Location: Landingpage.php");
+    }
 ?>
 
 
@@ -132,21 +138,15 @@
                                         echo '</span><img class="border rounded-circle img-profile" src="'.$profilePic.'"></a>';
                                     }
                                 ?>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="Landingpage.html"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="patientServices.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
-                    <div>
-                        <h3 class="text-dark mb-0" style="font-weight: bold;">Services</h3>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-4 py-3 mx-auto col-xl-4 col-lg-6 col-md-6 col-sm-12" style="min-width: 300px;min-height: 300px;">
-
-                                    <?php
+                        <div class="col" data-aos="fade-up" data-aos-duration="800">
+        <div class="row">
+            <?php
                                          $getImagestmt = "SELECT * FROM `servicetbl`";
                                          $exegetstmt = $con -> query($getImagestmt);
                                         
@@ -167,11 +167,8 @@
                                             echo "</div>"; // row
                                         }
                                     ?>
-                                       
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </div>
             </div>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>

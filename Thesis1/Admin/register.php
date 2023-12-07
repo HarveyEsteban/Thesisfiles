@@ -46,8 +46,10 @@
   
         }
         else {
-            $sql = "INSERT INTO `patients_user`(`Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`,`Access`) VALUES ('$email','$name','$address','$phone','$password','$hash', 'User')";
-  
+            $sql = "INSERT INTO `patients_user` (`Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `activation_timestamp`)
+            VALUES ('$email', '$name', '$address', '$phone', '$password', '$hash', 'User', NOW());
+            ";
+              
                 $useradd = $con->query($sql) or die($con->error); //add user to data base
   
   
@@ -63,8 +65,8 @@
                 $mail->isSMTP();                                     
                 $mail->Host = 'smtp.gmail.com';                      
                 $mail->SMTPAuth = true;                             
-                $mail->Username = 'asddqqwerasdr@gmail.com';     
-                $mail->Password = 'yluqnmartlvrkhkw';             
+                $mail->Username = 'TheDentalPod@gmail.com';     
+                $mail->Password = 'nndcoqvggmmlenhq';             
                 $mail->SMTPOptions = array(
                     'ssl' => array(
                     'verify_peer' => false,
@@ -155,6 +157,8 @@
     <link rel="stylesheet" href="assets/css/Feature-Section-MD.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 
 <body class="bg-gradient-primary" style="color: #a2a07b;background: #eae7ae;margin-top: -20px;">
@@ -168,7 +172,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"></li>
                         <li class="nav-item"><a class="nav-link" href="Landingpage.php" style="border-width: 0px;margin-left: 15px;"><strong>Home</strong></a></li>
-                        <li class="nav-item"><a class="nav-link" href="ServicesLandingpage.html" style="border-width: 0px;margin-left: 15px;font-weight: bold;">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ServicesLandingpage.php" style="border-width: 0px;margin-left: 15px;font-weight: bold;">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="About.html" style="border-width: 0px;margin-left: 15px;font-weight: bold;">About</a></li>
                         <li class="nav-item"></li>
                     </ul><a class="btn btn-primary ms-md-2" role="button" href="register.php" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-top-color: rgb(159,152,117);border-radius: 5px;margin-right: 6px;margin-left: 14px;">Sign Up</a><a class="btn btn-primary ms-md-2" role="button" href="loginpage.php" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-top-color: rgb(159,152,117);border-radius: 5px;">Login</a>
@@ -192,7 +196,7 @@
             <div class="mb-3">
                 <input class="form-control form-control-user c1" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email" name="email" />
             </div>
-            <input class="form-control form-control-user c2" type="tel" id="examplePasswordInput" placeholder="Phone Number" name="phone" />
+            <input class="form-control form-control-user c2" type="tel" id="examplePasswordInput" maxlength="11" placeholder="Phone Number" name="phone" />
             <input class="form-control form-control-user c1" type="text" id="exampleRepeatPasswordInput" placeholder="Address" name="address" />
             <button class="btn btn-primary d-block btn-user w-100 c3" type="submit" name="signup-button">Sign Up</bsignuputton>
         </form>
@@ -203,6 +207,10 @@
             </div>
         </div>
     </div>
+    <script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous">
+    </script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>

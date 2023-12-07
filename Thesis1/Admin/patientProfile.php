@@ -8,6 +8,12 @@
      $userID = $_SESSION['UserID'];
 
 
+    if(isset($_GET['logout_code'])){
+        session_unset();
+        header("Location: Landingpage.php");
+    }
+
+
 
      if(isset($_POST['btn-ChangePic'])){
 
@@ -77,7 +83,11 @@
 
 
         if($totalres > 0){
-            if($newPass == $ConPass){
+
+
+            if(checkPass($newPass))
+            {
+                 if($newPass == $ConPass){
                 $sqlPass = "UPDATE `patients_user` SET `Password`='$newPass' WHERE userID = '$userID'";
                 $con->query($sqlPass) or die();
     
@@ -87,6 +97,11 @@
             else{
                 echo '<script>alert("New password does not Match")</script>';
             }
+
+            }else{
+                echo '<script>alert("The Password Must contain letters and numbers and minimum of 8")</script>';
+            }
+           
         }
         else{
             echo '<script>alert("Wrong Current Password")</script>';
@@ -262,7 +277,7 @@
                                         echo '</span><img class="border rounded-circle img-profile" src="'.$profilePic.'"></a>';
                                     }
                                 ?>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="Landingpage.html"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="patientProfile.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>

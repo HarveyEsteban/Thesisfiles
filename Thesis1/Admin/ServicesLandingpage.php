@@ -1,3 +1,13 @@
+<?php
+include_once("connection/connection.php");
+$con = connection();
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,9 +31,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700,700i&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700,700i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/aos.min.css">
     <link rel="stylesheet" href="assets/css/aguilaraldo1_section_contact.css">
     <link rel="stylesheet" href="assets/css/Availability---Manage-availability-bookings-appointments_v1.css">
@@ -52,8 +60,8 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"></li>
                         <li class="nav-item"><a class="nav-link" href="Landingpage.php" style="font-weight: bold;">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="ServicesLandingpage.php" style="border-width: 0px;margin-left: 15px;"><strong>Services</strong></a></li>
-                        <li class="nav-item"><a class="nav-link active" href="About.html" style="border-width: 0px;margin-left: 15px;"><strong>About</strong></a></li>
+                        <li class="nav-item"><a class="nav-link active" href="ServicesLandingpage.php" style="border-width: 0px;margin-left: 15px;"><strong>Services</strong></a></li>
+                        <li class="nav-item"><a class="nav-link" href="About.html" style="border-width: 0px;margin-left: 15px;"><strong>About</strong></a></li>
                         <li class="nav-item"></li>
                     </ul><a class="btn btn-primary ms-md-2" role="button" href="register.php" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-top-color: rgb(159,152,117);border-radius: 5px;margin-right: 6px;margin-left: 14px;">Sign Up</a><a class="btn btn-primary ms-md-2" role="button" href="loginpage.php" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-top-color: rgb(159,152,117);border-radius: 5px;">Login</a>
                 </div>
@@ -61,31 +69,31 @@
         </nav>
     </div>
     <div class="col">
-        <div class="container" style="padding-top: 0px;margin-top: 22px;">
-            <div class="row">
-                <div class="col-md-6"><img data-aos="fade-right" data-aos-duration="800" src="assets/img/291176404_132233706156095_8119307911649530128_n%20(1).jpg" style="height: 455px;width: 534.088px;border-radius: 27px;" width="507" height="455"></div>
-                <div class="col-md-6" style="margin-left: -13px;">
-                    <p style="font-size: 21px;color: rgb(0,0,0);">Dr. Charry Ginefer G. Tubiera established The Dental Pod on June 8, 2022. The Dental Pod has a total of 4 employees, including a receptionist, dentist assistant, page admin, and dentist. The operating hours of The Dental Pod are from 9:00 a.m. to 5:00 p.m. every day.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
         <div></div>
     </div>
-    <div class="col">
-        <div style="background: #9f9875;margin-left: 62px;margin-bottom: 25px;margin-top: 23px;height: 1px;width: 1331px;"></div>
-    </div>
-    <div class="col">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p style="font-size: 21px;color: rgb(0,0,0);"><br><i class="fas fa-home text-dark" style="font-size: 24px;color: rgb(255,255,255);background: rgba(170,165,142,0);border-radius: 6px;"></i><span style="color: rgb(5, 5, 5);">&nbsp; R. Eugenio Street RJM Commercial Stalls Ext., ( infront of Infinitea), San Jose City, Nueva Ecija,&nbsp; Philippines, 3121</span></p>
-                    <p style="font-size: 21px;color: rgb(0,0,0);"><br><i class="fas fa-phone-alt text-dark" style="font-size: 24px;color: rgb(255,255,255);background: rgba(170,165,142,0);border-radius: 6px;"></i><span style="color: rgb(5, 5, 5);">&nbsp; 0998 475 2624</span></p>
-                    <p style="font-size: 21px;color: rgb(0,0,0);"><br><i class="fas fa-mail-bulk text-dark" style="font-size: 24px;color: rgb(255,255,255);background: rgba(170,165,142,0);border-radius: 6px;"></i><span style="color: rgb(5, 5, 5);">&nbsp; thedentalpod.2022@gmail.com</span></p>
-                </div>
-                <div class="col-md-6" style="margin-top: -12px;"><img data-aos="fade-left" data-aos-duration="800" src="assets/img/Screenshot_1.jpg" style="width: 534.088px;height: 455px;border-radius: 27px;margin-top: 12px;border-style: solid;border-color: rgb(167,167,167);margin-left: 75px;"></div>
-            </div>
+    <div class="col" data-aos="fade-up" data-aos-duration="800">
+        <div class="row">
+            <?php
+                                         $getImagestmt = "SELECT * FROM `servicetbl`";
+                                         $exegetstmt = $con -> query($getImagestmt);
+                                        
+                                         if ($exegetstmt->num_rows > 0) {
+                                            echo "<div class='row'>";
+                                            while ($row = $exegetstmt->fetch_assoc()) {
+                                                echo "<div class='col-md-6 mb-4'>";
+                                                echo "<div class='card' style='width: 100%; height: 100%;'>";
+                                                echo "<img class='img-fluid card-img-top' style='height: 300px; object-fit: ; border-top-left-radius: 7.6px;' src='" . $row['filename'] . "' alt='".$row['serviceName']."' width='600' height='300'>";
+                                                echo "<div class='card-body'>";
+                                                echo "<h5 class='card-title'><strong>" . $row['serviceName'] . "</strong></h5>";
+                                                echo "<p class='card-text'>&nbsp;" . $row['price'] . "</p>";
+                                                echo "<p class='card-text'>" . $row['description'] . "</p>";
+                                                echo "</div>"; // card-body
+                                                echo "</div>"; // card
+                                                echo "</div>"; // col-md-6
+                                            }
+                                            echo "</div>"; // row
+                                        }
+                                    ?>
         </div>
     </div>
     <div class="col">

@@ -2,6 +2,23 @@
 
 $connect = new PDO("mysql:host=localhost;dbname=patientsdb", "root", "Thesis1");
 
+
+
+   function checkPass($password)
+   {
+    if (strlen($password) < 8) {
+     return false;
+    }
+
+    // Check if the password contains at least one numeric digit
+    if (!preg_match('/\d/', $password)) {
+        return false;
+    }
+
+    // If both conditions are met, the password is considered strong
+    return true;
+   }
+
     
     function connection(){
 

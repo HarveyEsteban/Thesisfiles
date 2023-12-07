@@ -6,6 +6,11 @@
 
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
+     
+         if(isset($_GET['logout_code'])){
+        session_unset();
+        header("Location: Landingpage.php");
+    }
 
      function build_calendar($month, $year) {
         $mysqli = new mysqli('localhost', 'root', 'Thesis1', 'patientsdb');
@@ -31,7 +36,7 @@
          $dateComponents = getdate($firstDayOfMonth);
          $monthName = $dateComponents['month'];
          $dayOfWeek = $dateComponents['wday'];
-         $tomorrow = date('Y-m-d', strtotime('+1 day'));
+         $tomorrow = date('Y-m-d', strtotime('+3 day')); // this is the code to disable the date of today
 
     
         $datetoday = date('Y-m-d');
@@ -77,12 +82,7 @@
                 $eventNum = 0;
                 $today = $date==date('Y-m-d')? "today" : "";
       
-             if($dayname == 'saturday' || $dayname == 'sunday'){
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>Closed</button>";
-    
-
-                // Change the  date('Y-m-d') to $tomorrow to only allow use to book for tom schedule and not on the same day
-             }elseif ($date<$tomorrow) {
+             if ($date<$tomorrow) { // Change the  date('Y-m-d') to $tomorrow to only allow use to book for tom schedule and not on the same day
                 $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>&nbsp</button>";
              }
              else{
@@ -372,7 +372,7 @@
                                         echo '</span><img class="border rounded-circle img-profile" src="'.$profilePic.'"></a>';
                                     }
                                 ?>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="Landingpage.html"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="patientProfile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="patientInterface.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                                 
                             </li>

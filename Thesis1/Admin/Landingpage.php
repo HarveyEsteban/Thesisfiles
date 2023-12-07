@@ -26,6 +26,8 @@
          $dateComponents = getdate($firstDayOfMonth);
          $monthName = $dateComponents['month'];
          $dayOfWeek = $dateComponents['wday'];
+         $tomorrow = date('Y-m-d', strtotime('+3 day')); // this is the code to disable the date of today
+
     
         $datetoday = date('Y-m-d');
        
@@ -69,22 +71,19 @@
                 $dayname = strtolower(date('l', strtotime($date)));
                 $eventNum = 0;
                 $today = $date==date('Y-m-d')? "today" : "";
-      
-             if($dayname == 'saturday' || $dayname == 'sunday'){
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>Holliday</button>";
-    
-             }elseif ($date<date('Y-m-d')) {
-                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>";
+
+            if ($date<$tomorrow) { // Change the  date('Y-m-d') to $tomorrow to only allow use to book for tom schedule and not on the same day
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>&nbsp</button>";
              }
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 12){
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
+                if($totalBookings == 16){
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' disabled class='btn btn-danger btn-lg'>No Slots</a>";
     
                 }else{
-                    $avaislots = 12 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='register.php' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
+                    $avaislots = 16 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='register.php' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }
              }
@@ -278,8 +277,8 @@
                 <div class="collapse navbar-collapse" id="navcol-2" style="background: #ffffff;border-radius: 13px;width: 2px;padding-left: 0px;margin-left: 259px;padding-bottom: 15px;padding-right: 0px;margin-right: -18px;">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"></li>
-                        <li class="nav-item"><a class="nav-link active" href="Landingpage.html" style="border-width: 0px;margin-left: 15px;"><strong>Home</strong></a></li>
-                        <li class="nav-item"><a class="nav-link" href="ServicesLandingpage.html" style="border-width: 0px;margin-left: 15px;font-weight: bold;">Services</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="Landingpage.php" style="border-width: 0px;margin-left: 15px;"><strong>Home</strong></a></li>
+                        <li class="nav-item"><a class="nav-link" href="ServicesLandingpage.php" style="border-width: 0px;margin-left: 15px;font-weight: bold;">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="About.html" style="border-width: 0px;margin-left: 15px;font-weight: bold;">About</a></li>
                         <li class="nav-item"></li>
                     </ul><a class="btn btn-primary ms-md-2" role="button" href="register.php" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-top-color: rgb(159,152,117);border-radius: 5px;margin-right: 6px;margin-left: 14px;">Sign Up</a><a class="btn btn-primary ms-md-2" role="button" href="loginpage.php" style="background: rgb(159,152,117);border-color: rgb(159,152,117);border-top-color: rgb(159,152,117);border-radius: 5px;">Login</a>
@@ -370,10 +369,7 @@
                     <div class="col-md-6 col-lg-8 mx-auto"></div>
                     <div class="col">
                         <ul class="list-inline text-center" style="margin-left: 167px;">
-                            <li class="list-inline-item"><a id="social-footer-icon-facebook" href="#"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
-                            <li class="list-inline-item"><a id="social-footer-icon-twitter" href="#"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></span></a></li>
-                            <li class="list-inline-item"><a id="social-footer-icon-instagram" href="#"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-instagram fa-stack-1x fa-inverse"></i></span></a></li>
-                            <li class="list-inline-item"><a id="social-footer-icon-whatsapp" href="#"></a></li>
+            <li class="list-inline-item"><a id="social-footer-icon-facebook" href="https://www.facebook.com/TheDentalPod"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></span></a></li>
                         </ul>
                     </div>
                 </div>

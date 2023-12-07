@@ -3,6 +3,8 @@ include_once( "connection/connection.php" );
 $con = connection();
 
 session_start();
+date_default_timezone_set('Asia/Manila');
+
 
 
 $user = $_SESSION['UserLogin'];
@@ -73,12 +75,12 @@ $excludeStart = "12:00";
 function isPastTimeslot($timeslot) {
     global $date;
 
-    $currentDateTime = new DateTime();
-    $timeslotDateTime = DateTime::createFromFormat('h:i A', explode(' - ', $timeslot)[0]);
+    $timezone = new DateTimeZone('Asia/Manila');
+    $currentDateTime = new DateTime('now', $timezone);
+    $timeslotDateTime = DateTime::createFromFormat('h:i A', explode(' - ', $timeslot)[0], $timezone);
 
     return $timeslotDateTime < $currentDateTime;
 }
-
 
 function isCancelled($timeslot)
 {
@@ -209,16 +211,16 @@ foreach ($timeslots as $ts) {
         <div class="form-group">
             <?php
             if (in_array($ts, $bookings)) {
-                ?>
-                <?php if (isCancelled($ts) && isPending($ts)) { ?>
+                if (isCancelled($ts) && isPending($ts)) {
+                    ?>
                     <button class="btn btn-danger book" disabled><?php echo $ts; ?></button>
-                <?php } else if(isPending($ts)) { ?>
+                <?php } elseif (isPending($ts)) { ?>
                     <button class="btn btn-danger book" disabled><?php echo $ts; ?></button>
                 <?php } else { ?>
-                    <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
-                <?php } ?>
-            <?php } else { ?>
-                <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>"><?php echo $ts; ?></button>
+                    <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>" <?php echo isPastTimeslot($ts) ? 'disabled' : ''; ?>><?php echo $ts; ?></button>
+                <?php }
+            } else { ?>
+                <button class="btn btn-success book" data-timeslot="<?php echo $ts ?>" <?php echo isPastTimeslot($ts) ? 'disabled' : ''; ?>><?php echo $ts; ?></button>
             <?php } ?>
         </div>
     </div>
@@ -229,7 +231,7 @@ foreach ($timeslots as $ts) {
 
 
 <div class="space-below">
-    <a href="patientInterface.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
+    <a href="index.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
 </div>
 
     <div id="user_model_details"></div>

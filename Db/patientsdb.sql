@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2023 at 08:37 PM
+-- Generation Time: Dec 07, 2023 at 08:01 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -45,15 +45,24 @@ CREATE TABLE `bookinglog` (
 --
 
 INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
-(110, 1, 'Braces', '2023-12-07', '08:00 AM - 08:30 AM', '', 'Pending', 'None', '', '2023-12-06 13:30:24'),
-(111, 1, 'Braces', '2023-12-07', '09:00 AM - 09:30 AM', '', 'Cancel', 'None', '', '2023-12-06 13:30:34'),
-(112, 1, 'Braces', '2023-12-07', '09:00 AM - 09:30 AM', '', 'Pending', 'None', '', '2023-12-06 13:30:47'),
-(113, 1, 'Braces', '2023-12-07', '08:30 AM - 09:00 AM', '', 'Cancel', 'None', '', '2023-12-06 14:05:22'),
-(114, 1, 'Braces', '2023-12-07', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-06 14:05:37'),
-(115, 1, 'Braces', '2023-12-07', '09:30 AM - 10:00 AM', '', 'Cancel', 'None', '', '2023-12-06 14:58:37'),
-(116, 1, 'Braces', '2023-12-07', '09:30 AM - 10:00 AM', '', 'Cancel', 'None', '', '2023-12-06 14:58:51'),
-(117, 1, 'Braces', '2023-12-08', '08:00 AM - 08:30 AM', '', 'Cancel', 'None', '', '2023-12-06 18:54:50'),
-(118, 1, 'Braces', '2023-12-08', '09:00 AM - 09:30 AM', '', 'Cancel', 'None', '', '2023-12-06 18:54:50');
+(119, 1, 'Gum Depigmentation', '2023-12-10', '08:30 AM - 09:00 AM', '', 'Cancel', 'maximus Harvey', '', '2023-12-07 16:20:04'),
+(120, 1, 'Braces', '2023-12-10', '08:30 AM - 09:00 AM', '', 'Cancel', 'None', '', '2023-12-07 16:20:40'),
+(121, 1, 'Root canal theraphy', '2023-12-08', '08:30 AM - 09:00 AM', 'aaaaa', 'Done', 'None', '', '2023-12-07 18:49:47'),
+(122, 3, 'Braces', '2023-12-08', '09:30 AM - 10:00 AM', 'Pepets', 'Done', 'None', '', '2023-12-07 18:55:55'),
+(123, 3, 'Braces', '2023-12-09', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:36'),
+(124, 3, 'Braces', '2023-12-09', '09:30 AM - 10:00 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:37'),
+(125, 3, 'Braces', '2023-12-10', '08:00 AM - 08:30 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:40'),
+(126, 3, 'Braces', '2023-12-10', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:42'),
+(127, 3, 'Braces', '2023-12-07', '08:30 AM - 09:00 AM', 'sss', 'Canceled', 'None', '', '2023-12-07 17:52:35'),
+(128, 3, 'Braces', '2023-12-07', '09:30 AM - 10:00 AM', 'sasddd', 'Canceled', 'None', '', '2023-12-07 17:52:42'),
+(129, 3, 'Braces', '2023-12-08', '08:00 AM - 08:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:17'),
+(130, 3, 'Braces', '2023-12-08', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:18'),
+(131, 3, 'Braces', '2023-12-08', '09:00 AM - 09:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:19'),
+(132, 3, 'Braces', '2023-12-08', '09:30 AM - 10:00 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:21'),
+(133, 3, 'Braces', '2023-12-08', '10:00 AM - 10:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:22'),
+(134, 3, 'Braces', '2023-12-08', '10:30 AM - 11:00 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:23'),
+(135, 3, 'Braces', '2023-12-08', '11:00 AM - 11:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:25'),
+(136, 3, 'Braces', '2023-12-08', '11:30 AM - 12:00 PM', '', 'Pending', 'None', '', '2023-12-07 18:59:26');
 
 -- --------------------------------------------------------
 
@@ -179,25 +188,26 @@ CREATE TABLE `patients_user` (
   `Access` varchar(25) NOT NULL,
   `Active` int(11) NOT NULL DEFAULT 0,
   `profilePic` varchar(255) NOT NULL,
-  `last_activity` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `last_activity` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `activation_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patients_user`
 --
 
-INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`) VALUES
-(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'lee', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-11-29 16:01:00'),
-(2, 'mobs.dominiquemartinez@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-02 20:00:02'),
-(3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34'),
-(4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48'),
-(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48'),
-(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48'),
-(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48'),
-(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48'),
-(11, 'harveybucod21@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3772', '48ab2f9b45957ab574cf005eb8a76760', 'User', 1, '', '2023-11-30 15:36:48'),
-(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48'),
-(13, 'Kkksl@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Panda123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48');
+INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`, `activation_timestamp`) VALUES
+(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-12-07 17:27:18', '2023-12-07 15:19:04'),
+(2, 'mobs.dominiquemartinez@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-02 20:00:02', '2023-12-07 15:19:04'),
+(3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04'),
+(4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
+(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
+(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
+(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
+(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
+(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
+(20, 'harveybucod21@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '4256', 'e5841df2166dd424a57127423d276bbe', 'User', 1, '', '2023-12-07 16:06:23', '2023-12-07 16:06:05'),
+(21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40');
 
 -- --------------------------------------------------------
 
@@ -434,7 +444,7 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`
@@ -452,7 +462,7 @@ ALTER TABLE `confirmation_data`
 -- AUTO_INCREMENT for table `patients_user`
 --
 ALTER TABLE `patients_user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `reservation`

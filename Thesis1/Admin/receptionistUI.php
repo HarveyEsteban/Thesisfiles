@@ -1,18 +1,18 @@
 <?php
-    include_once("connection/connection.php");
-    $con = connection();
-    $todaysDate = date("Y/m/d");
+include_once("connection/connection.php");
+$con = connection();
 
-    session_start();
+session_start();
+
+$user = $_SESSION['UserLogin'];
+$userID = $_SESSION['UserID'];
+$todaysDate = date("Y-m-d", strtotime("+1 day")); // add plus one because of timezone.... 
 
 
-    $user = $_SESSION['UserLogin'];
-    $userID = $_SESSION['UserID'];
-
-    if(isset($_GET['logout_code'])){
-        session_unset();
-        header("Location: Landingpage.php");
-    }
+if (isset($_GET['logout_code'])) {
+    session_unset();
+    header("Location: Landingpage.php");
+}
 
 ?>
 
@@ -107,7 +107,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people" style="color: #3e3d1a;">
       <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
     </svg>
-    <span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Today's Patient</span>
+    <span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Patient's Schedule</span>
   </a>
   <a class="nav-link active" href="receptionistListofPatients.php" style="background: #ffffff;border-radius: 8px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;margin-top: 0px;">
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people" style="color: #3e3d1a;">
@@ -144,134 +144,154 @@
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
                                   echo  $user;
                                 ?></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="profile.html"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a><a class="dropdown-item" href="receptionistUI.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="receptionistUI.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
-
-                    <h3 class="text-dark mb-0" style="font-weight: bold;">Today's Patient</h3>
                     <div class="card shadow">
                         <div class="card-body" style="height: 1000px;">
                             <div class="row">
+
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
                                 </div>
 
                             </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 1000px;">
-                            <table class="table my-0" id="dataTable">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Services</th>
-                                            <th>Phone Number</th>
-                                            <th>Address</th>
-                                            <th>Email</th>
-                                            <th>Date</th>
-                                            <th>Add Remarks</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+<form method="post" action="">
+    <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
+    <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
+</form>
 
-                                       <?php
+<?php
+// Variable to determine which set of patients to display
+$isToday = isset($_POST['btn-Patients-Today']);
 
+?>
 
+<h3 class="text-dark mb-0" style="font-weight: bold;"><?php echo $isToday ? "Today's Patients" : "All Patients"; ?></h3>
+<div class="card shadow">
+    <div class="card-body" style="height: 800px;">
+        <div class="row">
+            <div class="col-md-6 text-nowrap">
+                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
+            </div>
+        </div>
+        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 800px;">
+            <table class="table my-0" id="dataTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Reservation ID</th>
+                        <th>Name</th>
+                        <th>Services</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Add Remarks</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                                            $retrieveQuery = "SELECT bookinglog.resID,bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber,patients_user.Email,patients_user.Address
-                                            FROM bookinglog
-                                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID WHERE status = 'Pending' AND DATE(date) >= $todaysDate";
-                                            $result =  $con -> query($retrieveQuery);
+                    <?php
 
+                    $retrieveQuery = $isToday ?
+                        "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address,bookinglog.timeslot
+                            FROM bookinglog
+                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+                            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"
+                        :
+                        "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address,bookinglog.timeslot
+                            FROM bookinglog
+                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+                            WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate'";
 
-                                            
+                    $result =  $con->query($retrieveQuery);
 
+                    if (isset($_GET['doneID'])) {
+                        $usID = $_GET['doneID'];
 
-                                            if (isset($_GET['doneID'])) {
-                                                $usID = $_GET['doneID'];
-                                            
-                                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                                                $execheck = $con->query($checkRemarksStmt);
-                                            
-                                                if ($execheck) {
-                                                    $row = $execheck->fetch_assoc();
-                                                    $total = $row['count'];
-                                            
-                                                    if ($total > 0) {
-                                                        $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
-                                                        $exeQuery = mysqli_query($con, $changeStatus);
-                                                    } else {
-                                                        echo "<script>alert('Please add a remark')</script>";
-                                                    }
-                                                } else {
-                                                    echo "Error executing query: " . $con->error;
-                                                }
-                                            } elseif (isset($_GET['canID'])) {
-                                                $usID = $_GET['canID'];
-                                            
-                                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                                                $execheck = $con->query($checkRemarksStmt);
-                                            
-                                                if ($execheck) {
-                                                    $row = $execheck->fetch_assoc();
-                                                    $total = $row['count'];
-                                            
-                                                    if ($total > 0) {
-                                                        $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
-                                                        $exeQuery2 = mysqli_query($con, $changeStatusCan);
-                                                        echo "<script>alert('Remarks successfully added')</script>";
+                        $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                        $execheck = $con->query($checkRemarksStmt);
 
-                                                    } else {
-                                                        echo "<script>alert('Please add a remark')</script>";
-                                                    }
-                                                } else {
-                                                    echo "Error executing query: " . $con->error;
-                                                }
-                                            }
-                                            
+                        if ($execheck) {
+                            $row = $execheck->fetch_assoc();
+                            $total = $row['count'];
 
+                            if ($total > 0) {
+                                $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
+                                $exeQuery = mysqli_query($con, $changeStatus);
+                            } else {
+                                echo "<script>alert('Please add a remark')</script>";
+                            }
+                        } else {
+                            echo "Error executing query: " . $con->error;
+                        }
+                    } elseif (isset($_GET['canID'])) {
+                        $usID = $_GET['canID'];
 
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                    $id = $row['resID'];
-                                                    $name = $row['Name'];
-                                                    $service = $row['serviceName'];
-                                                    $date = $row['date'];
-                                                    $phoneNumber = $row['PhoneNumber'];
-                                                    $address = $row['Address'];
-                                                    $email = $row['Email'];
-                                                
-                                                    echo '<tr>
-                                                            <td class="hidden-column">'.$id.'</td>    
-                                                            <td>'.$name.'</td>   
-                                                            <td>'.$service.'</td>
-                                                            <td>'.$phoneNumber.'</td>
-                                                            <td>'.$address.'</td>   
-                                                            <td>'.$email.'</td>
-                                                            <td>'.$date.'</td>
-                                                            <td>
-                                                                <input type="text" class="inputField" id="inputField'.$id.'">
-                                                            </td>
-                                                            <td>
-                                                                <input type="hidden" id="resID'.$id.'" name="resID" value="'.$id.'">
-                                                                <button"><a href="receptionistUI.php?doneID='.$id.'" class="btn btn-danger">Done</a></button>
-                                                                <button"><a href="receptionistUI.php?canID='.$id.'" class="btn btn-warning">Cancel</a></button>
-                                                            </td>
-                                                          </tr>';
-                                                }
-                                                
-                                    ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+                        $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                        $execheck = $con->query($checkRemarksStmt);
+
+                        if ($execheck) {
+                            $row = $execheck->fetch_assoc();
+                            $total = $row['count'];
+
+                            if ($total > 0) {
+                                $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
+                                $exeQuery2 = mysqli_query($con, $changeStatusCan);
+                                echo "<script>alert('Remarks successfully added')</script>";
+                            } else {
+                                echo "<script>alert('Please add a remark')</script>";
+                            }
+                        } else {
+                            echo "Error executing query: " . $con->error;
+                        }
+                    }
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $id = $row['resID'];
+                        $name = $row['Name'];
+                        $service = $row['serviceName'];
+                        $date = $row['date'];
+                        $phoneNumber = $row['PhoneNumber'];
+                        $address = $row['Address'];
+                        $time = $row['timeslot'];
+
+                        echo '<tr>
+                                <td>'.$id.'</td>    
+                                <td>'.$name.'</td>   
+                                <td>'.$service.'</td>
+                                <td>'.$phoneNumber.'</td>
+                                <td>'.$address.'</td>
+                                <td>'.$date.'</td>   
+                                <td>'.$time.'</td>
+                                <td>
+                                    <input type="text" class="inputField" id="inputField'.$id.'">
+                                </td>
+                                <td>
+                                    <input type="hidden" id="resID'.$id.'" name="resID" value="'.$id.'">
+                                    <button"><a href="receptionistUI.php?doneID='.$id.'" class="btn btn-danger">Done</a></button>
+                                    <button"><a href="receptionistUI.php?canID='.$id.'" class="btn btn-warning">Cancel</a></button>
+                                </td>
+                            </tr>';
+                    }
+
+                    ?>
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+                          
                 
                 
             
