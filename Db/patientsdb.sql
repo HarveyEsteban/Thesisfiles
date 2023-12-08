@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2023 at 08:01 PM
+-- Generation Time: Dec 08, 2023 at 08:06 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -34,6 +34,8 @@ CREATE TABLE `bookinglog` (
   `date` date NOT NULL,
   `timeslot` varchar(255) NOT NULL,
   `remarks` varchar(255) NOT NULL,
+  `admin_remarks` varchar(255) NOT NULL DEFAULT 'None',
+  `walk_in_name` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   `FamMemberName` varchar(255) NOT NULL DEFAULT 'N/A',
   `confirmationHash` varchar(255) NOT NULL,
@@ -44,25 +46,18 @@ CREATE TABLE `bookinglog` (
 -- Dumping data for table `bookinglog`
 --
 
-INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
-(119, 1, 'Gum Depigmentation', '2023-12-10', '08:30 AM - 09:00 AM', '', 'Cancel', 'maximus Harvey', '', '2023-12-07 16:20:04'),
-(120, 1, 'Braces', '2023-12-10', '08:30 AM - 09:00 AM', '', 'Cancel', 'None', '', '2023-12-07 16:20:40'),
-(121, 1, 'Root canal theraphy', '2023-12-08', '08:30 AM - 09:00 AM', 'aaaaa', 'Done', 'None', '', '2023-12-07 18:49:47'),
-(122, 3, 'Braces', '2023-12-08', '09:30 AM - 10:00 AM', 'Pepets', 'Done', 'None', '', '2023-12-07 18:55:55'),
-(123, 3, 'Braces', '2023-12-09', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:36'),
-(124, 3, 'Braces', '2023-12-09', '09:30 AM - 10:00 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:37'),
-(125, 3, 'Braces', '2023-12-10', '08:00 AM - 08:30 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:40'),
-(126, 3, 'Braces', '2023-12-10', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-07 17:44:42'),
-(127, 3, 'Braces', '2023-12-07', '08:30 AM - 09:00 AM', 'sss', 'Canceled', 'None', '', '2023-12-07 17:52:35'),
-(128, 3, 'Braces', '2023-12-07', '09:30 AM - 10:00 AM', 'sasddd', 'Canceled', 'None', '', '2023-12-07 17:52:42'),
-(129, 3, 'Braces', '2023-12-08', '08:00 AM - 08:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:17'),
-(130, 3, 'Braces', '2023-12-08', '08:30 AM - 09:00 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:18'),
-(131, 3, 'Braces', '2023-12-08', '09:00 AM - 09:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:19'),
-(132, 3, 'Braces', '2023-12-08', '09:30 AM - 10:00 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:21'),
-(133, 3, 'Braces', '2023-12-08', '10:00 AM - 10:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:22'),
-(134, 3, 'Braces', '2023-12-08', '10:30 AM - 11:00 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:23'),
-(135, 3, 'Braces', '2023-12-08', '11:00 AM - 11:30 AM', '', 'Pending', 'None', '', '2023-12-07 18:59:25'),
-(136, 3, 'Braces', '2023-12-08', '11:30 AM - 12:00 PM', '', 'Pending', 'None', '', '2023-12-07 18:59:26');
+INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
+(137, 3, 'Braces', '2023-12-09', '09:00 AM - 09:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-08 10:43:31'),
+(140, 1, 'Cleaning', '2023-12-09', '09:30 AM - 10:00 AM', '', 'None', '', 'Pending', 'N/A', '', '2023-12-08 16:59:42'),
+(141, 4, 'Gum Depigmentation', '2023-12-09', '10:00 AM - 10:30 AM', 'xczxcwsx', 'Maitim Gilagid ni gago', '', 'Done', 'N/A', '', '2023-12-08 18:44:58'),
+(142, 4, 'asd', '2023-12-09', '08:30 AM - 09:00 AM', 'Putang ina', 'Sheeeshable', '', 'Done', 'N/A', '', '2023-12-08 18:47:02'),
+(143, 7, 'Cleaning', '2023-12-09', '10:30 AM - 11:00 AM', '', 'None', '', 'Pending', 'N/A', '', '2023-12-08 17:15:12'),
+(146, 12, 'Root canal theraphy', '2023-12-09', '08:00 AM - 08:30 AM', 'Paid', 'None', 'Harvey Bien Bucod', 'Done', 'N/A', '', '2023-12-08 18:50:04'),
+(147, 1, 'Gum Depigmentation', '2023-12-12', '09:00 AM - 09:30 AM', 'Pepets', 'None', '', 'Done', 'None', '', '2023-12-08 18:20:12'),
+(148, 1, 'Root canal theraphy', '2023-12-12', '09:30 AM - 10:00 AM', 'asdasdasd', 'None', '', 'Canceled', 'None', '', '2023-12-08 18:20:00'),
+(149, 1, 'Braces', '2023-12-12', '10:00 AM - 10:30 AM', 'asdsd', 'None', '', 'Done', 'None', '', '2023-12-08 18:19:56'),
+(150, 1, 'Gum Depigmentation', '2023-12-11', '10:00 AM - 10:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-08 18:58:02'),
+(151, 12, 'Cleaning', '2023-12-11', '09:30 AM - 10:00 AM', '', 'None', 'barney the purple dinasour', 'Pending', 'N/A', '', '2023-12-08 19:02:57');
 
 -- --------------------------------------------------------
 
@@ -198,7 +193,7 @@ CREATE TABLE `patients_user` (
 
 INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`, `activation_timestamp`) VALUES
 (1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-12-07 17:27:18', '2023-12-07 15:19:04'),
-(2, 'mobs.dominiquemartinez@gmail.com', 'Bogart People', 'Abar 1st esteban blk San jose City Nueva Ecija', '161235612', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-02 20:00:02', '2023-12-07 15:19:04'),
+(2, 'mobs.dominiquemartinez@gmail.com', 'Crizsabel Castillo', 'Abar 1st esteban blk San jose City Nueva Ecija', '09959866117', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-08 17:17:43', '2023-12-07 15:19:04'),
 (3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04'),
 (4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
 (5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
@@ -281,6 +276,7 @@ CREATE TABLE `servicetbl` (
 --
 
 INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`) VALUES
+('asd', 123332, 'upload/6572f3fdf2ffb9.59752021.jpg', 'sdasdad'),
 ('Braces', 25000, 'upload/6562352146f467.76015121.jpg', 'These help your teeth to straight'),
 ('Cleaning', 700, '', '30-Minutes'),
 ('Gum Depigmentation', 800, 'upload/656601709ada52.14428633.jpg', 'Para sa maitim na gilagid'),
@@ -444,7 +440,7 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`

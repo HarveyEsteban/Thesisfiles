@@ -187,10 +187,18 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
+            <div class="container-fluid">
                 <h3 class="text-dark mb-0" style="font-weight: bold;">List of Patients</h3>
                     <div class="card shadow">
                         <div class="card-body">
+                            <div class="mb-3">
+                                <form method="GET" action="receptionistListofPatients.php">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search by Name" name="search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="thead-dark">
@@ -220,7 +228,18 @@
                                         }
 
 
+
+
+                                    $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
+
                                         $retrieveQuery = "SELECT `userID`,`Email`, `Name`, `Address`, `PhoneNumber` FROM `patients_user` WHERE Access = 'User'";
+
+
+                                        if (!empty($search)) {
+                                            $retrieveQuery .= " AND `Name` LIKE '%$search%'";
+                                        }
+
+
                                         $result =  $con -> query($retrieveQuery);
 
                                         while($row = mysqli_fetch_assoc($result)){
@@ -251,37 +270,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
 
-                        </div>
-                    </div>
-                    <div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1" style="border-radius: 0px;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="height: 80px;border-radius: 12px 7px 0px 0px;">
-                                        <h4 class="modal-title mb-0" style="font-weight: bold;color: rgb(77,77,77);">WALA PA</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" style="height: 312px;width: 498px;background: #ffffff;">
-                                        <div class="col-xl-12"></div>
-                                        <div class="col">
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                <div id="calendar"></div>
-                </div>
-            </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"></div>
-                </div>
-            </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

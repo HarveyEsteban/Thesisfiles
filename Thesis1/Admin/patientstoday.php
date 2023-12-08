@@ -1,8 +1,55 @@
 <?php
-            include_once("connection/connection.php");
-            $con = connection();
+include_once("connection/connection.php");
+$con = connection();
 
-            $todaysDate = date("Y/m/d");
+$todaysDate = date("Y-m-d", strtotime("+1 day")); // add plus one because of timezone....
+
+// Define arrays for table headers
+$headerToday = ["Reservation ID", "Name", "Services", "Phone Number", "Address", "Time", "Add Remarks"];
+$headerAll = ["Reservation ID", "Name", "Services", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerAdminReservation = ["Reservation ID", "Name", "Services", "Admin Remarks", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Services", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+
+// Determine which set of patients to display
+$isToday = isset($_POST['btn-Patients-Today']);
+$isAdminReservation = isset($_POST['btn-Admin-Reservation']);
+$isAll = isset($_POST['btn-Patients-All']);
+$isWalkInPatients = isset($_POST['btn-Walk-in-Patients']);
+
+// Initialize default values
+$header = $headerToday;
+$pageTitle = "Today's Patients";
+$retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
+
+// Choose the header based on the button clicked
+if ($isAll) {
+    $header = $headerAll;
+    $pageTitle = "All Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate'";
+} elseif ($isAdminReservation) {
+    $header = $headerAdminReservation;
+    $pageTitle = "Admin Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate' AND admin_remarks != 'None'";
+} elseif ($isWalkInPatients) {
+    $header = $headerWalkInPatients;
+    $pageTitle = "Walk-In Patients";
+     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.walk_in_name
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate' AND walk_in_name IS NOT NULL AND walk_in_name <> ''";
+    // Add the corresponding code for the Walk-In Patients button here if needed
+} else {
+    // Handle other cases or set default values
+}
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +135,7 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index.php" style="background: #ffffff;border-radius: 8px;margin-top: 13px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;"><i class="far fa-calendar" style="color: #3e3d1a;"></i><span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Calendar</span></a></li>
                     <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php"><i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php"><i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Today's Patient</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php"><i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Service Maintenance</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php"><i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Reports</span></a></li>
+                    <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php"><i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php"><i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php"><i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Service Maintenance</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php"><i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Reports</span></a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
@@ -129,133 +176,146 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid" style="background: rgb(255,255,255);">
-                    <h3 class="text-dark mb-0" style="font-weight: bold;">Today's Patient</h3>
-                    <div class="card shadow">
-                        <div class="card-body" style="height: 1000px;">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
-                                </div>
+              
+        <form method="post" action="">
+            <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
+            <button class="btn btn-primary btn-lg" type="submit" name="btn-Admin-Reservation">Admin Reservation</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-Walk-in-Patients">Walk-In Patients</button>
+        </form>
 
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 1000px;">
-                            <table class="table my-0" id="dataTable">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Services</th>
-                                            <th>Phone Number</th>
-                                            <th>Address</th>
-                                            <th>Email</th>
-                                            <th>Date</th>
-                                            <th>Add Remarks</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+        <h3 class="text-dark mb-0" style="font-weight: bold;"><?php echo $pageTitle; ?></h3>
 
-                                       <?php
-
-
-
-                                            $retrieveQuery = "SELECT bookinglog.resID,bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber,patients_user.Email,patients_user.Address
-                                            FROM bookinglog
-                                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID WHERE status = 'Pending' AND date = $todaysDate";
-                                            $result =  $con -> query($retrieveQuery);
-
-
-                                            
-
-
-                                            if (isset($_GET['doneID'])) {
-                                                $usID = $_GET['doneID'];
-                                            
-                                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                                                $execheck = $con->query($checkRemarksStmt);
-                                            
-                                                if ($execheck) {
-                                                    $row = $execheck->fetch_assoc();
-                                                    $total = $row['count'];
-                                            
-                                                    if ($total > 0) {
-                                                        $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
-                                                        $exeQuery = mysqli_query($con, $changeStatus);
-                                                    } else {
-                                                        echo "<script>alert('Please add a remark')</script>";
-                                                    }
-                                                } else {
-                                                    echo "Error executing query: " . $con->error;
-                                                }
-                                            } elseif (isset($_GET['canID'])) {
-                                                $usID = $_GET['canID'];
-                                            
-                                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                                                $execheck = $con->query($checkRemarksStmt);
-                                            
-                                                if ($execheck) {
-                                                    $row = $execheck->fetch_assoc();
-                                                    $total = $row['count'];
-                                            
-                                                    if ($total > 0) {
-                                                        $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
-                                                        $exeQuery2 = mysqli_query($con, $changeStatusCan);
-                                                        echo "<script>alert('Remarks successfully added')</script>";
-
-                                                    } else {
-                                                        echo "<script>alert('Please add a remark')</script>";
-                                                    }
-                                                } else {
-                                                    echo "Error executing query: " . $con->error;
-                                                }
-                                            }
-                                            
-
-
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                    $id = $row['resID'];
-                                                    $name = $row['Name'];
-                                                    $service = $row['serviceName'];
-                                                    $date = $row['date'];
-                                                    $phoneNumber = $row['PhoneNumber'];
-                                                    $address = $row['Address'];
-                                                    $email = $row['Email'];
-                                                
-                                                    echo '<tr>
-                                                            <td class="hidden-column">'.$id.'</td>    
-                                                            <td>'.$name.'</td>   
-                                                            <td>'.$service.'</td>
-                                                            <td>'.$phoneNumber.'</td>
-                                                            <td>'.$address.'</td>   
-                                                            <td>'.$email.'</td>
-                                                            <td>'.$date.'</td>
-                                                            <td>
-                                                                <input type="text" class="inputField" id="inputField'.$id.'">
-                                                            </td>
-                                                            <td>
-                                                                <input type="hidden" id="resID'.$id.'" name="resID" value="'.$id.'">
-                                                                <button"><a href="receptionistUI.php?doneID='.$id.'" class="btn btn-danger">Done</a></button>
-                                                                <button"><a href="receptionistUI.php?canID='.$id.'" class="btn btn-warning">Cancel</a></button>
-                                                            </td>
-                                                          </tr>';
-                                                }
-                                                
-                                    ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
+        <div class="card shadow">
+            <div class="card-body" style="height: 800px;">
+                <div class="row">
+                    <div class="col-md-6 text-nowrap">
+                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
                     </div>
                 </div>
-            </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"></div>
+                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 800px;">
+                    <table class="table my-0" id="dataTable">
+                      <thead class="thead-dark">
+                        <tr>
+                            <?php
+                            // Loop through the selected set of headers
+                            foreach ($header as $column) {
+                                echo "<th>$column</th>";
+                            }
+                            ?>
+                            <th></th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                           <?php
+
+
+
+
+
+                                    $result =  $con->query($retrieveQuery);
+
+                                if (isset($_GET['doneID'])) {
+                                $usID = $_GET['doneID'];
+
+                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                                $execheck = $con->query($checkRemarksStmt);
+
+                                if ($execheck) {
+                                    $row = $execheck->fetch_assoc();
+                                    $total = $row['count'];
+
+                                    if ($total > 0) {
+                                        $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
+                                        $exeQuery = mysqli_query($con, $changeStatus);
+                                    } else {
+                                        echo "<script>alert('Please add a remark')</script>";
+                                    }
+                                } else {
+                                    echo "Error executing query: " . $con->error;
+                                }
+                            } elseif (isset($_GET['canID'])) {
+                                $usID = $_GET['canID'];
+
+                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                                $execheck = $con->query($checkRemarksStmt);
+
+                                if ($execheck) {
+                                    $row = $execheck->fetch_assoc();
+                                    $total = $row['count'];
+
+                                    if ($total > 0) {
+                                        $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
+                                        $exeQuery2 = mysqli_query($con, $changeStatusCan);
+                                        echo "<script>alert('Remarks successfully added')</script>";
+                                    } else {
+                                        echo "<script>alert('Please add a remark')</script>";
+                                    }
+                                } else {
+                                    echo "Error executing query: " . $con->error;
+                                }
+                            }
+
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo '<tr>';
+                                        foreach ($header as $column) {
+                                            // Print corresponding value based on the column header
+                                            switch ($column) {
+                                                case "Reservation ID":
+                                                    echo '<td>' . $row['resID'] . '</td>';
+                                                    break;
+                                                case "Name":
+                                                    echo '<td>' . $row['Name'] . '</td>';
+                                                    break;
+                                                case "Walk-in Name":
+                                                    echo '<td>' . $row['walk_in_name'] . '</td>';
+                                                    break;
+                                                case "Admin Remarks":
+                                                    echo '<td>' . $row['admin_remarks'] . '</td>';
+                                                    break;
+                                                case "Services":
+                                                    echo '<td>' . $row['serviceName'] . '</td>';
+                                                    break;
+                                                case "Phone Number":
+                                                    echo '<td>' . $row['PhoneNumber'] . '</td>';
+                                                    break;
+                                                case "Address":
+                                                    echo '<td>' . $row['Address'] . '</td>';
+                                                    break;
+                                                case "Date":
+                                                    echo '<td>' . $row['date'] . '</td>';
+                                                    break;
+                                                case "Time":
+                                                    echo '<td>' . $row['timeslot'] . '</td>';
+                                                    break;
+                                                case "Add Remarks":
+                                                    echo '<td>
+                                                            <input type="text" class="inputField" id="inputField' . $row['resID'] . '">
+                                                        </td>';
+                                                    break;
+                                            }
+                                        }
+                                        echo '<td>
+                                                <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
+                                                <button"><a href="patientstoday.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Done</a></button>
+                                                <button"><a href="patientstoday.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
+                                            </td>';
+                                        echo '</tr>';
+                                    }
+                                    ?>
+                        </tbody>
+                        <tfoot>
+                            <tr></tr>
+                        </tfoot>
+                    </table>
                 </div>
-            </footer>
+            </div>
+        </div>
+
+        <!-- ... (rest of your body and script tags) ... -->
+
+    </div>
+                          
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -269,7 +329,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>                                    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://djpsoftwarecdn.azureedge.net/availabilityjs-v1/availability.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>     
+        <script>
+    $(document).ready(function(){
+        $('.inputField').on('input', function(){
+            var inputValue = $(this).val();
+            
+            // Find the parent row of the input field
+            var parentRow = $(this).closest('tr');
+            // Get the reservation ID from the hidden input in the same row
+            var ResID = parentRow.find('[name="resID"]').val();
+
+            $.ajax({
+                url: 'connection/remarksProcess.php',
+                type: 'POST',
+                data: {
+                    inputValue: inputValue,
+                    resID: ResID
+                }
+            });
+        });
+    });
+</script>                                    
 </body>
 
 </html>

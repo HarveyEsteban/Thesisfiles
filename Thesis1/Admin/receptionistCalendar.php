@@ -1,18 +1,152 @@
 <?php
-include_once("connection/connection.php");
-$con = connection();
 
-session_start();
-
+//admin interface
+     include_once("connection/connection.php");
+     $con = connection();
+     session_start();
 $user = $_SESSION['UserLogin'];
 $userID = $_SESSION['UserID'];
-$todaysDate = date("Y-m-d", strtotime("+1 day")); // add plus one because of timezone.... 
 
+     function build_calendar($month, $year) {
+        $mysqli = new mysqli('localhost', 'root', 'Thesis1', 'patientsdb');
+        // $stmt = $mysqli->prepare("SELECT * FROM bookrecords WHERE MONTH(date) = ? AND YEAR(date) = ?");
+        // $stmt->bind_param('ss', $month, $year);
+        // $bookings = array();
+        // if($stmt->execute()){
+        //     $result = $stmt->get_result();
+        //     if($result->num_rows>0){
+        //         while($row = $result->fetch_assoc()){
+        //             $bookings[] = $row['date'];
+        //         }
+                
+        //         $stmt->close();
+        //     }
+        // }
+        
+        
+        
+         $daysOfWeek = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+         $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
+         $numberDays = date('t',$firstDayOfMonth);
+         $dateComponents = getdate($firstDayOfMonth);
+         $monthName = $dateComponents['month'];
+         $dayOfWeek = $dateComponents['wday'];
+    
+        $datetoday = date('Y-m-d');
+       
+        $calendar = "<table class='table table-bordered'>";
+        $calendar .= "<center><h2>$monthName $year</h2>";
+        $calendar.= "<a class='btn btn-xs btn-success' href='?month=".date('m', mktime(0, 0, 0, $month-1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, $month-1, 1, $year))."'>Previous Month</a> ";
+        $calendar.= " <a class='btn btn-xs btn-danger' href='?month=".date('m')."&year=".date('Y')."'>Current Month</a> ";
+        $calendar.= "<a class='btn btn-xs btn-primary' href='?month=".date('m', mktime(0, 0, 0, $month+1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, $month+1, 1, $year))."'>Next Month</a></center><br>";
+        
+       
+          $calendar .= "<tr>";
+         foreach($daysOfWeek as $day) {
+              $calendar .= "<th  class='header'>$day</th>";
+         } 
+    
+         $currentDay = 1;
+         $calendar .= "</tr><tr>";
+    
+    
+         if ($dayOfWeek > 0) { 
+             for($k=0;$k<$dayOfWeek;$k++){
+                    $calendar .= "<td  class='empty'></td>"; 
+    
+             }
+         }
+        
+         $month = str_pad($month, 2, "0", STR_PAD_LEFT);
+      
+         while ($currentDay <= $numberDays) {
+    
+              if ($dayOfWeek == 7) {
+    
+                   $dayOfWeek = 0;
+                   $calendar .= "</tr><tr>";
+    
+              }
+              
+              $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
+              $date = "$year-$month-$currentDayRel";
+              
+                $dayname = strtolower(date('l', strtotime($date)));
+                $eventNum = 0;
+                $today = $date==date('Y-m-d')? "today" : "";
+      
+           if ($date<date('Y-m-d')) {
+                $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>&nbsp</button>";
+             }
+             else{
+    
+                $totalBookings =checkSlots($mysqli,$date);
+                if($totalBookings == 16){
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
+    
+                }else{
+                    $avaislots = 16 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookReceptionist.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
+    
+                }
+             }
+                
+              $calendar .="</td>";
+              $currentDay++;
+              $dayOfWeek++;
+         }
+    
+         if ($dayOfWeek != 7) { 
+         
+              $remainingDays = 7 - $dayOfWeek;
+                for($l=0;$l<$remainingDays;$l++){
+                    $calendar .= "<td class='empty'></td>"; 
+             }
+         }
+         
+         $calendar .= "</tr>";
+         $calendar .= "</table>";
+         echo $calendar;
+    
+    }
+    
+    
+    // function checkSlots($mysqli, $date){
+    //         $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ? AND status = 'Pending'");
+    //             $stmt->bind_param('s',$date);
+    //             $totalBookings = 0;
+    //             if($stmt->execute()){
+    //                 $result = $stmt->get_result();
+    //                 if($result->num_rows>0){
+    //                     while($row = $result->fetch_assoc()){
+    //                        $totalBookings++;
+    //                     }
+                        
+    //                     $stmt->close();
+    //                 }
+    //                 return $totalBookings;
+    //             }
+    // }
 
-if (isset($_GET['logout_code'])) {
-    session_unset();
-    header("Location: Landingpage.php");
+    function checkSlots($mysqli, $date)
+{
+    $stmt = $mysqli->prepare("SELECT * FROM bookinglog WHERE date = ? AND status = 'Pending'");
+    $stmt->bind_param('s', $date);
+    $totalBookings = 0;
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $totalBookings++;
+            }
+
+            $stmt->close();
+        }
+        return $totalBookings;
+    }
 }
+
 
 ?>
 
@@ -87,6 +221,113 @@ if (isset($_GET['logout_code'])) {
     <link rel="stylesheet" href="https://djpsoftwarecdn.azureedge.net/availabilitycss-v1/availability.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+  <style>
+       @media only screen and (max-width: 760px),
+        (min-device-width: 802px) and (max-device-width: 1020px) {
+
+            /* Force table to not be like tables anymore */
+            table, thead, tbody, th, td, tr {
+                display: block;
+
+            }
+            
+            
+
+            .empty {
+                display: none;
+            }
+
+            /* Hide table headers (but not display: none;, for accessibility) */
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                border: 1px solid #ccc;
+            }
+
+            td {
+                /* Behave  like a "row" */
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+
+
+
+            /*
+        Label the data
+        */
+            td:nth-of-type(1):before {
+                content: "Sunday";
+            }
+            td:nth-of-type(2):before {
+                content: "Monday";
+            }
+            td:nth-of-type(3):before {
+                content: "Tuesday";
+            }
+            td:nth-of-type(4):before {
+                content: "Wednesday";
+            }
+            td:nth-of-type(5):before {
+                content: "Thursday";
+            }
+            td:nth-of-type(6):before {
+                content: "Friday";
+            }
+            td:nth-of-type(7):before {
+                content: "Saturday";
+            }
+
+
+        }
+
+        /* Smartphones (portrait and landscape) ----------- */
+
+        @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        /* iPads (portrait and landscape) ----------- */
+
+        @media only screen and (min-device-width: 802px) and (max-device-width: 1020px) {
+            body {
+                width: 495px;
+            }
+        }
+
+        @media (min-width:641px) {
+            table {
+                table-layout: fixed;
+            }
+            td {
+                width: 33%;
+            }
+        }
+        
+        .row{
+            margin-top: 20px;
+        }
+        
+        .today{
+            background:#eee;
+        }
+
+    </style>
+
     <style>
         .hidden-column {
             display: none;
@@ -154,150 +395,31 @@ if (isset($_GET['logout_code'])) {
                         </ul>
                     </div>
                 </nav>
-                    <div class="card shadow">
-                        <div class="card-body" style="height: 1000px;">
-                            <div class="row">
-
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
+                
+                 <div class="container-fluid">
+                    <div class="container alert alert-default" style="background:#fff">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" style="background:#9f9875;border:none;color:#fff">
+                                <h1>Online Booking System</h1>
                                 </div>
-
-                            </div>
-<form method="post" action="">
-    <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
-    <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
-</form>
-
-<?php
-// Variable to determine which set of patients to display
-$isToday = isset($_POST['btn-Patients-Today']);
-
-?>
-
-<h3 class="text-dark mb-0" style="font-weight: bold;"><?php echo $isToday ? "Today's Patients" : "All Patients"; ?></h3>
-<div class="card shadow">
-    <div class="card-body" style="height: 800px;">
-        <div class="row">
-            <div class="col-md-6 text-nowrap">
-                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
+                                <?php
+                                    $dateComponents = getdate();
+                                    if(isset($_GET['month']) && isset($_GET['year'])){
+                                        $month = $_GET['month'];
+                                        $year = $_GET['year'];
+                                    }else{
+                                        $month = $dateComponents['mon'];
+                                        $year = $dateComponents['year'];
+                                    }
+                                    echo build_calendar($month, $year);
+                                ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 800px;">
-            <table class="table my-0" id="dataTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Reservation ID</th>
-                        <th>Name</th>
-                        <th>Services</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Add Remarks</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <?php
-
-                    $retrieveQuery = $isToday ?
-                        "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address,bookinglog.timeslot
-                            FROM bookinglog
-                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-                            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"
-                        :
-                        "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address,bookinglog.timeslot
-                            FROM bookinglog
-                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-                            WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate'";
-
-                    $result =  $con->query($retrieveQuery);
-
-                    if (isset($_GET['doneID'])) {
-                        $usID = $_GET['doneID'];
-
-                        $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                        $execheck = $con->query($checkRemarksStmt);
-
-                        if ($execheck) {
-                            $row = $execheck->fetch_assoc();
-                            $total = $row['count'];
-
-                            if ($total > 0) {
-                                $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
-                                $exeQuery = mysqli_query($con, $changeStatus);
-                            } else {
-                                echo "<script>alert('Please add a remark')</script>";
-                            }
-                        } else {
-                            echo "Error executing query: " . $con->error;
-                        }
-                    } elseif (isset($_GET['canID'])) {
-                        $usID = $_GET['canID'];
-
-                        $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                        $execheck = $con->query($checkRemarksStmt);
-
-                        if ($execheck) {
-                            $row = $execheck->fetch_assoc();
-                            $total = $row['count'];
-
-                            if ($total > 0) {
-                                $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
-                                $exeQuery2 = mysqli_query($con, $changeStatusCan);
-                                echo "<script>alert('Remarks successfully added')</script>";
-                            } else {
-                                echo "<script>alert('Please add a remark')</script>";
-                            }
-                        } else {
-                            echo "Error executing query: " . $con->error;
-                        }
-                    }
-
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $id = $row['resID'];
-                        $name = $row['Name'];
-                        $service = $row['serviceName'];
-                        $date = $row['date'];
-                        $phoneNumber = $row['PhoneNumber'];
-                        $address = $row['Address'];
-                        $time = $row['timeslot'];
-
-                        echo '<tr>
-                                <td>'.$id.'</td>    
-                                <td>'.$name.'</td>   
-                                <td>'.$service.'</td>
-                                <td>'.$phoneNumber.'</td>
-                                <td>'.$address.'</td>
-                                <td>'.$date.'</td>   
-                                <td>'.$time.'</td>
-                                <td>
-                                    <input type="text" class="inputField" id="inputField'.$id.'">
-                                </td>
-                                <td>
-                                    <input type="hidden" id="resID'.$id.'" name="resID" value="'.$id.'">
-                                    <button"><a href="receptionistUI.php?doneID='.$id.'" class="btn btn-danger">Done</a></button>
-                                    <button"><a href="receptionistUI.php?canID='.$id.'" class="btn btn-warning">Cancel</a></button>
-                                </td>
-                            </tr>';
-                    }
-
-                    ?>
-                </tbody>
-                <tfoot>
-                    <tr></tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-                          
                 
-                
+
             
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>

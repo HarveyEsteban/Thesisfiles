@@ -39,8 +39,7 @@ if ( isset( $_GET['date'] ) ) {
 if ( isset( $_POST['submit'] ) ) {
     $timeslot = $_POST['timeslot'];
     $optservices = $_POST['serviceOpt'];
-    $selectPatient = $_POST['patientopt'];
-    $adminRemarks = $_POST['admin-Remarks'];
+    $WalkinName = $_POST['receptionist-Walkin'];
     $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ? AND status = 'Pending'");
     $stmt->bind_param( 'ss', $date, $timeslot);
 
@@ -54,9 +53,9 @@ if ( isset( $_POST['submit'] ) ) {
 
         }else{
 
-            $famName = empty($famName) ? 'None' : $famName;
+            $WalkinName = empty($WalkinName) ? 'None' : $WalkinName;
             $adminRemarks = empty($adminRemarks) ? 'None' : $adminRemarks;
-            $stmt = "INSERT INTO `bookinglog`(`userID`, `serviceName`, `date`, `timeslot`,`status`,`admin_remarks`) VALUES ('$selectPatient','$optservices','$date','$timeslot','Pending', '$adminRemarks')";
+            $stmt = "INSERT INTO `bookinglog`(`userID`, `serviceName`, `date`, `timeslot`,`status`,`walk_in_name`) VALUES ('$userID','$optservices','$date','$timeslot','Pending', '$WalkinName')";
             
             $exe = $con -> query( $stmt );
                         echo '<div class="alert alert-success" role="alert">
@@ -235,7 +234,7 @@ foreach ($timeslots as $ts) {
 
 
 <div class="space-below">
-    <a href="index.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
+    <a href="receptionistCalendar.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
 </div>
 
     <div id="user_model_details"></div>
@@ -281,33 +280,11 @@ foreach ($timeslots as $ts) {
                                         ?>
                                         </select>
     </div>
-    <div class = "form-group">
-    <label for = "">Select Patients Name</label><br>
-    <select name="patientopt" id="">
-                                        <?php
-                                            $sqlquery = "SELECT userID, Name FROM patients_user WHERE Access = 'User'";  
-                                            $result = $con->query($sqlquery);
-                                            if($result -> num_rows> 0)
-                                            {
-                                                while($optionData = $result->fetch_assoc())
-                                                {
-                                                    $option = $optionData['Name'];
-                                                    $optionUserID   = $optionData['userID'];
-                                                    
-
-                                        ?>
-
-                                        <option value="<?php echo $optionUserID ?>"> <?php echo $option?></option>
-
-                                        <<?php
-                                            }}
-                                        ?>
-                                        </select>
-    </div> 
+   
 
     <div class = "form-group">
-    <label for = "">Add Remarks</label>
-    <input  type = "text"  name = "admin-Remarks" id = "admin-Remarks" class = "form-control">
+    <label for = "">Walk-In Patients Name</label>
+    <input  type = "text"  name = "receptionist-Walkin" id = "receptionist-Walkin" class = "form-control">
     </div>
   
 

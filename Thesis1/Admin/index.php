@@ -345,7 +345,7 @@
                       </a>
                       <a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php">
                         <i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i>
-                        <span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Today's Patient</span>
+                        <span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span>
                       </a>
                       <a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php">
                         <i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i>
