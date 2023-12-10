@@ -3,6 +3,7 @@ include_once("connection/connection.php");
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
+date_default_timezone_set('Asia/Manila');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -11,8 +12,6 @@ $con = connection();
 
 $currentDate = date('Y-m-d');
 $reminderDate = date('Y-m-d', strtotime($currentDate . ' + 2 days'));
-
-
 
 
 

@@ -1,6 +1,5 @@
 <?php
 
-//admin interface
      include_once("connection/connection.php");
      $con = connection();
 

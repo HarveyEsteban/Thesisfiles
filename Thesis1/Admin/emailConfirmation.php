@@ -8,6 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $con = connection();
+date_default_timezone_set('Asia/Manila');
 
 $currentDate = date('Y-m-d');
 $reminderDate = date('Y-m-d', strtotime($currentDate . ' + 3 days'));
@@ -42,7 +43,7 @@ while ($row = $exe->fetch_assoc()) {
 
     // Generate a unique hash code
     $hashCode = hash('sha256', uniqid());
-    $expirationTimestamp = time() + 24 * 60 * 60;
+    $expirationTimestamp = time() +60; // 24 * 60 * 
 
     // Store hash code and timestamp in the database
     $insertSql = "INSERT INTO confirmation_data (email, hash_code, timestamp, expiration_timestamp) VALUES ('$email', '$hashCode', NOW(), FROM_UNIXTIME($expirationTimestamp))";

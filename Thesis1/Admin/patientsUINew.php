@@ -382,7 +382,7 @@
                     <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-danger" style="background:#9f9875;border:none;color:#fff">
-                        <h1>Online Booking System</h1>
+                        <h1>Calendar</h1>
                         </div>
                         <?php
                             $dateComponents = getdate();

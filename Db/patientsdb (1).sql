@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2023 at 08:06 PM
+-- Generation Time: Dec 10, 2023 at 03:55 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -41,23 +41,6 @@ CREATE TABLE `bookinglog` (
   `confirmationHash` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `bookinglog`
---
-
-INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
-(137, 3, 'Braces', '2023-12-09', '09:00 AM - 09:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-08 10:43:31'),
-(140, 1, 'Cleaning', '2023-12-09', '09:30 AM - 10:00 AM', '', 'None', '', 'Pending', 'N/A', '', '2023-12-08 16:59:42'),
-(141, 4, 'Gum Depigmentation', '2023-12-09', '10:00 AM - 10:30 AM', 'xczxcwsx', 'Maitim Gilagid ni gago', '', 'Done', 'N/A', '', '2023-12-08 18:44:58'),
-(142, 4, 'asd', '2023-12-09', '08:30 AM - 09:00 AM', 'Putang ina', 'Sheeeshable', '', 'Done', 'N/A', '', '2023-12-08 18:47:02'),
-(143, 7, 'Cleaning', '2023-12-09', '10:30 AM - 11:00 AM', '', 'None', '', 'Pending', 'N/A', '', '2023-12-08 17:15:12'),
-(146, 12, 'Root canal theraphy', '2023-12-09', '08:00 AM - 08:30 AM', 'Paid', 'None', 'Harvey Bien Bucod', 'Done', 'N/A', '', '2023-12-08 18:50:04'),
-(147, 1, 'Gum Depigmentation', '2023-12-12', '09:00 AM - 09:30 AM', 'Pepets', 'None', '', 'Done', 'None', '', '2023-12-08 18:20:12'),
-(148, 1, 'Root canal theraphy', '2023-12-12', '09:30 AM - 10:00 AM', 'asdasdasd', 'None', '', 'Canceled', 'None', '', '2023-12-08 18:20:00'),
-(149, 1, 'Braces', '2023-12-12', '10:00 AM - 10:30 AM', 'asdsd', 'None', '', 'Done', 'None', '', '2023-12-08 18:19:56'),
-(150, 1, 'Gum Depigmentation', '2023-12-11', '10:00 AM - 10:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-08 18:58:02'),
-(151, 12, 'Cleaning', '2023-12-11', '09:30 AM - 10:00 AM', '', 'None', 'barney the purple dinasour', 'Pending', 'N/A', '', '2023-12-08 19:02:57');
 
 -- --------------------------------------------------------
 
@@ -164,7 +147,16 @@ INSERT INTO `confirmation_data` (`id`, `email`, `hash_code`, `timestamp`, `expir
 (33, 'harveybucod21@gmail.com', '313a8fe328a76c4d3c6c3a3151655c98e9ec5820be026435f6e098b47aff9ff5', '2023-12-05 17:51:29', '2023-12-06 17:51:29', 0),
 (34, 'harveybucod21@gmail.com', '21903f0e57eba10b9414639c247f413e9834b103a837804f59b67c3f26b56b03', '2023-12-05 18:57:41', '2023-12-06 18:57:41', 0),
 (35, 'Sample@gmail.com', 'f633660e3b8f7ffe73716d1f21c04e499331f84b95d5f5754a2bc78e342883a9', '2023-12-05 19:39:10', '2023-12-06 19:39:10', 0),
-(36, 'Sample@gmail.com', 'cf32a2041ab13db9f4e03297a10a649de812413c98ebded62b8f22bcd62ec3fa', '2023-12-06 18:13:42', '2023-12-07 18:13:42', 0);
+(36, 'Sample@gmail.com', 'cf32a2041ab13db9f4e03297a10a649de812413c98ebded62b8f22bcd62ec3fa', '2023-12-06 18:13:42', '2023-12-07 18:13:42', 0),
+(37, 'Sample@gmail.com', 'b1fc2bd488f2dc9ea28ed993de65c0ac5a762a476c03e428b8c4825d16cf1081', '2023-12-09 16:00:01', '2023-12-10 16:00:01', 0),
+(38, 'Sample@gmail.com', '92a742ad8eab617040b1929213d09f22e2b6563c226912768ead94ab72ccef30', '2023-12-09 17:36:40', '2023-12-09 17:37:40', 0),
+(40, 'Sample@gmail.com', 'f4b96267e5ce5fbb96ada0b424aae176206fa98e80a6d848705e0873d8def86a', '2023-12-09 17:43:19', '2023-12-09 17:44:19', 0),
+(42, 'mobs.dominiquemartinez@gmail.com', '026d3302c20697fdba3e9c3af298a7ff95caf01ea28de9d5d290a399a09a09dd', '2023-12-09 17:50:05', '2023-12-09 17:51:05', 0),
+(43, 'mobs.dominiquemartinez@gmail.com', 'ebd6859439916b3a0e10494f2cb1369844f19bed6e7c54acc3c079b2cf3a05e4', '2023-12-09 18:05:22', '2023-12-09 18:06:22', 0),
+(45, 'mobs.dominiquemartinez@gmail.com', '5523eeb6a642cfd6239696d92d581c3dea7a21b3367b6b73ea64f7da947bec78', '2023-12-09 18:07:25', '2023-12-09 18:08:25', 0),
+(46, 'harveybucod21@gmail.com', 'ac228da0c6b2deeda177a7cc6933d9c96824007c8dc89966793538e09f870b54', '2023-12-09 18:07:28', '2023-12-09 18:08:28', 0),
+(47, 'mobs.dominiquemartinez@gmail.com', '7efabe2d8957bd79e2a82f8991880b2ff593f9c4883fe98fca078b8805523194', '2023-12-10 02:32:57', '2023-12-10 02:33:57', 0),
+(48, 'harveybucod21@gmail.com', '59a64f4c121fd4e5f3917d232086b65146fe1e5466bc5eac98761a0192c2f967', '2023-12-10 02:33:00', '2023-12-10 02:34:00', 1);
 
 -- --------------------------------------------------------
 
@@ -184,25 +176,27 @@ CREATE TABLE `patients_user` (
   `Active` int(11) NOT NULL DEFAULT 0,
   `profilePic` varchar(255) NOT NULL,
   `last_activity` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `activation_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `activation_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ForgotPass` varchar(255) NOT NULL,
+  `forgot_expiration` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patients_user`
 --
 
-INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`, `activation_timestamp`) VALUES
-(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-12-07 17:27:18', '2023-12-07 15:19:04'),
-(2, 'mobs.dominiquemartinez@gmail.com', 'Crizsabel Castillo', 'Abar 1st esteban blk San jose City Nueva Ecija', '09959866117', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-08 17:17:43', '2023-12-07 15:19:04'),
-(3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04'),
-(4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
-(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
-(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
-(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
-(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
-(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04'),
-(20, 'harveybucod21@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '4256', 'e5841df2166dd424a57127423d276bbe', 'User', 1, '', '2023-12-07 16:06:23', '2023-12-07 16:06:05'),
-(21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40');
+INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`, `activation_timestamp`, `ForgotPass`, `forgot_expiration`) VALUES
+(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-12-09 18:48:48', '2023-12-07 15:19:04', '1321987590', NULL),
+(2, 'mobs.dominiquemartinez@gmail.com', 'Crizsabel Castillo', 'Abar 1st esteban blk San jose City Nueva Ecija', '09959866117', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-08 17:17:43', '2023-12-07 15:19:04', '', NULL),
+(3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04', '', NULL),
+(4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(20, 'harveybucod21@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', 'Harveybucod21', 'e5841df2166dd424a57127423d276bbe', 'User', 1, '', '2023-12-10 02:31:32', '2023-12-07 16:06:05', '554070821', '2023-12-10 02:59:49'),
+(21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -220,22 +214,6 @@ CREATE TABLE `reservation` (
   `status` varchar(255) NOT NULL,
   `confirmationHash` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `reservation`
---
-
-INSERT INTO `reservation` (`reservationID`, `userID`, `serviceName`, `start_date`, `end_date`, `remarks`, `status`, `confirmationHash`) VALUES
-(53, 1, 'Root canal theraphy', '2023-11-10 09:30:00', '2023-11-10 10:00:00', 'ssasddssdd', 'Done', ''),
-(54, 1, 'Cleaning', '2023-11-09 11:00:00', '2023-11-09 11:30:00', 'ssasddssdd', 'Done', ''),
-(55, 1, 'Cleaning', '2023-11-07 01:30:00', '2023-11-07 02:00:00', 'ssasddssdd', 'Pending', ''),
-(56, 1, 'Root canal theraphy', '2023-11-07 09:00:00', '2023-11-07 09:30:00', 'ssasddssdd', 'Pending', ''),
-(57, 1, 'Cleaning', '2023-11-07 08:30:00', '2023-11-07 09:00:00', 'ssasddssdd', 'Pending', ''),
-(58, 1, 'Root canal theraphy', '2023-11-07 10:30:00', '2023-11-07 11:00:00', 'ssasddssdd', 'Pending', ''),
-(59, 1, 'Root canal theraphy', '2023-11-06 11:00:00', '2023-11-06 11:30:00', 'ssasddssdd', 'Cancel', ''),
-(64, 1, 'Root canal theraphy', '2023-11-18 11:30:00', '2023-11-18 12:00:00', '', 'Cancel', ''),
-(65, 1, 'Cleaning', '2023-11-15 08:30:00', '2023-11-15 09:00:00', 'sssss', 'Cancel', ''),
-(66, 1, 'Cleaning', '2023-11-15 11:00:00', '2023-11-15 11:30:00', '', 'Cancel', '');
 
 -- --------------------------------------------------------
 
@@ -270,17 +248,6 @@ CREATE TABLE `servicetbl` (
   `filename` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `servicetbl`
---
-
-INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`) VALUES
-('asd', 123332, 'upload/6572f3fdf2ffb9.59752021.jpg', 'sdasdad'),
-('Braces', 25000, 'upload/6562352146f467.76015121.jpg', 'These help your teeth to straight'),
-('Cleaning', 700, '', '30-Minutes'),
-('Gum Depigmentation', 800, 'upload/656601709ada52.14428633.jpg', 'Para sa maitim na gilagid'),
-('Root canal theraphy', 1000, '', '30-minutes');
 
 -- --------------------------------------------------------
 
@@ -440,7 +407,7 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `bookings_record`
@@ -452,7 +419,7 @@ ALTER TABLE `bookings_record`
 -- AUTO_INCREMENT for table `confirmation_data`
 --
 ALTER TABLE `confirmation_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `patients_user`

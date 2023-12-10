@@ -2,6 +2,7 @@
 
 include_once("connection/connection.php");
 $con = connection();
+date_default_timezone_set('Asia/Manila');
 
 $currentDate = date('Y-m-d');
 $reminderDate = date('Y-m-d', strtotime($currentDate . ' + 2 days'));

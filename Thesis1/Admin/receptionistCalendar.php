@@ -81,11 +81,11 @@ $userID = $_SESSION['UserID'];
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 16){
+                if($totalBookings == 14){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
     
                 }else{
-                    $avaislots = 16 - $totalBookings;
+                    $avaislots = 14 - $totalBookings;
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookReceptionist.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
     
                 }
@@ -401,7 +401,7 @@ $userID = $_SESSION['UserID'];
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger" style="background:#9f9875;border:none;color:#fff">
-                                <h1>Online Booking System</h1>
+                                <h1>Calendar</h1>
                                 </div>
                                 <?php
                                     $dateComponents = getdate();

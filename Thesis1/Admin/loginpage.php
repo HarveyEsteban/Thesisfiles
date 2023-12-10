@@ -93,6 +93,22 @@
     <link rel="stylesheet" href="assets/css/Feature-Section-MD.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add a custom class to the button */
+        .no-hover-effect {
+            text-decoration: none !important; /* Remove underline */
+            color: #007bff !important; /* Set the text color */
+            cursor: auto !important; /* Set the cursor to default */
+        }
+
+        /* Style for the button when it's not being hovered */
+        .no-hover-effect:hover {
+            text-decoration: none !important; /* Remove underline */
+            color: #007bff !important; /* Set the text color */
+            cursor: auto !important; /* Set the cursor to default */
+        }
+    </style>
     
 </head>
 
@@ -134,8 +150,12 @@
                                     <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                 </div> -->
                             </div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="background: rgb(159,152,117);border-radius: 9px;border-color: rgb(159,152,117);border-top-color: rgb(159,152,117); " name="login-button">Login</button>
-                            <hr>
-                            <hr>
+                        </form>
+
+                        <form method="post">
+                            <div class="text-center">
+                                <a href="forgotPass.php" >Forgot password?</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -146,6 +166,9 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/Ultimate-Event-Calendar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
