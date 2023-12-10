@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 $con = connection();
 
 $currentDate = date('Y-m-d');
-$reminderDate = date('Y-m-d', strtotime($currentDate . ' + 2 days'));
+$reminderDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
 
 
 

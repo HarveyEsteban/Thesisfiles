@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 03:55 AM
+-- Generation Time: Dec 10, 2023 at 02:59 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -42,29 +42,15 @@ CREATE TABLE `bookinglog` (
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `bookings_record`
+-- Dumping data for table `bookinglog`
 --
 
-CREATE TABLE `bookings_record` (
-  `ID` int(11) NOT NULL,
-  `FIRSTNAME` varchar(255) NOT NULL,
-  `MIDDLENAME` varchar(255) NOT NULL,
-  `LASTNAME` varchar(255) NOT NULL,
-  `PHONE` varchar(255) NOT NULL,
-  `EMAIL` varchar(255) NOT NULL,
-  `DATE` date NOT NULL,
-  `AUTONUM` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `bookings_record`
---
-
-INSERT INTO `bookings_record` (`ID`, `FIRSTNAME`, `MIDDLENAME`, `LASTNAME`, `PHONE`, `EMAIL`, `DATE`, `AUTONUM`) VALUES
-(1, 'ANDRES', 'PAUSAL', 'JARIO', '09306247025', 'andresjario26@gmail.com', '2023-03-30', 'TRAC155965404521');
+INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
+(164, 12, 'Braces', '2023-12-10', '04:00 PM - 04:30 PM', 'x', 'None', 'arsadasd', 'Done', 'N/A', '', '2023-12-10 09:57:46'),
+(165, 12, 'Braces', '2023-12-10', '04:30 PM - 05:00 PM', 'sss', 'None', 'ssss', 'Done', 'N/A', '', '2023-12-10 09:57:55'),
+(166, 2, 'Bunot', '2023-12-12', '04:30 PM - 05:00 PM', 'sssssss', 'Vovx', '', 'Done', 'N/A', '', '2023-12-10 09:56:25'),
+(167, 12, 'Braces', '2023-12-12', '02:00 PM - 02:30 PM', 'Kupal', 'None', 'ssss', 'Cancel', 'N/A', '', '2023-12-10 11:39:01');
 
 -- --------------------------------------------------------
 
@@ -110,7 +96,65 @@ INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `ch
 (0, 3, 1, 'asd', '2023-12-05 09:57:03', 0),
 (0, 1, 3, 'asd', '2023-12-05 09:57:12', 0),
 (0, 3, 1, 'Hello motherfucker', '2023-12-05 10:00:52', 0),
-(0, 1, 3, 'Yow Stupid', '2023-12-05 10:02:02', 0);
+(0, 1, 3, 'Yow Stupid', '2023-12-05 10:02:02', 0),
+(0, 3, 1, 'Hello admin', '2023-12-10 12:12:30', 0),
+(0, 3, 1, 'ssss', '2023-12-10 12:14:29', 0),
+(0, 3, 1, 'hey there\n', '2023-12-10 12:43:10', 0),
+(0, 1, 3, 'Hey What can i do for you?', '2023-12-10 12:43:25', 0),
+(0, 1, 3, 'hotdog', '2023-12-10 12:43:34', 0),
+(0, 3, 1, 'zxcxcz', '2023-12-10 12:47:43', 0),
+(0, 3, 1, 'asdasd', '2023-12-10 12:49:11', 0),
+(0, 3, 1, 'ssss', '2023-12-10 12:49:22', 0),
+(0, 3, 1, 'dasdasdasd', '2023-12-10 12:49:28', 0),
+(0, 1, 3, 'asdasdasdasd', '2023-12-10 12:50:43', 0),
+(0, 1, 3, 'Hey there', '2023-12-10 12:51:24', 0),
+(0, 3, 1, 'Hello', '2023-12-10 12:51:42', 0),
+(0, 3, 1, 'ssss', '2023-12-10 12:51:59', 0),
+(0, 3, 1, 'asdasdasdas', '2023-12-10 12:52:11', 0),
+(0, 1, 3, 'ssss\n', '2023-12-10 12:53:10', 0),
+(0, 1, 3, 'ssssss', '2023-12-10 12:53:16', 0),
+(0, 3, 1, 'asdasddd', '2023-12-10 12:53:28', 0),
+(0, 3, 1, 'ssss', '2023-12-10 12:55:05', 0),
+(0, 3, 1, 'leee harvey', '2023-12-10 12:58:38', 0),
+(0, 3, 1, 'ssss', '2023-12-10 13:02:38', 0),
+(0, 1, 3, 'sssss', '2023-12-10 13:03:07', 0),
+(0, 3, 1, 'asdasdads', '2023-12-10 13:04:05', 0),
+(0, 1, 3, 'asdasdasdasdasd', '2023-12-10 13:04:25', 0),
+(0, 1, 3, 'sssdasd', '2023-12-10 13:04:42', 0),
+(0, 1, 3, 'asdasdd', '2023-12-10 13:04:51', 0),
+(0, 1, 3, 'sdasd', '2023-12-10 13:09:43', 0),
+(0, 3, 1, 'hey', '2023-12-10 13:14:01', 0),
+(0, 3, 1, 'dddsad', '2023-12-10 13:14:32', 0),
+(0, 1, 3, 'sasddd', '2023-12-10 13:14:38', 0),
+(0, 1, 3, 'aasdasd', '2023-12-10 13:14:50', 0),
+(0, 1, 3, 'asddaasd', '2023-12-10 13:15:01', 0),
+(0, 3, 1, 'Hey ', '2023-12-10 13:15:14', 0),
+(0, 3, 1, 'wrqwrqwr', '2023-12-10 13:15:58', 0),
+(0, 1, 3, 'sdaasdasasd', '2023-12-10 13:16:07', 0),
+(0, 1, 3, 'ssad', '2023-12-10 13:16:32', 0),
+(0, 3, 1, 'sdasd', '2023-12-10 13:17:06', 0),
+(0, 1, 3, 'afafasdf', '2023-12-10 13:17:33', 0),
+(0, 1, 3, 'asdsadsa', '2023-12-10 13:18:12', 0),
+(0, 3, 1, 'asdadsasd', '2023-12-10 13:18:58', 0),
+(0, 1, 3, 'asdasdas', '2023-12-10 13:24:52', 0),
+(0, 3, 1, 'asdasdasdd', '2023-12-10 13:31:06', 0),
+(0, 1, 3, 'asdadssda', '2023-12-10 13:33:22', 0),
+(0, 3, 1, 'dasdasd', '2023-12-10 13:34:56', 0),
+(0, 1, 3, 'asddd', '2023-12-10 13:36:17', 0),
+(0, 1, 3, 'asdasddd', '2023-12-10 13:36:29', 0),
+(0, 1, 3, 'asddd', '2023-12-10 13:37:11', 0),
+(0, 3, 1, 'sadwwds', '2023-12-10 13:37:38', 0),
+(0, 3, 1, 'eeesd', '2023-12-10 13:37:51', 0),
+(0, 3, 1, 'asddd', '2023-12-10 13:39:35', 0),
+(0, 1, 3, 'asdddasd', '2023-12-10 13:47:28', 0),
+(0, 1, 3, 'ddddd', '2023-12-10 13:47:38', 0),
+(0, 1, 3, 'assss', '2023-12-10 13:50:24', 0),
+(0, 1, 3, 'sasdddd', '2023-12-10 13:50:49', 0),
+(0, 1, 3, 'asdddd', '2023-12-10 13:51:03', 0),
+(0, 1, 3, 'ddd', '2023-12-10 13:51:24', 0),
+(0, 1, 3, 'asddd', '2023-12-10 13:51:36', 0),
+(0, 3, 1, 'assdwwww', '2023-12-10 13:51:50', 0),
+(0, 3, 1, 'asddsw', '2023-12-10 13:53:00', 1);
 
 -- --------------------------------------------------------
 
@@ -156,7 +200,8 @@ INSERT INTO `confirmation_data` (`id`, `email`, `hash_code`, `timestamp`, `expir
 (45, 'mobs.dominiquemartinez@gmail.com', '5523eeb6a642cfd6239696d92d581c3dea7a21b3367b6b73ea64f7da947bec78', '2023-12-09 18:07:25', '2023-12-09 18:08:25', 0),
 (46, 'harveybucod21@gmail.com', 'ac228da0c6b2deeda177a7cc6933d9c96824007c8dc89966793538e09f870b54', '2023-12-09 18:07:28', '2023-12-09 18:08:28', 0),
 (47, 'mobs.dominiquemartinez@gmail.com', '7efabe2d8957bd79e2a82f8991880b2ff593f9c4883fe98fca078b8805523194', '2023-12-10 02:32:57', '2023-12-10 02:33:57', 0),
-(48, 'harveybucod21@gmail.com', '59a64f4c121fd4e5f3917d232086b65146fe1e5466bc5eac98761a0192c2f967', '2023-12-10 02:33:00', '2023-12-10 02:34:00', 1);
+(48, 'harveybucod21@gmail.com', '59a64f4c121fd4e5f3917d232086b65146fe1e5466bc5eac98761a0192c2f967', '2023-12-10 02:33:00', '2023-12-10 02:34:00', 0),
+(49, 'harveybucod21@gmail.com', '2e7ffb8513532f4c8dc82748eec4fda0b2b2deeb57e2001a9f0a6e1ceb02df61', '2023-12-10 07:12:33', '2023-12-10 07:13:33', 1);
 
 -- --------------------------------------------------------
 
@@ -194,47 +239,11 @@ INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`
 (6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
-(12, 'Recept@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Receptionist123', '', 'Receptionist', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(12, 'Recept@gmail.com', 'Harvey', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Helloworld123', '', 'Receptionist', 1, '', '2023-12-10 09:45:48', '2023-12-07 15:19:04', '', NULL),
 (20, 'harveybucod21@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', 'Harveybucod21', 'e5841df2166dd424a57127423d276bbe', 'User', 1, '', '2023-12-10 02:31:32', '2023-12-07 16:06:05', '554070821', '2023-12-10 02:59:49'),
-(21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40', '', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reservation`
---
-
-CREATE TABLE `reservation` (
-  `reservationID` int(11) NOT NULL,
-  `userID` int(11) NOT NULL,
-  `serviceName` varchar(255) NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `remarks` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `confirmationHash` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `services`
---
-
-CREATE TABLE `services` (
-  `serviceID` int(11) NOT NULL,
-  `serviceName` varchar(255) NOT NULL,
-  `Price` int(11) NOT NULL,
-  `estTime` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `services`
---
-
-INSERT INTO `services` (`serviceID`, `serviceName`, `Price`, `estTime`) VALUES
-(1, 'Cleaning', 700, '30-minutes'),
-(2, 'Root canal therapy', 1000, '60 minutes');
+(21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40', '', NULL),
+(22, 'Pople@gmail.com', 'New', '', '', 'NewPanda123', '', 'Receptionist', 1, '', '2023-12-10 09:22:59', '2023-12-10 09:22:59', '', NULL),
+(23, 'Pople@gmail.com', 'New', '', '', 'NewPanda123', '', 'Receptionist', 1, '', '2023-12-10 09:23:41', '2023-12-10 09:23:41', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -244,98 +253,21 @@ INSERT INTO `services` (`serviceID`, `serviceName`, `Price`, `estTime`) VALUES
 
 CREATE TABLE `servicetbl` (
   `serviceName` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
+  `price` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `teeth`
---
-
-CREATE TABLE `teeth` (
-  `tooth_id` int(11) NOT NULL,
-  `tooth_type` varchar(50) NOT NULL,
-  `tooth_number` int(11) NOT NULL,
-  `status` enum('Present','Pulled') DEFAULT 'Present',
-  `position` enum('Upper','Lower') NOT NULL
+  `description` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'Un-Archive'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `teeth`
+-- Dumping data for table `servicetbl`
 --
 
-INSERT INTO `teeth` (`tooth_id`, `tooth_type`, `tooth_number`, `status`, `position`) VALUES
-(1, 'Incisor', 1, 'Present', 'Upper'),
-(2, 'Canine', 2, 'Pulled', 'Upper'),
-(3, 'Incisor', 3, 'Present', 'Upper'),
-(4, 'Canine', 4, 'Present', 'Upper'),
-(5, 'Premolar', 5, 'Present', 'Upper'),
-(6, 'Molar', 6, 'Pulled', 'Upper'),
-(7, 'Incisor', 7, 'Present', 'Upper'),
-(8, 'Canine', 8, 'Present', 'Upper'),
-(9, 'Premolar', 9, 'Present', 'Upper'),
-(10, 'Molar', 10, 'Present', 'Upper'),
-(11, 'Incisor', 11, 'Present', 'Upper'),
-(12, 'Canine', 12, 'Present', 'Upper'),
-(13, 'Premolar', 13, 'Present', 'Upper'),
-(14, 'Molar', 14, 'Present', 'Upper'),
-(15, 'Incisor', 15, 'Present', 'Upper'),
-(16, 'Canine', 16, 'Present', 'Upper'),
-(17, 'Incisor', 1, 'Present', 'Lower'),
-(18, 'Canine', 2, 'Present', 'Lower'),
-(19, 'Incisor', 3, 'Present', 'Lower'),
-(20, 'Canine', 4, 'Present', 'Lower'),
-(21, 'Premolar', 5, 'Present', 'Lower'),
-(22, 'Molar', 6, 'Present', 'Lower'),
-(23, 'Incisor', 7, 'Present', 'Lower'),
-(24, 'Canine', 8, 'Present', 'Lower'),
-(25, 'Premolar', 9, 'Present', 'Lower'),
-(26, 'Molar', 10, 'Present', 'Lower'),
-(27, 'Incisor', 11, 'Present', 'Lower'),
-(28, 'Canine', 12, 'Present', 'Lower'),
-(29, 'Premolar', 13, 'Present', 'Lower'),
-(30, 'Molar', 14, 'Present', 'Lower'),
-(31, 'Incisor', 15, 'Present', 'Lower'),
-(32, 'Canine', 16, 'Pulled', 'Lower');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `timeslot`
---
-
-CREATE TABLE `timeslot` (
-  `timeslotID` int(11) NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
-  `date` date NOT NULL,
-  `is_available` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `timeslot`
---
-
-INSERT INTO `timeslot` (`timeslotID`, `start_time`, `end_time`, `date`, `is_available`) VALUES
-(7, '08:00:00', '08:30:00', '2023-10-11', 1),
-(8, '08:30:00', '09:00:00', '2023-10-11', 1),
-(9, '09:00:00', '09:30:00', '2023-10-11', 1),
-(10, '09:30:00', '10:00:00', '2023-10-11', 1),
-(11, '10:00:00', '10:30:00', '2023-10-11', 1),
-(12, '10:30:00', '11:00:00', '2023-10-11', 1),
-(13, '11:00:00', '11:30:00', '2023-10-11', 1),
-(14, '11:30:00', '12:00:00', '2023-10-11', 1),
-(15, '01:00:00', '01:30:00', '2023-10-11', 1),
-(16, '01:30:00', '02:00:00', '2023-10-11', 1),
-(17, '02:00:00', '02:30:00', '2023-10-11', 1),
-(18, '02:30:00', '03:00:00', '2023-10-11', 1),
-(19, '03:00:00', '03:30:00', '2023-10-11', 1),
-(20, '03:30:00', '04:00:00', '2023-10-11', 1),
-(21, '04:00:00', '04:30:00', '2023-10-11', 1),
-(22, '04:30:00', '05:00:00', '2023-10-11', 1);
+INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`, `status`) VALUES
+('Braces', '4000', 'upload/6575603406fa67.06864760.png', 'Bakal', 'Un-Archive'),
+('Bunot', '400.00 - 700.00', 'upload/65756645bebd45.61223826.jpg', 'Tangal ngipin', 'Un-Archive'),
+('mcDo', '50', 'upload/6575604935cc12.43900192.png', 'mcChiken', 'Un-Archive'),
+('Ortho', '222.00 - 400.00', 'upload/657582b9050441.19550374.jpg', 'asdasafwd', 'Un-Archive');
 
 --
 -- Indexes for dumped tables
@@ -350,12 +282,6 @@ ALTER TABLE `bookinglog`
   ADD KEY `Userss` (`userID`);
 
 --
--- Indexes for table `bookings_record`
---
-ALTER TABLE `bookings_record`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `confirmation_data`
 --
 ALTER TABLE `confirmation_data`
@@ -368,36 +294,10 @@ ALTER TABLE `patients_user`
   ADD PRIMARY KEY (`userID`);
 
 --
--- Indexes for table `reservation`
---
-ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`reservationID`),
-  ADD KEY `User` (`userID`),
-  ADD KEY `Services` (`serviceName`);
-
---
--- Indexes for table `services`
---
-ALTER TABLE `services`
-  ADD PRIMARY KEY (`serviceID`);
-
---
 -- Indexes for table `servicetbl`
 --
 ALTER TABLE `servicetbl`
   ADD PRIMARY KEY (`serviceName`);
-
---
--- Indexes for table `teeth`
---
-ALTER TABLE `teeth`
-  ADD PRIMARY KEY (`tooth_id`);
-
---
--- Indexes for table `timeslot`
---
-ALTER TABLE `timeslot`
-  ADD PRIMARY KEY (`timeslotID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -407,49 +307,19 @@ ALTER TABLE `timeslot`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
-
---
--- AUTO_INCREMENT for table `bookings_record`
---
-ALTER TABLE `bookings_record`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`
 --
 ALTER TABLE `confirmation_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `patients_user`
 --
 ALTER TABLE `patients_user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT for table `reservation`
---
-ALTER TABLE `reservation`
-  MODIFY `reservationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-
---
--- AUTO_INCREMENT for table `services`
---
-ALTER TABLE `services`
-  MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `teeth`
---
-ALTER TABLE `teeth`
-  MODIFY `tooth_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT for table `timeslot`
---
-ALTER TABLE `timeslot`
-  MODIFY `timeslotID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
@@ -461,13 +331,6 @@ ALTER TABLE `timeslot`
 ALTER TABLE `bookinglog`
   ADD CONSTRAINT `Service` FOREIGN KEY (`serviceName`) REFERENCES `servicetbl` (`serviceName`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Userss` FOREIGN KEY (`userID`) REFERENCES `patients_user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `reservation`
---
-ALTER TABLE `reservation`
-  ADD CONSTRAINT `Services` FOREIGN KEY (`serviceName`) REFERENCES `servicetbl` (`serviceName`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `User` FOREIGN KEY (`userID`) REFERENCES `patients_user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,11 +7,13 @@ date_default_timezone_set('Asia/Manila');
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
      
-         if(isset($_GET['logout_code'])){
-        session_unset();
-        header("Location: Landingpage.php");
-    }
-
+if (isset($_GET['logout_code'])) {
+    session_unset();
+    session_destroy();
+    // Redirect to the landing page
+    header("Location: Landingpage.php");
+    exit(); // Make sure to exit after sending the header
+}
      function build_calendar($month, $year) {
         $mysqli = new mysqli('localhost', 'root', 'Thesis1', 'patientsdb');
         // $stmt = $mysqli->prepare("SELECT * FROM bookrecords WHERE MONTH(date) = ? AND YEAR(date) = ?");

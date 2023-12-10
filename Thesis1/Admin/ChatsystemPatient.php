@@ -5,11 +5,13 @@ session_start();
 $user = $_SESSION['UserLogin'];
 $con = connection();
 
-if(isset($_GET['logout_code'])){
-        session_unset();
-        header("Location: Landingpage.php");
-    }
-
+if (isset($_GET['logout_code'])) {
+    session_unset();
+    session_destroy();
+    // Redirect to the landing page
+    header("Location: Landingpage.php");
+    exit(); // Make sure to exit after sending the header
+}
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
 
@@ -61,7 +63,10 @@ if(isset($_GET['logout_code'])){
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

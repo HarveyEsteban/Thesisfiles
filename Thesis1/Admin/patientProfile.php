@@ -8,10 +8,13 @@
      $userID = $_SESSION['UserID'];
 
 
-    if(isset($_GET['logout_code'])){
-        session_unset();
-        header("Location: Landingpage.php");
-    }
+if (isset($_GET['logout_code'])) {
+    session_unset();
+    session_destroy();
+    // Redirect to the landing page
+    header("Location: Landingpage.php");
+    exit(); // Make sure to exit after sending the header
+}
 
 
 

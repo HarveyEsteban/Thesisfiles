@@ -54,7 +54,7 @@
                         $fileNameNew = uniqid('', true). "." . $fileActualExt;
                         $fileDestination = 'upload/' . $fileNameNew;
                         move_uploaded_file($fileTmpName, $fileDestination);
-                        echo "Sucess";
+
     
                         $sqlStmtImg = "INSERT INTO `servicetbl`(`serviceName`, `price`, `filename`, `description`) VALUES ('$serviceName','$servicePrice','$fileDestination','$serviceDescription')";
                         $exeStmt = $con -> query($sqlStmtImg);
@@ -74,6 +74,24 @@
             }
 
         }
+
+    }
+
+    if(isset($_GET['archiveName']))
+    {
+        $archiveName = $_GET['archiveName'];
+
+        $archivestmt = "UPDATE `servicetbl` SET `status`='Archive' WHERE serviceName = '$archiveName'";
+        $exestmt = $con->query($archivestmt);
+
+    }
+
+    if(isset($_GET['unArchive'])){
+
+        $unArchiveName = $_GET['unArchive'];
+
+        $unarchivestmt = "UPDATE `servicetbl` SET `status`='Un-Archive' WHERE serviceName = '$unArchiveName'";
+        $exestmt = $con->query($unarchivestmt);
 
     }
 
@@ -166,6 +184,11 @@
     <link rel="stylesheet" href="https://djpsoftwarecdn.azureedge.net/availabilitycss-v1/availability.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+    <style>
+        .hidden-column {
+            display: none;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -176,7 +199,7 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index.php" style="background: #ffffff;border-radius: 8px;margin-top: 13px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;"><i class="far fa-calendar" style="color: #3e3d1a;"></i><span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Calendar</span></a></li>
                     <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php"><i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php"><i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php"><i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Service Maintenance</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php"><i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Reports</span></a></li>
+                    <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php"><i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php"><i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php"><i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Maintenance</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php"><i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Reports</span></a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
@@ -200,91 +223,261 @@
                                 </div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">Dr. Charry Tubiera</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <h3 class="text-dark mb-0" style="font-weight: bold;">Service Maintenance</h3>
-                    </div>
-                </div>
-                <form action="" method="post" enctype="multipart/form-data">
-                <div class="container"><label class="form-label" style="margin-right: 23px;">Name&nbsp;</label><input name="nametxt" id="nametxt" type="text" style="margin-bottom: 8px;"><button class="btn btn-primary" name="submit-btn" id="submit-btn" type="submit" style="background: rgb(225,218,191);color: var(--bs-black);transform: translate(119px);">Add Service</button></div>
-                <div class="container"><label class="form-label" style="margin-right: 22px;">Price&nbsp; &nbsp;</label><input name="pricetxt" id="pricetxt" type="text" style="padding-top: 1px;margin-bottom: 8px;"></div>
-                <div class="container"><label class="form-label" style="margin-right: 3px;">Description&nbsp;</label><input name="descriptiontxt" id="descriptiontxt" type="text" style="margin-top: 1px;">
-                <input required type="file" name="image" id="image">
-                </form>    
+
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-around mb-4">
+        <h3 class="text-dark mb-0" style="font-weight: bold;">Service Maintenance</h3>
+        <h3 class="text-dark mb-0" style="font-weight: bold;">Add Account</h3>
+    </div>
+</div>
+     <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Service Maintenance Section -->
+            <div class="container">
+                <form action="" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <!-- ... (form fields) ... -->
+            <div class="mb-3">
+                                    <label for="nametxt" class="form-label">Name</label>
+                                    <input name="nametxt" id="nametxt" type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a name.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pricetxt" class="form-label">Price</label>
+                                    <input name="pricetxt" id="pricetxt" type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a price.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descriptiontxt" class="form-label">Description</label>
+                                    <input name="descriptiontxt" id="descriptiontxt" type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image</label>
+                                    <input required type="file" name="image" id="image" class="form-control">
+                                    <div class="invalid-feedback">
+                                        Please choose an image.
+                                    </div>
+                                </div>
+                    <button class="btn btn-primary" name="submit-btn" id="submit-btn" type="submit">Add Service</button>
+                </form>
                 <div class="col">
-                        <div style="margin-bottom: 36px;"></div>
-                    </div>
+                    <div style="margin-bottom: 36px;"></div>
                 </div>
-                <div class="container">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Duration</th>
-                                    <th></th>
+            </div>
+        </div>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                                $retrieveServices = "SELECT * FROM `servicetbl`";
+        <div class="col-md-6">
+            <!-- Add New Account Section -->
+            <div class="container">
+                <!-- ... (previous Add New Account section content) ... -->
+                            <!-- ... (form fields) ... -->
+    </div>
+<form action="" method="post">
+    <div class="mb-3">
+         <label for="emailUsertxt" class="form-label">Email</label>
+        <input type="text" name="emailUsertxt" id="emailUsertxt" class="form-control" style="margin-bottom: 8px;">
+    </div>
+    <div class="mb-3">
+        <label for="nameUsertxt" class="form-label">Name</label>
+        <input type="text" name="nameUsertxt" id="nameUsertxt" class="form-control" style="padding-top: 1px; margin-bottom: 8px;">
+    </div>
+    <div class="mb-3">
+        <label for="passUsertxt" class="form-label">Password</label>
+        <input type="text" name="passUsertxt" id="passUsertxt" class="form-control" style="padding-top: 1px; margin-bottom: 8px;">
+    </div>
+    <div class="mb-3">
+        <label for="optAccess" class="form-label">Access</label>
+        <select name="optAccess" id="optAccess" class="form-select">
+            <option value="Receptionist">Receptionist</option>
+            <option value="Admin">Admin</option>
+        </select>
+    </div>
+                    <button class="btn btn-primary" name="submitUser-btn" id="submitUser-btn" type="submit">Add Service</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+  <div class="d-sm-flex justify-content-between align-items-center mb-4">
+    <h3 class="text-dark mb-0" style="font-weight: bold;">Available Services</h3>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody> <?php
+                                 $retrieveServices = "SELECT * FROM `servicetbl` WHERE status = 'Un-Archive'";
                                 $result = $con -> query($retrieveServices);
-
+                                // Loop through the rows of the table to display data
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    // $serviceID = $row['ServiceID'];
+                                    // Extracting data from the row
                                     $name = $row['serviceName'];
                                     $price = $row['price'];
                                     $est = $row['description'];
                                     $pic = $row['filename'];
 
-
-
-                                    echo '<tr>
-                                    <td>'.$name.'</td>    
-                                    <td>'.$price.'</td>
-                                    <td>'.$est.'</td>
-                                    <td><img src="'.$pic.'" alt="'.$name.'" style="max-width: 100px; max-height: 100px;"></td>
-                                    </tr>';
+                                    // Displaying the data in a table row
+                                    echo '
+                <tr>
+                    <td>' . $name . '</td>
+                    <td>' . $price . '</td>
+                    <td>' . $est . '</td>
+                    <td>
+                        <img src="' . $pic . '" alt="' . $name . '" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>
+                            <button">
+                                <a href="ServiceEdit.php?serviceName=' . $name . '" class="btn btn-danger">Edit</a>
+                            </button>
+                            <button">
+                                <a href="Servicemaintenance.php?archiveName=' . $name . '" class="btn btn-warning">Un-Avaiable</a>
+                            </button>
+                        </td>
+                    </tr>';
                                 }
+                                ?> </tbody>
+    </table>
+  </div>
+  <div class="d-sm-flex justify-content-between align-items-center mb-4">
+    <h3 class="text-dark mb-0" style="font-weight: bold;">Archive Services</h3>
+  </div>
+</div>
+<div class="container">
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody> <?php
+                                 $retrieveServices = "SELECT * FROM `servicetbl` WHERE status = 'Archive'";
+                                $result = $con -> query($retrieveServices);
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Extracting data from the row
+                                    $name = $row['serviceName'];
+                                    $price = $row['price'];
+                                    $est = $row['description'];
+                                    $pic = $row['filename'];
 
-                            ?>
+                                    // Displaying the data in a table row
+                                    echo '
+                    <tr>
+                        <td>' . $name . '</td>
+                        <td>' . $price . '</td>
+                        <td>' . $est . '</td>
+                        <td>
+                            <img src="' . $pic . '" alt="' . $name . '" style="max-width: 100px; max-height: 100px;">
+                            </td>
+                            <td>
+                                <button">
+                                    <a href="ServiceEdit.php?serviceName=' . $name . '" class="btn btn-danger">Edit</a>
+                                </button>
+                                <button">
+                                    <a href="Servicemaintenance.php?unArchive=' . $name . '" class="btn btn-warning">Available</a>
+                                </button>
+                            </td>
+                        </tr>';
+                                }
+                                ?> </tbody>
+    </table>
+  </div>
+</div>
 
-                           
+    <div class="container">
+        <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0" style="font-weight: bold;">Receptionist Account List</h3>
+    </div>
+        <table class="table">
+            <!-- ... (table header) ... -->
+             <thead class="thead-dark">
+        <tr>
+            <th></th>
+            <th></th>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Password</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+            <tbody>
+               <?php
 
 
-                            </tbody>
-                        </table>
-                    </div>
+                                        if(isset($_GET['UsernameID']))
+                                        {
+                                            $usID = $_GET['UsernameID']; // Use $_GET since you're passing data through the URL
+                                            $upName = isset($_POST['updateName']) ? $_POST['updateName'] : '';
+                                            $upEmail = isset($_POST['updateEmail']) ? $_POST['updateEmail'] : '';
+                                            $upPass = isset($_POST['updatepass']) ? $_POST['updatepass'] : '';
 
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <h3 class="text-dark mb-0" style="font-weight: bold;">Add New Account</h3>
-                    </div>
-                </div>
-                <form action="" method="post">
-                <div class="container"><label class="form-label" style="margin-right: 23px;">Email</label><input type="text" name="emailUsertxt" style="margin-bottom: 8px;"> <button class="btn btn-primary" name="submitUser-btn" id="submitUser-btn" type="submit" style="background: rgb(225,218,191);color: var(--bs-black);transform: translate(119px);">Sumbit</button></div>
-                <div class="container"><label class="form-label" style="margin-right: 22px;">Name</label><input type="text" name="nameUsertxt" style="padding-top: 1px;margin-bottom: 8px;"></div>
-                <div class="container"><label class="form-label" style="margin-right: 22px;">Password</label><input type="text" name="passUsertxt" style="padding-top: 1px;margin-bottom: 8px;"></div>
-                <div class="container"><label class="form-label" style="margin-right: 22px;">Access</label> 
-                <select name="optAccess" id="cars">
-                <option value="Receptionist">Receptionist</option>
-                <option value="Admin">Admin</option>
-                </select></div>
-                </div>
-                </form>
-            </div>
+                                            $sqlinsetNewinfo = "UPDATE `patients_user` SET `Name`='$upName',`Email`='$upEmail',`Password`='$upPass' WHERE userId = $usID";
+                                            $exestmt = $con -> query($sqlinsetNewinfo);
+                                            
+                                            echo "<script>alert('Update Done')</script>";
+                                        }
 
-            
-            
+
+
+                                 $retrieveServices = "SELECT * FROM `patients_user` WHERE Access = 'Receptionist'";
+                                $result = $con -> query($retrieveServices);
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+
+
+                                    $recepID = $row['userID'];
+                                    $email = $row['Email'];
+                                    $name = $row['Name'];
+                                    $pass = $row['Password'];
+
+                                    // Displaying the data in a table row
+                                    echo '
+                    <tr>
+                        <td class="hidden-column">'.$recepID.'</td>
+                        <td>
+                        <form method="post" action="Servicemaintenance.php?UsernameID=' . $recepID . '">
+                        <td>
+                            <td><input class="form-control" type="text" value="' . $email . '" name="updateEmail"></td>
+                           <td><input class="form-control" type="text" value="' . $name . '" name="updateName"></td>
+                            <td><input class="form-control" type="text" value="' . $pass . '" name="updatepass"></td>
+                            <td>
+                                    <button type="submit" class="btn btn-info">Update</button>
+                                 </form>
+                            </td>
+                        </tr>';
+                                }
+                                ?> 
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+
+
+
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright"></div>

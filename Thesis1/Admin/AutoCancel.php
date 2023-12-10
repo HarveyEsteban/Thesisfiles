@@ -5,7 +5,7 @@ $con = connection();
 date_default_timezone_set('Asia/Manila');
 
 $currentDate = date('Y-m-d');
-$reminderDate = date('Y-m-d', strtotime($currentDate . ' + 2 days'));
+$reminderDate = date('Y-m-d', strtotime($currentDate . ' + 3 days'));
 
 echo $reminderDate;
 

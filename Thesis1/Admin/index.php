@@ -5,6 +5,17 @@
      $con = connection();
      session_start();
 date_default_timezone_set('Asia/Manila');
+
+
+if (isset($_GET['logout_code'])) {
+    session_unset();
+    session_destroy();
+    // Redirect to the landing page
+    header("Location: Landingpage.php");
+    exit(); // Make sure to exit after sending the header
+}
+
+
      function build_calendar($month, $year) {
         $mysqli = new mysqli('localhost', 'root', 'Thesis1', 'patientsdb');
         // $stmt = $mysqli->prepare("SELECT * FROM bookrecords WHERE MONTH(date) = ? AND YEAR(date) = ?");
@@ -349,7 +360,7 @@ date_default_timezone_set('Asia/Manila');
                       </a>
                       <a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php">
                         <i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i>
-                        <span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Service Maintenance</span>
+                        <span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Maintenance</span>
                       </a>
                       <a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php">
                         <i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i>
@@ -381,8 +392,8 @@ date_default_timezone_set('Asia/Manila');
                           
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">Dr. Charry Tubiera</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="Landingpage.html"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">Admin</span><img class="border rounded-circle img-profile" src="assets/img/Profile.png"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="index.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
                                 </div>
                             </li>
                         </ul>

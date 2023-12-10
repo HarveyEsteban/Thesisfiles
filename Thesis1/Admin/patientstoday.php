@@ -1,14 +1,14 @@
 <?php
 include_once("connection/connection.php");
 $con = connection();
-
-$todaysDate = date("Y-m-d", strtotime("+1 day")); // add plus one because of timezone....
+date_default_timezone_set('Asia/Manila');
+$todaysDate = date("Y-m-d"); // add plus one because of timezone....
 
 // Define arrays for table headers
-$headerToday = ["Reservation ID", "Name", "Services", "Phone Number", "Address", "Time", "Add Remarks"];
-$headerAll = ["Reservation ID", "Name", "Services", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
-$headerAdminReservation = ["Reservation ID", "Name", "Services", "Admin Remarks", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
-$headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Services", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time", "Add Remarks"];
+$headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerAdminReservation = ["Reservation ID", "Name", "Type of Service", "Admin Remarks", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Type of Service", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
 
 // Determine which set of patients to display
 $isToday = isset($_POST['btn-Patients-Today']);
@@ -19,7 +19,7 @@ $isWalkInPatients = isset($_POST['btn-Walk-in-Patients']);
 // Initialize default values
 $header = $headerToday;
 $pageTitle = "Today's Patients";
-$retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name
+$retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
         WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
@@ -28,24 +28,24 @@ $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user
 if ($isAll) {
     $header = $headerAll;
     $pageTitle = "All Patients";
-    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate'";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None' ";
 } elseif ($isAdminReservation) {
     $header = $headerAdminReservation;
     $pageTitle = "Admin Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate' AND admin_remarks != 'None'";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks != 'None'";
 } elseif ($isWalkInPatients) {
     $header = $headerWalkInPatients;
     $pageTitle = "Walk-In Patients";
      $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.walk_in_name
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate' AND walk_in_name IS NOT NULL AND walk_in_name <> ''";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND walk_in_name IS NOT NULL AND walk_in_name <> ''";
     // Add the corresponding code for the Walk-In Patients button here if needed
 } else {
     // Handle other cases or set default values
@@ -135,7 +135,7 @@ if ($isAll) {
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index.php" style="background: #ffffff;border-radius: 8px;margin-top: 13px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;"><i class="far fa-calendar" style="color: #3e3d1a;"></i><span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Calendar</span></a></li>
                     <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php"><i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php"><i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php"><i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Service Maintenance</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php"><i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Reports</span></a></li>
+                    <li class="nav-item"><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php"><i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php"><i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span></a><a class="nav-link active" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php"><i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Maintenance</span></a><a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Reports.php"><i class="icon ion-document-text" style="color: #3e3d1a;font-size: 19px;"></i><span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Reports</span></a></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
@@ -168,11 +168,6 @@ if ($isAll) {
                                 <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);">Dr. Charry Tubiera</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -273,7 +268,7 @@ if ($isAll) {
                                                 case "Admin Remarks":
                                                     echo '<td>' . $row['admin_remarks'] . '</td>';
                                                     break;
-                                                case "Services":
+                                                case "Type of Service":
                                                     echo '<td>' . $row['serviceName'] . '</td>';
                                                     break;
                                                 case "Phone Number":
@@ -288,11 +283,16 @@ if ($isAll) {
                                                 case "Time":
                                                     echo '<td>' . $row['timeslot'] . '</td>';
                                                     break;
+                                                case "Family Member":
+                                                    echo '<td>' . $row['FamMemberName'] . '</td>';
+                                                    break;
                                                 case "Add Remarks":
                                                     echo '<td>
                                                             <input type="text" class="inputField" id="inputField' . $row['resID'] . '">
                                                         </td>';
                                                     break;
+
+
                                             }
                                         }
                                         echo '<td>

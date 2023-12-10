@@ -8,10 +8,13 @@
      $userID = $_SESSION['UserID'];
 
 
-         if(isset($_GET['logout_code'])){
-        session_unset();
-        header("Location: Landingpage.php");
-    }
+if (isset($_GET['logout_code'])) {
+    session_unset();
+    session_destroy();
+    // Redirect to the landing page
+    header("Location: Landingpage.php");
+    exit(); // Make sure to exit after sending the header
+}
 ?>
 
 
@@ -147,7 +150,7 @@
                         <div class="col" data-aos="fade-up" data-aos-duration="800">
         <div class="row">
             <?php
-                                         $getImagestmt = "SELECT * FROM `servicetbl`";
+                                         $getImagestmt = "SELECT * FROM `servicetbl` WHERE status = 'Un-Archive'";
                                          $exegetstmt = $con -> query($getImagestmt);
                                         
                                          if ($exegetstmt->num_rows > 0) {
@@ -157,8 +160,8 @@
                                                 echo "<div class='card' style='width: 100%; height: 100%;'>";
                                                 echo "<img class='img-fluid card-img-top' style='height: 300px; object-fit: ; border-top-left-radius: 7.6px;' src='" . $row['filename'] . "' alt='".$row['serviceName']."' width='600' height='300'>";
                                                 echo "<div class='card-body'>";
-                                                echo "<h5 class='card-title'><strong>" . $row['serviceName'] . "</strong></h5>";
-                                                echo "<p class='card-text'>&nbsp;" . $row['price'] . "</p>";
+                                                echo "<h5 class='card-title'><strong>" .$row['serviceName']. "</strong></h5>";
+                                                echo "<p class='card-text'>&nbsp;₱" . $row['price'] . "</p>";
                                                 echo "<p class='card-text'>" . $row['description'] . "</p>";
                                                 echo "</div>"; // card-body
                                                 echo "</div>"; // card

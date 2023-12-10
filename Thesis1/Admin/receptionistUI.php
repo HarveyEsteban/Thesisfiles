@@ -3,15 +3,66 @@ include_once("connection/connection.php");
 $con = connection();
 
 session_start();
+date_default_timezone_set('Asia/Manila');
 
 $user = $_SESSION['UserLogin'];
 $userID = $_SESSION['UserID'];
-$todaysDate = date("Y-m-d", strtotime("+1 day")); // add plus one because of timezone.... 
-
+$todaysDate = date("Y-m-d"); // add plus one because of timezone.... 
 
 if (isset($_GET['logout_code'])) {
     session_unset();
+    session_destroy();
+    // Redirect to the landing page
     header("Location: Landingpage.php");
+    exit(); // Make sure to exit after sending the header
+}
+
+
+// Define arrays for table headers
+$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time", "Add Remarks"];
+$headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerAdminReservation = ["Reservation ID", "Name", "Type of Service", "Admin Remarks", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Type of Service", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+
+// Determine which set of patients to display
+$isToday = isset($_POST['btn-Patients-Today']);
+$isAdminReservation = isset($_POST['btn-Admin-Reservation']);
+$isAll = isset($_POST['btn-Patients-All']);
+$isWalkInPatients = isset($_POST['btn-Walk-in-Patients']);
+
+// Initialize default values
+$header = $headerToday;
+$pageTitle = "Today's Patients";
+$retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
+
+// Choose the header based on the button clicked
+if ($isAll) {
+    $header = $headerAll;
+    $pageTitle = "All Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None' ";
+} elseif ($isAdminReservation) {
+    $header = $headerAdminReservation;
+    $pageTitle = "Admin Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks != 'None'";
+} elseif ($isWalkInPatients) {
+    $header = $headerWalkInPatients;
+    $pageTitle = "Walk-In Patients";
+     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.walk_in_name
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND walk_in_name IS NOT NULL AND walk_in_name <> ''";
+    // Add the corresponding code for the Walk-In Patients button here if needed
+} else {
+    // Handle other cases or set default values
 }
 
 ?>
@@ -142,8 +193,6 @@ if (isset($_GET['logout_code'])) {
                                     </form>
                                 </div>
                             </li>
-                        
-                            <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
                                   echo  $user;
@@ -163,139 +212,149 @@ if (isset($_GET['logout_code'])) {
                                 </div>
 
                             </div>
-<form method="post" action="">
-    <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
-    <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
-</form>
+   <form method="post" action="">
+            <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
+            <button class="btn btn-primary btn-lg" type="submit" name="btn-Admin-Reservation">Admin Reservation</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-Walk-in-Patients">Walk-In Patients</button>
+        </form>
 
-<?php
-// Variable to determine which set of patients to display
-$isToday = isset($_POST['btn-Patients-Today']);
+        <h3 class="text-dark mb-0" style="font-weight: bold;"><?php echo $pageTitle; ?></h3>
 
-?>
+        <div class="card shadow">
+            <div class="card-body" style="height: 800px;">
+                <div class="row">
+                    <div class="col-md-6 text-nowrap">
+                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
+                    </div>
+                </div>
+                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 800px;">
+                    <table class="table my-0" id="dataTable">
+                      <thead class="thead-dark">
+                        <tr>
+                            <?php
+                            // Loop through the selected set of headers
+                            foreach ($header as $column) {
+                                echo "<th>$column</th>";
+                            }
+                            ?>
+                            <th></th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                           <?php
 
-<h3 class="text-dark mb-0" style="font-weight: bold;"><?php echo $isToday ? "Today's Patients" : "All Patients"; ?></h3>
-<div class="card shadow">
-    <div class="card-body" style="height: 800px;">
-        <div class="row">
-            <div class="col-md-6 text-nowrap">
-                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
+
+
+
+
+                                    $result =  $con->query($retrieveQuery);
+
+                                if (isset($_GET['doneID'])) {
+                                $usID = $_GET['doneID'];
+
+                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                                $execheck = $con->query($checkRemarksStmt);
+
+                                if ($execheck) {
+                                    $row = $execheck->fetch_assoc();
+                                    $total = $row['count'];
+
+                                    if ($total > 0) {
+                                        $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
+                                        $exeQuery = mysqli_query($con, $changeStatus);
+                                    } else {
+                                        echo "<script>alert('Please add a remark')</script>";
+                                    }
+                                } else {
+                                    echo "Error executing query: " . $con->error;
+                                }
+                            } elseif (isset($_GET['canID'])) {
+                                $usID = $_GET['canID'];
+
+                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+                                $execheck = $con->query($checkRemarksStmt);
+
+                                if ($execheck) {
+                                    $row = $execheck->fetch_assoc();
+                                    $total = $row['count'];
+
+                                    if ($total > 0) {
+                                        $changeStatusCan = "UPDATE `bookinglog` SET `status`='Cancel' WHERE resID = '$usID'";
+                                        $exeQuery2 = mysqli_query($con, $changeStatusCan);
+                                        echo "<script>alert('Remarks successfully added')</script>";
+                                    } else {
+                                        echo "<script>alert('Please add a remark')</script>";
+                                    }
+                                } else {
+                                    echo "Error executing query: " . $con->error;
+                                }
+                            }
+
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo '<tr>';
+                                        foreach ($header as $column) {
+                                            // Print corresponding value based on the column header
+                                          switch ($column) {
+                                                case "Reservation ID":
+                                                    echo '<td>' . $row['resID'] . '</td>';
+                                                    break;
+                                                case "Name":
+                                                    echo '<td>' . $row['Name'] . '</td>';
+                                                    break;
+                                                case "Walk-in Name":
+                                                    echo '<td>' . $row['walk_in_name'] . '</td>';
+                                                    break;
+                                                case "Admin Remarks":
+                                                    echo '<td>' . $row['admin_remarks'] . '</td>';
+                                                    break;
+                                                case "Type of Service":
+                                                    echo '<td>' . $row['serviceName'] . '</td>';
+                                                    break;
+                                                case "Phone Number":
+                                                    echo '<td>' . $row['PhoneNumber'] . '</td>';
+                                                    break;
+                                                case "Address":
+                                                    echo '<td>' . $row['Address'] . '</td>';
+                                                    break;
+                                                case "Date":
+                                                    echo '<td>' . $row['date'] . '</td>';
+                                                    break;
+                                                case "Time":
+                                                    echo '<td>' . $row['timeslot'] . '</td>';
+                                                    break;
+                                                case "Family Member":
+                                                    echo '<td>' . $row['FamMemberName'] . '</td>';
+                                                    break;
+                                                case "Add Remarks":
+                                                    echo '<td>
+                                                            <input type="text" class="inputField" id="inputField' . $row['resID'] . '">
+                                                        </td>';
+                                                    break;
+
+
+                                            }
+                                        }
+                                        echo '<td>
+                                                <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
+                                                <button"><a href="receptionistUI.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Done</a></button>
+                                                <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
+                                            </td>';
+                                        echo '</tr>';
+                                    }
+                                    ?>
+                        </tbody>
+                        <tfoot>
+                            <tr></tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info" style="height: 800px;">
-            <table class="table my-0" id="dataTable">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Reservation ID</th>
-                        <th>Name</th>
-                        <th>Services</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Add Remarks</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                    <?php
+        <!-- ... (rest of your body and script tags) ... -->
 
-                    $retrieveQuery = $isToday ?
-                        "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address,bookinglog.timeslot
-                            FROM bookinglog
-                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-                            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"
-                        :
-                        "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address,bookinglog.timeslot
-                            FROM bookinglog
-                            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-                            WHERE status = 'Pending' AND DATE(bookinglog.date) > '$todaysDate'";
-
-                    $result =  $con->query($retrieveQuery);
-
-                    if (isset($_GET['doneID'])) {
-                        $usID = $_GET['doneID'];
-
-                        $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                        $execheck = $con->query($checkRemarksStmt);
-
-                        if ($execheck) {
-                            $row = $execheck->fetch_assoc();
-                            $total = $row['count'];
-
-                            if ($total > 0) {
-                                $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
-                                $exeQuery = mysqli_query($con, $changeStatus);
-                            } else {
-                                echo "<script>alert('Please add a remark')</script>";
-                            }
-                        } else {
-                            echo "Error executing query: " . $con->error;
-                        }
-                    } elseif (isset($_GET['canID'])) {
-                        $usID = $_GET['canID'];
-
-                        $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                        $execheck = $con->query($checkRemarksStmt);
-
-                        if ($execheck) {
-                            $row = $execheck->fetch_assoc();
-                            $total = $row['count'];
-
-                            if ($total > 0) {
-                                $changeStatusCan = "UPDATE `bookinglog` SET `status`='Canceled' WHERE resID = '$usID'";
-                                $exeQuery2 = mysqli_query($con, $changeStatusCan);
-                                echo "<script>alert('Remarks successfully added')</script>";
-                            } else {
-                                echo "<script>alert('Please add a remark')</script>";
-                            }
-                        } else {
-                            echo "Error executing query: " . $con->error;
-                        }
-                    }
-
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $id = $row['resID'];
-                        $name = $row['Name'];
-                        $service = $row['serviceName'];
-                        $date = $row['date'];
-                        $phoneNumber = $row['PhoneNumber'];
-                        $address = $row['Address'];
-                        $time = $row['timeslot'];
-
-                        echo '<tr>
-                                <td>'.$id.'</td>    
-                                <td>'.$name.'</td>   
-                                <td>'.$service.'</td>
-                                <td>'.$phoneNumber.'</td>
-                                <td>'.$address.'</td>
-                                <td>'.$date.'</td>   
-                                <td>'.$time.'</td>
-                                <td>
-                                    <input type="text" class="inputField" id="inputField'.$id.'">
-                                </td>
-                                <td>
-                                    <input type="hidden" id="resID'.$id.'" name="resID" value="'.$id.'">
-                                    <button"><a href="receptionistUI.php?doneID='.$id.'" class="btn btn-danger">Done</a></button>
-                                    <button"><a href="receptionistUI.php?canID='.$id.'" class="btn btn-warning">Cancel</a></button>
-                                </td>
-                            </tr>';
-                    }
-
-                    ?>
-                </tbody>
-                <tfoot>
-                    <tr></tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-                          
+    </div>     
                 
                 
             

@@ -74,7 +74,7 @@ $con = connection();
     <div class="col" data-aos="fade-up" data-aos-duration="800">
         <div class="row">
             <?php
-                                         $getImagestmt = "SELECT * FROM `servicetbl`";
+                                         $getImagestmt = "SELECT * FROM `servicetbl` WHERE status = 'Un-Archive'";
                                          $exegetstmt = $con -> query($getImagestmt);
                                         
                                          if ($exegetstmt->num_rows > 0) {

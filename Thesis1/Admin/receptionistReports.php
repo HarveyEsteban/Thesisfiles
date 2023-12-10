@@ -3,7 +3,7 @@
     $con = connection();
 
     session_start();
-
+date_default_timezone_set('Asia/Manila');
 
     $user = $_SESSION['UserLogin'];
     $userID = $_SESSION['UserID'];
@@ -24,6 +24,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel&amp;display=swap">
@@ -56,6 +57,26 @@
     <link rel="stylesheet" href="https://djpsoftwarecdn.azureedge.net/availabilitycss-v1/availability.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-BBf4y1cZCf74iifZr1eMm3z2llQjZ5C+2a+nY8v1GCpkePhhBjiid8s1pL4N2pL" crossorigin="anonymous">
+      <style>
+
+        .centered-div {
+            text-align: center;
+            padding: 80px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            font-size: 30px;
+
+        }
+
+        .centered-div>h1{
+            font-size: 70px;
+        }
+
+
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -65,7 +86,7 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                 <li class="nav-item">
-  <a class="nav-link" href="receptionistUI.php" style="background: #ffffff;border-radius: 8px;margin-top: 13px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;">
+   <a class="nav-link" href="receptionistUI.php" style="background: #ffffff;border-radius: 8px;margin-top: 13px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;">
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people" style="color: #3e3d1a;">
       <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
     </svg>
@@ -80,6 +101,10 @@
   <a class="nav-link active" href="receptionistReports.php" style="background: #ffffff;border-radius: 8px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;margin-top: 0px;">
     <i class="icon ion-ios-paper-outline" style="color: #3e3d1a;"></i>
     <span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Reports</span>
+  </a>
+  <a class="nav-link active" href="receptionistCalendar.php" style="background: #ffffff;border-radius: 8px;border-color: var(--bs-blue);border-top-width: 1px;border-top-color: #95947c;border-bottom: 1px outset rgba(149,148,124,0.33);box-shadow: 0px 0px 10px rgb(159,152,117);--bs-body-bg: #fff;margin-top: 0px;">
+    <i class="far fa-calendar" style="color: #3e3d1a;"></i>
+    <span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Calendar</span>
   </a>
 </li>
                 </ul>
@@ -101,100 +126,214 @@
                                 </div>
                             </li>
                           
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
-                                    echo $user;
-                                ?></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a><a class="dropdown-item" href="receptionistReports.php?logout_code"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a></div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <h3 class="text-dark mb-0" style="font-weight: bold;">Reports</h3>
-                    </div>
-                    <div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal-1" style="border-radius: 0px;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="height: 80px;border-radius: 12px 7px 0px 0px;">
-                                        <h4 class="modal-title mb-0" style="font-weight: bold;color: rgb(77,77,77);">WALA PA</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" style="height: 312px;width: 498px;background: #ffffff;">
-                                        <div class="col-xl-12"></div>
-                                        <div class="col">
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer"></div>
+
+                        <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon1Modal">
+                                <div class="text-center">
+                                    <i class="fa fa-users fa-3x text-primary"></i>
+                                    <p class="mt-2">Active Users</p>
                                 </div>
-                            </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon4Modal">
+                                <div class="text-center">
+                                    <i class="fa fa-users fa-3x text-info"></i>
+                                    <p class="mt-2">Top Pick Services</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon2Modal">
+                                <div class="text-center">
+                                    <i class="fa fa-check-circle fa-3x text-success"></i>
+                                    <p class="mt-2">Done Reservations </p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon3Modal">
+                                <div class="text-center">
+                                    <i class="fa fa-exclamation fa-3x text-danger"></i>
+                                    <p class="mt-2">Canceled Reservations</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
+
+
+                    <div class="centered-div">
+                        <h1 class="text-dark">Welcome to your Weekly Report</h1>
+                        <br>
+                        <p class="mt-2">In here you can view different reports by cling the Icon above</p>
+                    </div>
+
+                <div class="modal fade" id="icon1Modal" tabindex="-1" role="dialog" aria-labelledby="icon1ModalLabel" aria-hidden="true">
+                    <!-- Add your modal content for Icon 1 here -->
+                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Active Users</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
                             <div class="table-responsive">
                             <table class="table">
-                                    <thead class="thead-dark">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Date Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $retrieveServices = "SELECT * FROM `patients_user` WHERE Access = 'User' AND  Active = '1'";
+                                $result = $con->query($retrieveServices);
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Extracting data from the row
+                                    $name = $row['Name'];
+                                    $email = $row['Email'];
+                                    $Phone = $row['PhoneNumber'];
+                                    $Address = $row['Address'];
+                                    $actTime = $row['activation_timestamp'];
+
+                                    $unixTime = strtotime($actTime);
+                                    $dateOnly = date("Y-m-d", $unixTime);
+
+                                    // Displaying the data in a table row
+                                    echo '
                                         <tr>
-                                            <th>Service Name</th>
-                                            <th>Number of Acquire</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        $weeklyService = "SELECT serviceName, COUNT(*) as Total_Acquired
-                                        FROM bookinglog
-                                        WHERE date >= CURDATE() - INTERVAL 1 WEEK
-                                        GROUP BY serviceName
-                                        ORDER BY Total_Acquired
-                                        ";
-                                        $resultService = $con->query($weeklyService);
-                                        
-                                            while ($row = mysqli_fetch_assoc($resultService)) {
-                                                
-                                                $serviceName = $row['serviceName'];
-                                                $totalAqq = $row['Total_Acquired'];
-
-
-                                                echo '<tr>
-                                                <td>'.$serviceName.'</td>    
-                                                <td>'.$totalAqq.'</td>
-                                                </tr>';
-
-
-                                            }
-
-                                    ?>
-                                    </tbody>
-                                </table>
+                                            <td>' . $name . '</td>
+                                            <td>' . $email . '</td>
+                                            <td>' . $Phone . '</td>
+                                            <td>' . $Address . '</td>
+                                            <td>' . $dateOnly . '</td>
+                                        </tr>';
+                                }
+                                ?>
+                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                        <div class="col-md-6">
+                    </div>
+                </div>
+
+    <div class="modal fade" id="icon4Modal" tabindex="-1" role="dialog" aria-labelledby="icon4ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-dark mb-0" style="font-weight: bold;">Top Pick Services</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>Patients Per Week</th>
+                                            <th>Service Name</th>
+                                            <th>Numbers Acquired</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $weeklyService = "SELECT bookinglog.serviceName, COUNT(*) as Total_Acquired, servicetbl.filename
+                                            FROM bookinglog
+                                            JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
+                                            WHERE date >= CURDATE() - INTERVAL 1 WEEK
+                                            GROUP BY serviceName
+                                            ORDER BY Total_Acquired";
+                                        $resultService = $con->query($weeklyService);
+
+                                        while ($row = mysqli_fetch_assoc($resultService)) {
+                                            $serviceName = $row['serviceName'];
+                                            $totalAqq = $row['Total_Acquired'];
+                                            $file = $row['filename'];
+
+                                            echo '<tr>
+                                                    <td>' . $serviceName . '</td>    
+                                                    <td>' . $totalAqq . '</td>
+                                                    <td><img src="' . $file. '" alt="'.$serviceName.'" style="max-width: 100px; max-height: 200px;"></td>
+                                                  </tr>';
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+</div>
+
+
+                <div class="modal fade" id="icon2Modal" tabindex="-1" role="dialog" aria-labelledby="icon2ModalLabel" aria-hidden="true">
+                    <!-- Add your modal content for Icon 2 here -->
+                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Done Reservation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type of Serive</th>
+                                            <th>date</th>
+                                            <th>Time</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead >
                                     <tbody>
                                        <?php
                                            //Use this code to get the total user weekly
-                                            $getWeeklyUser = "SELECT COUNT(*) as row_count FROM bookinglog WHERE date >= CURDATE() - INTERVAL 1 WEEK";
+                                            $getWeeklyUser = "SELECT bookinglog.serviceName, bookinglog.date, bookinglog.timeslot, bookinglog.remarks, patients_user.Name 
+                                            FROM `bookinglog` 
+                                            JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                            WHERE date >= CURDATE() - INTERVAL 1 WEEK";
                                             $resultUser = $con -> query($getWeeklyUser);
 
                                             while ($rowUser = mysqli_fetch_assoc($resultUser)) {
-                                                $count = $rowUser['row_count'];
-                                                
+                                                    $name = $rowUser['Name'];
+                                                    $service = $rowUser['serviceName'];
+                                                    $date = $rowUser['date'];
+                                                    $time = $rowUser['timeslot'];
+                                                    $remark = $rowUser['remarks'];
+                                                    
 
                                                 echo '<tr>
-                                                <td>'.$count.'</td>    
+                                                <td>'.$name.'</td>
+                                                <td>'.$service.'</td>
+                                                <td>'.$date.'</td>
+                                                <td>'.$time.'</td> 
+                                                <td>'.$remark.'</td>   
                                                 </tr>';
 
                                             }
@@ -204,102 +343,80 @@
 
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container py-4 py-xl-5">
-                    <div class="row gy-4 row-cols-2 row-cols-md-4">
-                        <div class="col">
-                            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon" style="background: rgb(187,177,114);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
-                                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
-                                    </svg></div>
-                                <div class="px-3">
-                                    <?php
-                                        $getallActiveUsetStmt = "SELECT COUNT(userID) AS ActiveUsers FROM patients_user WHERE Access = 'User' AND Active = 1";
-                                        $exestmt = $con -> query($getallActiveUsetStmt);
-                                        $row1 = mysqli_fetch_assoc($exestmt);
-
-                                        $allActiveUser = $row1['ActiveUsers'];
-                                    ?>
-                                    <h2 class="fw-bold mb-0"><?php echo $allActiveUser; ?></h2>
-                                    <p class="mb-0">Active Users</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon" style="background: rgb(187,177,114);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-tools">
-                                        <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"></path>
-                                    </svg></div>
-                                <div class="px-3">
-                                <?php
-                                        $getnumServicestmt = "SELECT COUNT(serviceName) AS allService FROM servicetbl";
-                                        $getServicesexe = $con -> query($getnumServicestmt);
-                                        $row2 = mysqli_fetch_assoc($getServicesexe);
-
-                                        $allservice = $row2['allService'];
-                                    ?>
-                                    <h2 class="fw-bold mb-0"><?php echo $allservice; ?></h2>
-                                    <p class="mb-0">Services</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon" style="background: rgb(187,177,114);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash-coin">
-                                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"></path>
-                                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"></path>
-                                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"></path>
-                                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"></path>
-                                    </svg></div>
-                                <div class="px-3">
-                                    <?php
-                                        $salesperweekSTMT = "SELECT SUM(servicetbl.price) AS TotalSales
-                                        FROM bookinglog
-                                        JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
-                                        WHERE status = 'Done' AND date >= CURDATE() - INTERVAL 1 WEEK
-                                        ";
-                                        $exesalesperWeek = $con-> query($salesperweekSTMT);
-                                        $row3 = mysqli_fetch_assoc($exesalesperWeek);
-
-                                        $getAllSales = $row3['TotalSales'];
-
-                                    ?>
-                                    <h2 class="fw-bold mb-0"><?php echo "₱".$getAllSales; ?></h2>
-                                    <p class="mb-0">Sales in a Week</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon" style="background: rgb(187,177,114);"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-exclamation-diamond-fill">
-                                        <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
-                                    </svg></div>
-                                <div class="px-3">
-                                    <?php
-                                        $getCancelUsers = "SELECT COUNT(status) AS allCanceled FROM reservation WHERE status = 'Cancel' AND start_date >= CURDATE() - INTERVAL 1 WEEK";
-                                        $exeCancelUsers = $con -> query($getCancelUsers);
-                                        $row4 = mysqli_fetch_assoc($exeCancelUsers);
-
-                                        $allcanceledUser = $row4['allCanceled'];
-                                    ?>
-                                    <h2 class="fw-bold mb-0"><?php echo $allcanceledUser; ?></h2>
-                                    <p class="mb-0">Canceled</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
-                <div class="container"></div>
-            </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"></div>
+
+                <div class="modal fade" id="icon3Modal" tabindex="-1" role="dialog" aria-labelledby="icon3ModalLabel" aria-hidden="true">
+                    <!-- Add your modal content for Icon 3 here -->
+                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Canceled Reservations</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                         <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type of Serive</th>
+                                            <th>date</th>
+                                            <th>Time</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead >
+                                    <tbody>
+                                       <?php
+                                           //Use this code to get the total user weekly
+                                            $getWeeklyUser = "SELECT bookinglog.serviceName, bookinglog.date, bookinglog.timeslot, bookinglog.remarks, patients_user.Name
+                                            FROM `bookinglog` 
+                                            JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                            WHERE date >= CURDATE() - INTERVAL 1 WEEK AND status = 'Cancel'";
+                                            $resultUser = $con -> query($getWeeklyUser);
+
+                                            while ($rowUser = mysqli_fetch_assoc($resultUser)) {
+                                                    $name = $rowUser['Name'];
+                                                    $service = $rowUser['serviceName'];
+                                                    $date = $rowUser['date'];
+                                                    $time = $rowUser['timeslot'];
+                                                    $remark = $rowUser['remarks'];
+
+                                                    
+
+                                                echo '<tr>
+                                                <td>'.$name.'</td>
+                                                <td>'.$service.'</td>
+                                                <td>'.$date.'</td>
+                                                <td>'.$time.'</td> 
+                                                <td>'.$remark.'</td>   
+                                                </tr>';
+
+                                            }
+
+                                       ?>
+
+
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </footer>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+        </div>
+               
+
+           
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://djpsoftwarecdn.azureedge.net/availabilityjs-v1/availability.min.js"></script>
@@ -309,7 +426,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

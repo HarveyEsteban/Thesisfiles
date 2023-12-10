@@ -80,7 +80,7 @@ $connect = new PDO("mysql:host=localhost;dbname=patientsdb", "root", "Thesis1");
       }
    }
 
-   function fetch_user_chat_history($from_user_id, $to_user_id, $connect)
+function fetch_user_chat_history($from_user_id, $to_user_id, $connect)
 {
  $query = "
  SELECT * FROM chat_message 
@@ -88,7 +88,7 @@ $connect = new PDO("mysql:host=localhost;dbname=patientsdb", "root", "Thesis1");
  AND to_user_id = '".$to_user_id."') 
  OR (from_user_id = '".$to_user_id."' 
  AND to_user_id = '".$from_user_id."') 
- ORDER BY timestamp 
+ ORDER BY timestamp DESC
  ";
  $statement = $connect->prepare($query);
  $statement->execute();
@@ -125,7 +125,6 @@ $connect = new PDO("mysql:host=localhost;dbname=patientsdb", "root", "Thesis1");
  ";
  $statement = $connect->prepare($query);
  $statement->execute();
- return $output;
  return $output;
 }
 
