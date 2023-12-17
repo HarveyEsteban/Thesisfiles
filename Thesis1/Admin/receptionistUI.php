@@ -19,10 +19,10 @@ if (isset($_GET['logout_code'])) {
 
 
 // Define arrays for table headers
-$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time", "Add Remarks"];
-$headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
-$headerAdminReservation = ["Reservation ID", "Name", "Type of Service", "Admin Remarks", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
-$headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Type of Service", "Phone Number", "Address", "Date", "Time", "Add Remarks"];
+$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time"];
+$headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time"];
+$headerAdminReservation = ["Reservation ID", "Name", "Type of Service", "Admin Remarks", "Phone Number", "Address", "Date", "Time"];
+$headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Type of Service", "Phone Number", "Address", "Date", "Time"];
 
 // Determine which set of patients to display
 $isToday = isset($_POST['btn-Patients-Today']);
@@ -31,22 +31,69 @@ $isAll = isset($_POST['btn-Patients-All']);
 $isWalkInPatients = isset($_POST['btn-Walk-in-Patients']);
 
 // Initialize default values
-$header = $headerToday;
-$pageTitle = "Today's Patients";
-$retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
-        FROM bookinglog
-        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
 
-// Choose the header based on the button clicked
-if ($isAll) {
+if(isset($_GET['resIDQR']))
+{
+    $qrID = $_GET['resIDQR'];
+    $header = $headerToday;
+    $pageTitle = "Today's Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+    FROM bookinglog
+    INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+    WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND resID = '$qrID'"; // Initialize with an empty string
+
+
+    $stmtCheckToday = "SELECT * from bookinglog where DATE(date) = '$todaysDate' and resID = '$qrID'";
+    $exestmt = $con -> query($stmtCheckToday);
+    $total = $exestmt -> num_rows;
+
+    if($total <= 0)
+    {
+        echo '<div class="alert alert-danger" role="alert">
+        No Reservation found!!
+        </div>';
+    }
+
+}else{
+    // $header = $headerToday;
+    // $pageTitle = "Today's Patients";
+    // $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+    //         FROM bookinglog
+    //         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+    //         WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
+
+    $searchKeyword = isset($_POST['searchKeyword']) ? $_POST['searchKeyword'] : '';
     $header = $headerAll;
     $pageTitle = "All Patients";
-    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None' ";
-} elseif ($isAdminReservation) {
+        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+        $isAll = true;
+
+    if (!empty($searchKeyword)) {
+        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
+        $isAll = true;
+    }
+}
+
+
+if($isToday)
+{
+
+    $isAll = false;
+    $header = $headerToday;
+    $pageTitle = "Today's Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+            FROM bookinglog
+            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
+
+}
+// Choose the header based on the button clicked
+elseif ($isAdminReservation) {
+
+    $isAll = false;
     $header = $headerAdminReservation;
     $pageTitle = "Admin Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks
@@ -54,14 +101,30 @@ if ($isAll) {
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
         WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks != 'None'";
 } elseif ($isWalkInPatients) {
+
+    $isAll = false;
     $header = $headerWalkInPatients;
     $pageTitle = "Walk-In Patients";
      $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.walk_in_name
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND walk_in_name IS NOT NULL AND walk_in_name <> ''";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND walk_in_name != 'None'";
     // Add the corresponding code for the Walk-In Patients button here if needed
-} else {
+} 
+elseif ($isAll) {
+    $searchKeyword = isset($_POST['searchKeyword']) ? $_POST['searchKeyword'] : '';
+    $header = $headerAll;
+    $pageTitle = "All Patients";
+    $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+
+    if (!empty($searchKeyword)) {
+        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
+    }
+} 
+else {
     // Handle other cases or set default values
 }
 
@@ -134,6 +197,8 @@ if ($isAll) {
     <link rel="stylesheet" href="assets/css/Carousel-Hero-1.css">
     <link rel="stylesheet" href="assets/css/Carousel-Hero.css">
     <link rel="stylesheet" href="assets/css/Diagonal-div-section.css">
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity = "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin = "anonymous">
+
     <link rel="stylesheet" href="assets/css/Feature-Section-MD.css">
     <link rel="stylesheet" href="https://djpsoftwarecdn.azureedge.net/availabilitycss-v1/availability.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
@@ -143,6 +208,12 @@ if ($isAll) {
             display: none;
         }
     </style>
+    <script src="assets/js/html5-qrcode.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://djpsoftwarecdn.azureedge.net/availabilityjs-v1/availability.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>      
 
 
 </head>
@@ -175,6 +246,7 @@ if ($isAll) {
     <span style="background: transparent;color: #3e3d1a;font-family: 'Albert Sans', sans-serif;font-weight: bold;">Calendar</span>
   </a>
 </li>
+
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button" style="background: rgb(159,152,117);"></button></div>
             </div>
@@ -189,11 +261,17 @@ if ($isAll) {
                                     <form class="me-auto navbar-search w-100">
                                         <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
                                             <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                            
                                         </div>
                                     </form>
+                                    
                                 </div>
+
+                                
                             </li>
+                            <a class="nav-link" aria-expanded="false" data-toggle="modal" data-target="#exampleModal"  href="#" style="color: rgb(0,0,0);"><i class="icon ion-qr-scanner" style="font-size: 37px;"></i></a>
                             <li class="nav-item dropdown no-arrow">
+                                
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small" style="font-weight: bold;color: var(--bs-black);"><?php
                                   echo  $user;
                                 ?></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
@@ -203,20 +281,30 @@ if ($isAll) {
                         </ul>
                     </div>
                 </nav>
+                
+
                     <div class="card shadow">
                         <div class="card-body" style="height: 1000px;">
                             <div class="row">
-
+                                
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
                                 </div>
-
+                                <?php if ($isAll): ?>
+                                <form method="post" action="receptionistUI.php">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Search by Name" name="searchKeyword">
+                                        <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>
+                                    </div>
+                                </form>
+                            <?php endif; ?>
                             </div>
    <form method="post" action="">
             <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
             <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
             <button class="btn btn-primary btn-lg" type="submit" name="btn-Admin-Reservation">Admin Reservation</button>
             <button class="btn btn-info btn-lg" type="submit" name="btn-Walk-in-Patients">Walk-In Patients</button>
+
         </form>
 
         <h3 class="text-dark mb-0" style="font-weight: bold;"><?php echo $pageTitle; ?></h3>
@@ -326,18 +414,13 @@ if ($isAll) {
                                                 case "Family Member":
                                                     echo '<td>' . $row['FamMemberName'] . '</td>';
                                                     break;
-                                                case "Add Remarks":
-                                                    echo '<td>
-                                                            <input type="text" class="inputField" id="inputField' . $row['resID'] . '">
-                                                        </td>';
-                                                    break;
 
 
                                             }
                                         }
                                         echo '<td>
                                                 <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
-                                                <button"><a href="receptionistUI.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Done</a></button>
+                                                <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
                                                 <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
                                             </td>';
                                         echo '</tr>';
@@ -352,34 +435,53 @@ if ($isAll) {
             </div>
         </div>
 
-        <!-- ... (rest of your body and script tags) ... -->
-
     </div>     
                 
                 
             
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal1">
-        <div class="modal-dialog" role="document">  
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Hello</h4><button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Hello</p>
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="reader"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+            const scanner = new Html5QrcodeScanner('reader', {
+            fps: 20,
+            rememberLastUsedCamera: true,
+            });
+            scanner.render(success, error);
+            function success(result) {
+            scanner.clear();
+            document.getElementById('reader').remove();
 
 
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://djpsoftwarecdn.azureedge.net/availabilityjs-v1/availability.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>                                            
+            window.location.href = 'receptionistUI.php?resIDQR=' + encodeURIComponent(result);
+
+            }
+            function error(err) {
+            console.error(err);
+            }
+            </script>
 
     <script>
     $(document).ready(function(){

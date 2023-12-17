@@ -28,13 +28,8 @@
             $file = $path.date("Y-m-d-h-i-s").'.png';
 
             // Our text: here we will use concat\
-            $text = "Patients Name: ". $name. "\n";
-            $text .= "Family Member Name:: ". $famMemberNAme. "\n";
-            $text .= "Reservation ID: ". $ResID . "\n";
-            $text .= "Service Name: ". $serviceName. "\n"; 
-            $text .= "Reservation Date: ". $date. "\n";
-            $text .= "Reservation Timeslot: ". $timeslot. "\n";
-            $text .= "Patients Phone number: ". $phoneNum;
+            $text = $ResID;
+
 
             // Lets create
             QRcode::png($text, $file, 'H', 2, 2);
@@ -95,7 +90,7 @@
     ?>
 
     <div class="form-group">
-    <button type="button" onclick="window.location.href='patientsOwnReservation.php'" class="btn btn-lg btn-block" style="background-color:rgb(187,177,114) ;">Go back</button>
+    <a href="patientsOwnReservation.php" class="btn btn-lg btn-block" style="background-color:rgb(187,177,114) ;">Go back</a>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

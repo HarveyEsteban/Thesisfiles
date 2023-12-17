@@ -1,15 +1,18 @@
 <?php
     include_once("connection/connection.php");
+    require_once('config.php');
+    $redirectTo = "http://localhost:8080/THESIS1/Admin/callback.php";
+    $data = ['email'];
+    $fullURL = $handler->getLoginUrl($redirectTo, $data);
     $con = connection();
-    session_start();
     
         // Start of LoginFunction //
     
         if(!isset($_SESSION)){
           session_start();
       }
-      
-      
+
+
       if(isset($_POST['login-button'])){
       
           $password = $_POST['password'];
@@ -149,7 +152,9 @@
                                 <!-- <div class="custom-control custom-checkbox small">
                                     <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                 </div> -->
-                            </div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="background: rgb(159,152,117);border-radius: 9px;border-color: rgb(159,152,117);border-top-color: rgb(159,152,117); " name="login-button">Login</button>
+                            </div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="background: rgb(159,152,117);border-radius: 9px;border-color: rgb(159,152,117);border-top-color: rgb(159,152,117); " name="login-button">Login</button><br>
+                            <input type="button" onclick="window.location = '<?php echo $fullURL ?>'" value="Login with Facebook" class="btn btn-primary btn-user btn-block" style="background: #3b5998; border-radius: 9px; border: 1px solid #3b5998;">
+
                         </form>
 
                         <form method="post">

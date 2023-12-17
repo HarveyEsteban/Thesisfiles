@@ -120,6 +120,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+  
   <style>
         .hidden-column {
             display: none;
@@ -227,7 +228,7 @@
 
 
 
-                                    $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
+                                        $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
 
                                         $retrieveQuery = "SELECT `userID`,`Email`, `Name`, `Address`, `PhoneNumber` FROM `patients_user` WHERE Access = 'User'";
 

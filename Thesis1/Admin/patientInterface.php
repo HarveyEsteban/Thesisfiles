@@ -3,9 +3,14 @@
      $con = connection();
      session_start();
 
+
 date_default_timezone_set('Asia/Manila');
      $user = $_SESSION['UserLogin'];
      $userID = $_SESSION['UserID'];
+
+
+      
+      
      
 if (isset($_GET['logout_code'])) {
     session_unset();

@@ -129,6 +129,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Register - Brand</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel&amp;display=swap">
@@ -180,11 +181,12 @@
             </div>
         </nav>
     </div>
-    <div class="card shadow-lg o-hidden border-0 my-5">
+   <div class="card shadow-lg o-hidden border-0 my-5">
         <div class="card-body p-0">
             <div class="row">
                 <div class="col-lg-5 d-none d-lg-flex">
-                    <div class="flex-grow-1 bg-register-image" style="background-image: url(&quot;assets/img/easy.jpeg.&quot;);"></div>
+                    <div class="flex-grow-1 bg-register-image"
+                        style="background-image: url(&quot;assets/img/easy.jpeg.&quot;);"></div>
                 </div>
                 <div class="col-lg-7">
                     <div class="p-5" style="margin-left: -9px;">
@@ -192,25 +194,56 @@
                             <h4 class="text-dark mb-4">Sign Up</h4>
                         </div>
                         <form class="user" method="post">
-            <input class="form-control form-control-user c1" type="text" id="exampleFirstName-1" placeholder="Full Name" name="name" />
-            <div class="mb-3">
-                <input class="form-control form-control-user c1" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email" name="email" />
-            </div>
-            <input class="form-control form-control-user c2" type="tel" id="examplePasswordInput" maxlength="11" placeholder="Phone Number" name="phone" />
-            <input class="form-control form-control-user c1" type="text" id="exampleRepeatPasswordInput" placeholder="Address" name="address" />
-            <button class="btn btn-primary d-block btn-user w-100 c3" type="submit" name="signup-button">Sign Up</bsignuputton>
-        </form>
-            </div>
-                    <div class="text-center"><a class="small" href="Landingpage.php">Home</a></div>
-                    <div class="text-center"><a class="small" href="loginpage.php">Already have an account? Login!</a></div>
+
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="text" id="exampleFirstName-1"
+                                    placeholder="Full Name" name="name" />
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="email" id="exampleInputEmail"
+                                    aria-describedby="emailHelp" placeholder="Email" name="email" />
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="tel" id="examplePasswordInput"
+                                    maxlength="11" placeholder="Phone Number" name="phone" />
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control form-control-user" type="text"
+                                    id="exampleRepeatPasswordInput" placeholder="Address" name="address" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ageCertification" class="form-check-label">
+                                    <input type="checkbox" id="ageCertification" name="ageCertification"
+                                        class="form-check-input" required>
+                                    I certify that I am 18 years of age or older.
+                                </label>
+                            </div>
+
+                            <button class="btn btn-primary btn-user w-100" type="submit"
+                                name="signup-button">Sign Up</button>
+
+                        </form>
+                        <div class="text-center"><a class="small" href="Landingpage.php">Home</a></div>
+                        <div class="text-center"><a class="small" href="loginpage.php">Already have an account? Login!</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
     <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>
     <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous">
+
     </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
