@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2023 at 03:09 PM
+-- Generation Time: Dec 23, 2023 at 12:52 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,23 +39,25 @@ CREATE TABLE `bookinglog` (
   `status` varchar(255) NOT NULL,
   `FamMemberName` varchar(255) NOT NULL DEFAULT 'N/A',
   `confirmationHash` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `totalServicePay` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bookinglog`
 --
 
-INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`) VALUES
-(164, 12, 'Braces', '2023-12-10', '04:00 PM - 04:30 PM', 'x', 'None', 'arsadasd', 'Done', 'N/A', '', '2023-12-10 09:57:46'),
-(165, 12, 'Braces', '2023-12-10', '04:30 PM - 05:00 PM', 'sss', 'None', 'ssss', 'Done', 'N/A', '', '2023-12-10 09:57:55'),
-(166, 2, 'Bunot', '2023-12-12', '04:30 PM - 05:00 PM', 'sssssss', 'Vovx', '', 'Done', 'N/A', '', '2023-12-10 09:56:25'),
-(167, 12, 'Braces', '2023-12-12', '02:00 PM - 02:30 PM', 'Kupal', 'None', 'ssss', 'Cancel', 'N/A', '', '2023-12-10 11:39:01'),
-(168, 1, 'Bunot', '2023-12-13', '10:00 AM - 10:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-10 14:29:49'),
-(169, 1, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:44'),
-(170, 26, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:39'),
-(171, 1, 'Braces', '2023-12-18', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Cancel', 'None', '', '2023-12-14 17:30:24'),
-(172, 1, 'Braces', '2023-12-15', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:34');
+INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`, `totalServicePay`) VALUES
+(164, 12, 'Braces', '2023-12-10', '04:00 PM - 04:30 PM', 'x', 'None', 'arsadasd', 'Done', 'N/A', '', '2023-12-10 09:57:46', 0),
+(165, 12, 'Braces', '2023-12-10', '04:30 PM - 05:00 PM', 'sss', 'None', 'ssss', 'Done', 'N/A', '', '2023-12-10 09:57:55', 0),
+(166, 2, 'Bunot', '2023-12-12', '04:30 PM - 05:00 PM', 'sssssss', 'Vovx', '', 'Done', 'N/A', '', '2023-12-10 09:56:25', 0),
+(167, 12, 'Braces', '2023-12-12', '02:00 PM - 02:30 PM', 'Kupal', 'None', 'ssss', 'Cancel', 'N/A', '', '2023-12-10 11:39:01', 0),
+(168, 1, 'Bunot', '2023-12-13', '10:00 AM - 10:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-10 14:29:49', 0),
+(169, 1, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:44', 0),
+(170, 26, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:39', 0),
+(171, 1, 'Braces', '2023-12-18', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Cancel', 'None', '', '2023-12-14 17:30:24', 0),
+(172, 1, 'Braces', '2023-12-15', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:34', 0),
+(173, 1, 'Braces', '2023-12-25', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-21 18:16:52', 0);
 
 -- --------------------------------------------------------
 
@@ -320,7 +322,7 @@ ALTER TABLE `servicetbl`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`
