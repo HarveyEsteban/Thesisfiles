@@ -4,14 +4,14 @@
     $con = connection();
 
 
+
+
     if(isset($_GET['doneID']))
     {
         $paymentID = $_GET['doneID'];
         global $paymentID;
     }
 
-
-    
 
 
 ?>
@@ -26,6 +26,8 @@
     
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity = "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin = "anonymous">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <style>
         body {
@@ -94,7 +96,7 @@
                 $SName = $row['serviceName'];
                 $Sprice = $row['price'];
                 $Pname = $row['Name'];
-
+                global $Sprice;
                     
             ?>
 
@@ -110,12 +112,12 @@
 
         <div class="form-group">
             <label for="ammount">Ammount</label>
-            <input readonly type="text" class="form-control" id="ammount" value="<?php echo $Sprice; ?>" name="ammount" required>
+            <input readonly type="text" class="form-control" id="ammount" value="<?php echo "₱". $Sprice; ?>" name="ammount" required>
         </div>
 
         <div class="form-group">
             <label for="ammount">Additional Charges</label>
-            <input  type="text" class="form-control" id="charges" name="charges" required placeholder="Please Enter the amount of additional charges if there is any...">
+            <input  type="text" class="form-control" id="charges" name="charges"  placeholder="Please Enter the amount of additional charges if there is any...">
         </div>
 
         <button type="submit" name="btn-Payment" class="btn btn-success">Done</button>
@@ -126,6 +128,24 @@
             }else{
                 echo "<scrip>alert('Error...')</script>";
             }
+
+
+            
+    if(isset($_POST['btn-Payment']))
+    {
+        $additionalCharge = $_POST['charges'];
+
+
+        $additionalCharge = empty($additionalCharge) ? $Sprice : $additionalCharge;
+
+        $updatestmt = "UPDATE `bookinglog` SET `status`='Done',`totalServicePay`='$additionalCharge' WHERE resID = '$paymentID'";
+        $exeUpdate = $con -> query($updatestmt);
+
+        echo header("Location: receptionistUI.php");
+        
+    }
+    
+
         ?>
     </form>
 </div>
@@ -134,6 +154,10 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>
+    <script src = "https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity = "sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin = "anonymous">
+    </script>
 
 </body>
 </html>

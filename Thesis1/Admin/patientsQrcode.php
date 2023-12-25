@@ -90,7 +90,7 @@
     ?>
 
     <div class="form-group">
-    <a href="patientsOwnReservation.php" class="btn btn-lg btn-block" style="background-color:rgb(187,177,114) ;">Go back</a>
+    <a href="PatientsOwnReservation.php" class="btn btn-lg btn-block" style="background-color:rgb(187,177,114) ;">Go back</a>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

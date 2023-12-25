@@ -68,7 +68,7 @@ if(isset($_GET['resIDQR']))
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
         $isAll = true;
 
     if (!empty($searchKeyword)) {
@@ -81,13 +81,19 @@ if(isset($_GET['resIDQR']))
 if($isToday)
 {
 
-    $isAll = false;
+    $searchKeyword = isset($_POST['searchKeyword']) ? $_POST['searchKeyword'] : '';
+
     $header = $headerToday;
     $pageTitle = "Today's Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
             FROM bookinglog
             INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
+            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'AND admin_remarks = 'None' AND walk_in_name = 'None'"; // Initialize with an empty string
+
+
+if (!empty($searchKeyword)) {
+    $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
+}
 
 }
 // Choose the header based on the button clicked
@@ -118,7 +124,7 @@ elseif ($isAll) {
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
 
     if (!empty($searchKeyword)) {
         $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
@@ -290,14 +296,14 @@ else {
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
                                 </div>
-                                <?php if ($isAll): ?>
+                     
                                 <form method="post" action="receptionistUI.php">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Search by Name" name="searchKeyword">
                                         <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>
                                     </div>
                                 </form>
-                            <?php endif; ?>
+                           
                             </div>
    <form method="post" action="">
             <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
