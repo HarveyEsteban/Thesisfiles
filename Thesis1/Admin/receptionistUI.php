@@ -17,10 +17,32 @@ if (isset($_GET['logout_code'])) {
     exit(); // Make sure to exit after sending the header
 }
 
+if (isset($_GET['canID'])) {
+    $usID = $_GET['canID'];
+
+    $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
+    $execheck = $con->query($checkRemarksStmt);
+
+    if ($execheck) {
+        $row = $execheck->fetch_assoc();
+        $total = $row['count'];
+
+        if ($total > 0) {
+            $changeStatusCan = "UPDATE `bookinglog` SET `status`='Cancel' WHERE resID = '$usID'";
+            $exeQuery2 = mysqli_query($con, $changeStatusCan);
+            echo "<script>alert('Remarks successfully added'); window.location.href='receptionistUI.php';</script>";
+        } else {
+            echo "<script>alert('Please add a remark')</script>";
+        }
+    } else {
+        echo "Error executing query: " . $con->error;
+    }
+}
+
 
 // Define arrays for table headers
-$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time"];
-$headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time"];
+$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time","Add Remarks"];
+$headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time","Add Remarks"];
 $headerAdminReservation = ["Reservation ID", "Name", "Type of Service", "Admin Remarks", "Phone Number", "Address", "Date", "Time"];
 $headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Type of Service", "Phone Number", "Address", "Date", "Time"];
 
@@ -55,14 +77,8 @@ if(isset($_GET['resIDQR']))
     }
 
 }else{
-    // $header = $headerToday;
-    // $pageTitle = "Today's Patients";
-    // $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
-    //         FROM bookinglog
-    //         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-    //         WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'"; // Initialize with an empty string
 
-    $searchKeyword = isset($_POST['searchKeyword']) ? $_POST['searchKeyword'] : '';
+    $searchKeywordAll = isset($_POST['searchKeywordAll']) ? $_POST['searchKeywordAll'] : '';
     $header = $headerAll;
     $pageTitle = "All Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
@@ -70,19 +86,58 @@ if(isset($_GET['resIDQR']))
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
         WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
         $isAll = true;
+        $istoday = false;
 
-    if (!empty($searchKeyword)) {
-        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
+    if (!empty($searchKeywordAll)) {
+        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeywordAll%'";
         $isAll = true;
     }
-}
+
+    if(isset($_POST['searchKeywordAll']))
+
+    {
+        $searchKeywordAll = isset($_POST['searchKeywordAll']) ? $_POST['searchKeywordAll'] : '';
+        $header = $headerAll;
+        $pageTitle = "All Patients";
+        $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
+            FROM bookinglog
+            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+            $isAll = true;
+            $istoday = false;
+    
+        if (!empty($searchKeywordAll)) {
+            $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeywordAll%'";
+            $isAll = true;
+        }
+    
+    }
+    elseif (isset($_POST['searchKeywordToday'])) {
+
+        $searchKeywordToday = isset($_POST['searchKeywordToday']) ? $_POST['searchKeywordToday'] : '';
+        $isAll = false;
+        $istoday = true;
+        $header = $headerToday;
+        $pageTitle = "Today's Patients";
+        $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+                FROM bookinglog
+                INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+                WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'AND admin_remarks = 'None' AND walk_in_name = 'None'"; // Initialize with an empty string
+    
+    
+    if (!empty($searchKeywordToday)) {
+        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeywordToday%'";
+    }
+    }
 
 
-if($isToday)
+
+    if($isToday)
 {
 
-    $searchKeyword = isset($_POST['searchKeyword']) ? $_POST['searchKeyword'] : '';
-
+    $searchKeywordToday = isset($_POST['searchKeywordToday']) ? $_POST['searchKeywordToday'] : '';
+    $isAll = false;
+    $istoday = true;
     $header = $headerToday;
     $pageTitle = "Today's Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
@@ -91,25 +146,28 @@ if($isToday)
             WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'AND admin_remarks = 'None' AND walk_in_name = 'None'"; // Initialize with an empty string
 
 
-if (!empty($searchKeyword)) {
-    $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
+if (!empty($searchKeywordToday)) {
+    $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeywordToday%'";
 }
 
 }
 // Choose the header based on the button clicked
 elseif ($isAdminReservation) {
 
-    $isAll = false;
     $header = $headerAdminReservation;
+    $isAll = false;
+    $istoday = false;
     $pageTitle = "Admin Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
         WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks != 'None'";
+
 } elseif ($isWalkInPatients) {
 
-    $isAll = false;
     $header = $headerWalkInPatients;
+    $isAll = false;
+    $istoday = false;
     $pageTitle = "Walk-In Patients";
      $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.walk_in_name
         FROM bookinglog
@@ -118,21 +176,20 @@ elseif ($isAdminReservation) {
     // Add the corresponding code for the Walk-In Patients button here if needed
 } 
 elseif ($isAll) {
-    $searchKeyword = isset($_POST['searchKeyword']) ? $_POST['searchKeyword'] : '';
+    $searchKeywordAll = isset($_POST['searchKeywordAll']) ? $_POST['searchKeywordAll'] : '';
     $header = $headerAll;
     $pageTitle = "All Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+        WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
 
-    if (!empty($searchKeyword)) {
-        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeyword%'";
+    if (!empty($searchKeywordAll)) {
+        $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeywordAll%'";
     }
 } 
-else {
-    // Handle other cases or set default values
 }
+
 
 ?>
 
@@ -297,10 +354,21 @@ else {
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"></div>
                                 </div>
                      
-                                <form method="post" action="receptionistUI.php">
+                                <form method="post" >
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Search by Name" name="searchKeyword">
-                                        <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>
+
+                                    <?php 
+                                        if($isAll == true)
+                                        {
+                                            echo '<input type="text" class="form-control" placeholder="Search by Name" name="searchKeywordAll">
+                                            <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>';
+                                        }
+                                        elseif($istoday == true)
+                                        {
+                                            echo '<input type="text" class="form-control" placeholder="Search by Name" name="searchKeywordToday">
+                                            <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>';
+                                        }
+                                    ?>
                                     </div>
                                 </form>
                            
@@ -344,47 +412,6 @@ else {
 
                                     $result =  $con->query($retrieveQuery);
 
-                                if (isset($_GET['doneID'])) {
-                                $usID = $_GET['doneID'];
-
-                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                                $execheck = $con->query($checkRemarksStmt);
-
-                                if ($execheck) {
-                                    $row = $execheck->fetch_assoc();
-                                    $total = $row['count'];
-
-                                    if ($total > 0) {
-                                        $changeStatus = "UPDATE `bookinglog` SET `status`='Done' WHERE resID = '$usID'";
-                                        $exeQuery = mysqli_query($con, $changeStatus);
-                                    } else {
-                                        echo "<script>alert('Please add a remark')</script>";
-                                    }
-                                } else {
-                                    echo "Error executing query: " . $con->error;
-                                }
-                            } elseif (isset($_GET['canID'])) {
-                                $usID = $_GET['canID'];
-
-                                $checkRemarksStmt = "SELECT COUNT(*) as count FROM bookinglog WHERE remarks IS NOT NULL AND remarks <> '' AND resID = $usID";
-                                $execheck = $con->query($checkRemarksStmt);
-
-                                if ($execheck) {
-                                    $row = $execheck->fetch_assoc();
-                                    $total = $row['count'];
-
-                                    if ($total > 0) {
-                                        $changeStatusCan = "UPDATE `bookinglog` SET `status`='Cancel' WHERE resID = '$usID'";
-                                        $exeQuery2 = mysqli_query($con, $changeStatusCan);
-                                        echo "<script>alert('Remarks successfully added')</script>";
-                                    } else {
-                                        echo "<script>alert('Please add a remark')</script>";
-                                    }
-                                } else {
-                                    echo "Error executing query: " . $con->error;
-                                }
-                            }
-
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo '<tr>';
                                         foreach ($header as $column) {
@@ -420,16 +447,35 @@ else {
                                                 case "Family Member":
                                                     echo '<td>' . $row['FamMemberName'] . '</td>';
                                                     break;
+                                                case "Add Remarks":
+                                                    echo '<td>
+                                                            <input type="text" class="inputField" id="inputField' . $row['resID'] . '">
+                                                        </td>';
+                                                    break;
 
 
                                             }
                                         }
-                                        echo '<td>
+
+                                        if($isAll == true)
+                                        {
+                                            echo '<td>
                                                 <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
-                                                <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
                                                 <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
-                                            </td>';
+                                                </td>';
                                         echo '</tr>';
+                                        }
+                                        elseif($istoday == true)
+                                        {
+                                            echo '<td>
+                                            <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
+                                            <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
+                                            <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
+                                        </td>';
+                                    echo '</tr>';
+                                        }
+
+                                       
                                     }
                                     ?>
                         </tbody>

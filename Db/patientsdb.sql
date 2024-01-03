@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2023 at 12:52 PM
+-- Generation Time: Jan 03, 2024 at 04:53 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -51,13 +51,15 @@ INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, 
 (164, 12, 'Braces', '2023-12-10', '04:00 PM - 04:30 PM', 'x', 'None', 'arsadasd', 'Done', 'N/A', '', '2023-12-10 09:57:46', 0),
 (165, 12, 'Braces', '2023-12-10', '04:30 PM - 05:00 PM', 'sss', 'None', 'ssss', 'Done', 'N/A', '', '2023-12-10 09:57:55', 0),
 (166, 2, 'Bunot', '2023-12-12', '04:30 PM - 05:00 PM', 'sssssss', 'Vovx', '', 'Done', 'N/A', '', '2023-12-10 09:56:25', 0),
-(167, 12, 'Braces', '2023-12-12', '02:00 PM - 02:30 PM', 'Kupal', 'None', 'ssss', 'Cancel', 'N/A', '', '2023-12-10 11:39:01', 0),
-(168, 1, 'Bunot', '2023-12-13', '10:00 AM - 10:30 AM', '', 'None', '', 'Pending', 'None', '', '2023-12-10 14:29:49', 0),
-(169, 1, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:44', 0),
+(167, 12, 'Braces', '2023-12-12', '02:00 PM - 02:30 PM', 'Kupal', 'None', 'ssss', 'Pending', 'N/A', '', '2024-01-01 18:41:28', 0),
+(168, 4, 'Bunot', '2024-01-02', '10:00 AM - 10:30 AM', 'mark', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:04:21', 0),
+(169, 1, 'Braces', '2023-12-24', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-23 17:16:07', 0),
 (170, 26, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:39', 0),
-(171, 1, 'Braces', '2023-12-18', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Cancel', 'None', '', '2023-12-14 17:30:24', 0),
-(172, 1, 'Braces', '2023-12-15', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:34', 0),
-(173, 1, 'Braces', '2023-12-25', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-21 18:16:52', 0);
+(171, 1, 'Braces', '2023-12-18', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:03:38', 0),
+(172, 6, 'Braces', '2024-01-02', '09:00 AM - 09:30 AM', 'Dhan dhns', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:03:42', 0),
+(173, 1, 'Braces', '2023-12-25', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Done', 'None', '', '2023-12-23 17:10:55', 5800),
+(174, 1, 'mcDo', '2024-01-05', '09:30 AM - 10:00 AM', 'x', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:03:48', 0),
+(175, 2, 'Ortho', '2024-01-05', '10:00 AM - 10:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-01 17:32:58', 0);
 
 -- --------------------------------------------------------
 
@@ -322,7 +324,7 @@ ALTER TABLE `servicetbl`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`
