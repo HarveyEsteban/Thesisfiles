@@ -14,8 +14,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     global $famName;
 }
 
-if ( isset( $_GET['date'] ) ) {
+if ( isset($_GET['date']) && isset($_GET['service']) ) {
     $date = $_GET['date'];
+    $selectedService = $_GET['service'];
+    global $selectedService;
     global $date;
     
     $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =?");
@@ -35,7 +37,6 @@ if ( isset( $_GET['date'] ) ) {
 
 if ( isset( $_POST['submit'] ) ) {
     $timeslot = $_POST['timeslot'];
-    $optservices = $_POST['serviceOpt'];
     $stmt = $con->prepare( "SELECT * FROM bookinglog WHERE date =? AND timeslot = ? AND status = 'Pending'");
     $stmt->bind_param( 'ss', $date, $timeslot);
 
@@ -50,7 +51,7 @@ if ( isset( $_POST['submit'] ) ) {
         }else{
 
             $famName = empty($famName) ? 'None' : $famName;
-            $stmt = "INSERT INTO `bookinglog`(`userID`, `serviceName`, `date`, `timeslot`,`status`, `FamMemberName`) VALUES ('$userID','$optservices','$date','$timeslot','Pending','$famName')";
+            $stmt = "INSERT INTO `bookinglog`(`userID`, `serviceName`, `date`, `timeslot`,`status`, `FamMemberName`) VALUES ('$userID','$selectedService','$date','$timeslot','Pending','$famName')";
             
             $exe = $con -> query( $stmt );
                         echo '<div class="alert alert-success" role="alert">
@@ -229,7 +230,7 @@ foreach ($timeslots as $ts) {
 
 
 <div class="space-below">
-    <a href="patientInterface.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
+    <a href="patientServices.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
 </div>
 
     <div id="user_model_details"></div>
@@ -253,27 +254,10 @@ foreach ($timeslots as $ts) {
     <input required type = "text" readonly name = "timeslot" id = "timeslot" class = "form-control">
     </div>
 
-    <div class = "form-group">
-    <select name="serviceOpt" id="">
-                                        <?php
-                                            $sqlquery = "SELECT serviceName FROM servicetbl";  
-                                            $result = $con->query($sqlquery);
-                                            if($result -> num_rows> 0)
-                                            {
-                                                while($optionData = $result->fetch_assoc())
-                                                {
-                                                    $option = $optionData['serviceName'];
-                                                    
-
-                                        ?>
-
-                                        <option value="<?php echo $option?>"> <?php echo $option?></option>
-
-                                        <<?php
-                                            }}
-                                        ?>
-                                        </select>
-    </div>
+        <div class = "form-group">
+            <label for = "">Service</label>
+            <input required type = "text" readonly name = "serviceopt" id="sericeopt" value="<?php echo $selectedService;?>"  class = "form-control">
+        </div>
 
     <div class = "form-check">
     <input  type = "checkbox" name = "checkbox-fam" id = "checkbox-fam" class="form-check-input">

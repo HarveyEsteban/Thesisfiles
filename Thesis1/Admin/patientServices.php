@@ -163,6 +163,7 @@ if (isset($_GET['logout_code'])) {
                                                 echo "<h5 class='card-title'><strong>" .$row['serviceName']. "</strong></h5>";
                                                 echo "<p class='card-text'>&nbsp;₱" . $row['price'] . "</p>";
                                                 echo "<p class='card-text'>" . $row['description'] . "</p>";
+                                                echo "<a class='btn btn-success btn-lg' href='patientInterface.php?service=".$row['serviceName']."'>Select</a>";
                                                 echo "</div>"; // card-body
                                                 echo "</div>"; // card
                                                 echo "</div>"; // col-md-6

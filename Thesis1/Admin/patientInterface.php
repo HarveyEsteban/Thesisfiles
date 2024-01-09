@@ -9,6 +9,7 @@ date_default_timezone_set('Asia/Manila');
      $userID = $_SESSION['UserID'];
 
 
+
       
       
      
@@ -45,7 +46,7 @@ if (isset($_GET['logout_code'])) {
          $dayOfWeek = $dateComponents['wday'];
          $tomorrow = date('Y-m-d', strtotime('+3 day')); // this is the code to disable the date of today
 
-    
+
         $datetoday = date('Y-m-d');
        
         $calendar = "<table class='table table-bordered'>";
@@ -88,7 +89,22 @@ if (isset($_GET['logout_code'])) {
                 $dayname = strtolower(date('l', strtotime($date)));
                 $eventNum = 0;
                 $today = $date==date('Y-m-d')? "today" : "";
-      
+
+                if(isset($_GET['service']))
+                {
+                    $serviceSelected = $_GET['service'];
+                    global $serviceSelected;
+                }
+                else{
+                    $serviceSelected  = null;
+                }
+
+
+
+
+
+
+
              if ($date<$tomorrow) { // Change the  date('Y-m-d') to $tomorrow to only allow use to book for tom schedule and not on the same day
                 $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-lg' disabled>&nbsp</button>";
              }
@@ -98,9 +114,15 @@ if (isset($_GET['logout_code'])) {
                 if($totalBookings == 14){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-lg'>No Slots</a>";
     
-                }else{
+                }
+                elseif (!isset($_GET['service'])){
                     $avaislots = 14 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='patientServices.php' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
+
+                }
+                else{
+                    $avaislots = 14 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."&service=".$serviceSelected."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }
              }
