@@ -57,6 +57,7 @@ $isWalkInPatients = isset($_POST['btn-Walk-in-Patients']);
 if(isset($_GET['resIDQR']))
 {
     $qrID = $_GET['resIDQR'];
+
     $header = $headerToday;
     $pageTitle = "Today's Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
@@ -71,6 +72,8 @@ if(isset($_GET['resIDQR']))
 
     if($total <= 0)
     {
+        $isAll = false;
+        $istoday = false;
         echo '<div class="alert alert-danger" role="alert">
         No Reservation found!!
         </div>';

@@ -117,7 +117,7 @@
 
         <div class="form-group">
             <label for="ammount">Additional Charges</label>
-            <input  type="text" class="form-control" id="charges" name="charges"  placeholder="Please Enter the amount of additional charges if there is any...">
+            <input  type="text" class="form-control" id="charges" name="charges"  placeholder="Please Enter the amount of additional charges">
         </div>
 
         <button type="submit" name="btn-Payment" class="btn btn-success">Done</button>
