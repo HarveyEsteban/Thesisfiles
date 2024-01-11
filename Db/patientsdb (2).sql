@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2024 at 04:58 PM
+-- Generation Time: Jan 11, 2024 at 05:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -48,11 +48,13 @@ CREATE TABLE `bookinglog` (
 --
 
 INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`, `totalServicePay`) VALUES
-(176, 1, 'Dental Braces', '2024-01-11', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 13:21:31', 0),
-(177, 2, 'Tooth Extraction', '2024-01-11', '02:00 PM - 02:30 PM', '', 'None', 'None', 'Done', 'None', '', '2024-01-11 13:29:30', 800),
-(178, 6, 'Dentures (Pustiso)', '2024-01-16', '02:30 PM - 03:00 PM', 'Doc not avail', 'None', 'None', 'Cancel', 'None', '', '2024-01-11 14:22:42', 0),
-(179, 32, 'Dental Braces', '2024-01-14', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 13:56:53', 0),
-(180, 12, 'Dental Braces ', '2024-01-11', '01:00 PM - 02:00 PM', '', 'None', 'Juan Dela Cruz', 'Pending', 'Juan Dela Cruz', '', '2024-01-11 15:52:28', 0);
+(181, 21, 'Dentures (Pustiso) ', '2024-01-15', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:49', 0),
+(182, 5, 'Dentures (Pustiso) ', '2024-01-15', '10:00 AM - 11:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:59', 0),
+(183, 1, 'Dentures (Pustiso) ', '2024-01-15', '11:00 AM - 12:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:05', 0),
+(184, 4, 'Dentures (Pustiso) ', '2024-01-15', '01:00 PM - 02:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:11', 0),
+(185, 2, 'Dentures (Pustiso) ', '2024-01-15', '02:00 PM - 03:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:18', 0),
+(186, 2, 'Dentures (Pustiso) ', '2024-01-15', '03:00 PM - 04:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:25', 0),
+(187, 1, 'Dentures (Pustiso) ', '2024-01-15', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:11', 0);
 
 -- --------------------------------------------------------
 
@@ -61,6 +63,7 @@ INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, 
 --
 
 CREATE TABLE `chat_message` (
+  `Chatidpk` int(11) NOT NULL,
   `chat_message_id` int(11) NOT NULL,
   `to_user_id` int(11) NOT NULL,
   `from_user_id` int(11) NOT NULL,
@@ -73,95 +76,9 @@ CREATE TABLE `chat_message` (
 -- Dumping data for table `chat_message`
 --
 
-INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
-(0, 1, 0, 'aaa', '2023-11-30 17:05:49', 1),
-(0, 1, 0, 'aaaa', '2023-11-30 17:06:21', 1),
-(0, 1, 0, 'aaaa', '2023-11-30 17:14:19', 1),
-(0, 2, 0, 'hello\n', '2023-11-30 17:14:35', 1),
-(0, 1, 0, 'Hello', '2023-11-30 17:18:02', 1),
-(0, 2, 0, 'sss', '2023-11-30 17:18:14', 1),
-(0, 1, 2, 'aaaa', '2023-11-30 17:21:19', 1),
-(0, 2, 1, 'Yow', '2023-11-30 17:21:58', 1),
-(0, 3, 2, 'Hello Its me', '2023-11-30 17:37:35', 0),
-(0, 2, 3, 'Omg what a fucking stupid shit', '2023-11-30 17:37:53', 0),
-(0, 3, 2, 'Yeah', '2023-11-30 17:45:52', 0),
-(0, 2, 3, 'Hey there fucking shit', '2023-11-30 17:49:47', 0),
-(0, 2, 3, 'Yow', '2023-11-30 17:50:28', 0),
-(0, 3, 2, 'putang ina', '2023-11-30 17:58:31', 0),
-(0, 3, 1, 'Hello', '2023-12-04 17:27:49', 0),
-(0, 3, 1, 'Hey', '2023-12-04 17:47:35', 0),
-(0, 3, 1, 'yow', '2023-12-04 17:49:12', 0),
-(0, 3, 1, 'hey', '2023-12-04 17:49:15', 0),
-(0, 3, 1, 'hey', '2023-12-04 17:49:16', 0),
-(0, 3, 1, 'Hello', '2023-12-04 17:58:13', 0),
-(0, 1, 3, 'Hello', '2023-12-05 09:56:47', 0),
-(0, 3, 1, 'asd', '2023-12-05 09:57:03', 0),
-(0, 1, 3, 'asd', '2023-12-05 09:57:12', 0),
-(0, 3, 1, 'Hello motherfucker', '2023-12-05 10:00:52', 0),
-(0, 1, 3, 'Yow Stupid', '2023-12-05 10:02:02', 0),
-(0, 3, 1, 'Hello admin', '2023-12-10 12:12:30', 0),
-(0, 3, 1, 'ssss', '2023-12-10 12:14:29', 0),
-(0, 3, 1, 'hey there\n', '2023-12-10 12:43:10', 0),
-(0, 1, 3, 'Hey What can i do for you?', '2023-12-10 12:43:25', 0),
-(0, 1, 3, 'hotdog', '2023-12-10 12:43:34', 0),
-(0, 3, 1, 'zxcxcz', '2023-12-10 12:47:43', 0),
-(0, 3, 1, 'asdasd', '2023-12-10 12:49:11', 0),
-(0, 3, 1, 'ssss', '2023-12-10 12:49:22', 0),
-(0, 3, 1, 'dasdasdasd', '2023-12-10 12:49:28', 0),
-(0, 1, 3, 'asdasdasdasd', '2023-12-10 12:50:43', 0),
-(0, 1, 3, 'Hey there', '2023-12-10 12:51:24', 0),
-(0, 3, 1, 'Hello', '2023-12-10 12:51:42', 0),
-(0, 3, 1, 'ssss', '2023-12-10 12:51:59', 0),
-(0, 3, 1, 'asdasdasdas', '2023-12-10 12:52:11', 0),
-(0, 1, 3, 'ssss\n', '2023-12-10 12:53:10', 0),
-(0, 1, 3, 'ssssss', '2023-12-10 12:53:16', 0),
-(0, 3, 1, 'asdasddd', '2023-12-10 12:53:28', 0),
-(0, 3, 1, 'ssss', '2023-12-10 12:55:05', 0),
-(0, 3, 1, 'leee harvey', '2023-12-10 12:58:38', 0),
-(0, 3, 1, 'ssss', '2023-12-10 13:02:38', 0),
-(0, 1, 3, 'sssss', '2023-12-10 13:03:07', 0),
-(0, 3, 1, 'asdasdads', '2023-12-10 13:04:05', 0),
-(0, 1, 3, 'asdasdasdasdasd', '2023-12-10 13:04:25', 0),
-(0, 1, 3, 'sssdasd', '2023-12-10 13:04:42', 0),
-(0, 1, 3, 'asdasdd', '2023-12-10 13:04:51', 0),
-(0, 1, 3, 'sdasd', '2023-12-10 13:09:43', 0),
-(0, 3, 1, 'hey', '2023-12-10 13:14:01', 0),
-(0, 3, 1, 'dddsad', '2023-12-10 13:14:32', 0),
-(0, 1, 3, 'sasddd', '2023-12-10 13:14:38', 0),
-(0, 1, 3, 'aasdasd', '2023-12-10 13:14:50', 0),
-(0, 1, 3, 'asddaasd', '2023-12-10 13:15:01', 0),
-(0, 3, 1, 'Hey ', '2023-12-10 13:15:14', 0),
-(0, 3, 1, 'wrqwrqwr', '2023-12-10 13:15:58', 0),
-(0, 1, 3, 'sdaasdasasd', '2023-12-10 13:16:07', 0),
-(0, 1, 3, 'ssad', '2023-12-10 13:16:32', 0),
-(0, 3, 1, 'sdasd', '2023-12-10 13:17:06', 0),
-(0, 1, 3, 'afafasdf', '2023-12-10 13:17:33', 0),
-(0, 1, 3, 'asdsadsa', '2023-12-10 13:18:12', 0),
-(0, 3, 1, 'asdadsasd', '2023-12-10 13:18:58', 0),
-(0, 1, 3, 'asdasdas', '2023-12-10 13:24:52', 0),
-(0, 3, 1, 'asdasdasdd', '2023-12-10 13:31:06', 0),
-(0, 1, 3, 'asdadssda', '2023-12-10 13:33:22', 0),
-(0, 3, 1, 'dasdasd', '2023-12-10 13:34:56', 0),
-(0, 1, 3, 'asddd', '2023-12-10 13:36:17', 0),
-(0, 1, 3, 'asdasddd', '2023-12-10 13:36:29', 0),
-(0, 1, 3, 'asddd', '2023-12-10 13:37:11', 0),
-(0, 3, 1, 'sadwwds', '2023-12-10 13:37:38', 0),
-(0, 3, 1, 'eeesd', '2023-12-10 13:37:51', 0),
-(0, 3, 1, 'asddd', '2023-12-10 13:39:35', 0),
-(0, 1, 3, 'asdddasd', '2023-12-10 13:47:28', 0),
-(0, 1, 3, 'ddddd', '2023-12-10 13:47:38', 0),
-(0, 1, 3, 'assss', '2023-12-10 13:50:24', 0),
-(0, 1, 3, 'sasdddd', '2023-12-10 13:50:49', 0),
-(0, 1, 3, 'asdddd', '2023-12-10 13:51:03', 0),
-(0, 1, 3, 'ddd', '2023-12-10 13:51:24', 0),
-(0, 1, 3, 'asddd', '2023-12-10 13:51:36', 0),
-(0, 3, 1, 'assdwwww', '2023-12-10 13:51:50', 0),
-(0, 3, 1, 'asddsw', '2023-12-10 13:53:00', 0),
-(0, 3, 1, 'sssss', '2023-12-10 17:39:58', 0),
-(0, 1, 3, 'gago', '2024-01-11 13:17:52', 0),
-(0, 1, 3, 'Utut mo', '2024-01-11 13:18:34', 0),
-(0, 3, 32, 'Hello there, I would like to ask a mother fucking question', '2024-01-11 14:16:18', 0),
-(0, 32, 3, 'Hello what can i do for you', '2024-01-11 14:17:03', 0);
+INSERT INTO `chat_message` (`Chatidpk`, `chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
+(89, 0, 1, 3, 'Hello', '2024-01-11 16:09:48', 0),
+(90, 0, 3, 1, 'Hello', '2024-01-11 16:10:21', 0);
 
 -- --------------------------------------------------------
 
@@ -243,21 +160,8 @@ INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`
 (3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04', '', NULL),
 (4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (5, 'SS@gmail.com', 'Aeron Ruivivar', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2024-01-11 14:08:00', '2023-12-07 15:19:04', '', NULL),
-(6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
-(7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
-(8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
-(12, 'Recept@gmail.com', 'Harvey', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Helloworld123', '', 'Receptionist', 1, '', '2023-12-10 09:45:48', '2023-12-07 15:19:04', '', NULL),
-(21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40', '', NULL),
-(22, 'Pople@gmail.com', 'New', '', '', 'NewPanda123', '', 'Receptionist', 1, '', '2023-12-10 09:22:59', '2023-12-10 09:22:59', '', NULL),
-(23, 'Pople@gmail.com', 'New', '', '', 'NewPanda123', '', 'Receptionist', 1, '', '2023-12-10 09:23:41', '2023-12-10 09:23:41', '', NULL),
-(24, 'harveybucod2s1@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '4643', 'ad13a2a07ca4b7642959dc0c4c740ab6', 'User', 0, '', '2023-12-10 18:47:23', '2023-12-10 18:47:23', '', NULL),
-(26, 'dellleebucod@gmail.com', 'Harvey Bien Bucod', '', '', '', '', 'User', 0, '', '2024-01-11 14:24:05', '2023-12-10 20:19:07', '', NULL),
-(27, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:20:41', '2023-12-10 20:20:41', '', NULL),
-(28, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:21:38', '2023-12-10 20:21:38', '', NULL),
-(29, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:23:18', '2023-12-10 20:23:18', '', NULL),
-(30, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:39:43', '2023-12-10 20:39:43', '', NULL),
-(31, 'harveybucod22221@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '2562', '7d04bbbe5494ae9d2f5a76aa1c00fa2f', 'User', 0, '', '2024-01-11 11:45:14', '2024-01-11 11:45:14', '', NULL),
-(32, 'harveybucod21@gmail.com', 'Maximus Harvey bucod', 'Abar 1st esteban blk, Sanjose City, Nueva Ecija', '09154571800', '4378', '0336dcbab05b9d5ad24f4333c7658a0e', 'User', 1, '', '2024-01-11 13:53:52', '2024-01-11 13:52:37', '', NULL);
+(21, 'robartos@gmail.com', 'Steve Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2024-01-11 16:02:36', '2023-12-07 16:14:40', '', NULL),
+(33, 'Recept1@gmail.com', 'Koala', '', '', 'Koala123', '', 'Receptionist', 1, '', '2024-01-11 16:03:27', '2024-01-11 16:03:27', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -300,6 +204,12 @@ ALTER TABLE `bookinglog`
   ADD KEY `Userss` (`userID`);
 
 --
+-- Indexes for table `chat_message`
+--
+ALTER TABLE `chat_message`
+  ADD PRIMARY KEY (`Chatidpk`);
+
+--
 -- Indexes for table `confirmation_data`
 --
 ALTER TABLE `confirmation_data`
@@ -325,7 +235,13 @@ ALTER TABLE `servicetbl`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+
+--
+-- AUTO_INCREMENT for table `chat_message`
+--
+ALTER TABLE `chat_message`
+  MODIFY `Chatidpk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`
@@ -337,7 +253,7 @@ ALTER TABLE `confirmation_data`
 -- AUTO_INCREMENT for table `patients_user`
 --
 ALTER TABLE `patients_user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
