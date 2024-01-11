@@ -59,12 +59,17 @@ if(isset($_GET['resIDQR']))
     $qrID = $_GET['resIDQR'];
 
     $header = $headerToday;
+    $istoday = true;
     $pageTitle = "Today's Patients";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
     FROM bookinglog
     INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
     WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND resID = '$qrID'"; // Initialize with an empty string
 
+    echo '<script>
+    var newUrl = window.location.href.split("?")[0];
+    window.history.replaceState({}, document.title, newUrl);
+    </script>';
 
     $stmtCheckToday = "SELECT * from bookinglog where DATE(date) = '$todaysDate' and resID = '$qrID'";
     $exestmt = $con -> query($stmtCheckToday);
@@ -72,12 +77,16 @@ if(isset($_GET['resIDQR']))
 
     if($total <= 0)
     {
-        $isAll = false;
-        $istoday = false;
+
         echo '<div class="alert alert-danger" role="alert">
         No Reservation found!!
         </div>';
-    }
+
+        echo "<script>
+        setTimeout(function() {
+            window.location.href='receptionistUI.php';
+        }, 3000); // 3000 milliseconds (3 seconds) delay
+      </script>";    }
 
 }else{
 
@@ -105,7 +114,7 @@ if(isset($_GET['resIDQR']))
         $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
             FROM bookinglog
             INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+            WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
             $isAll = true;
             $istoday = false;
     
@@ -135,7 +144,7 @@ if(isset($_GET['resIDQR']))
 
 
 
-    if($isToday)
+    elseif($isToday)
 {
 
     $searchKeywordToday = isset($_POST['searchKeywordToday']) ? $_POST['searchKeywordToday'] : '';
@@ -474,6 +483,21 @@ elseif ($isAll) {
                                             <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
                                             <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
                                             <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
+                                        </td>';
+                                    echo '</tr>';
+                                        }
+                                        elseif($isWalkInPatients == true){
+                                             echo '<td>
+                                            <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
+                                            <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
+                                        </td>';
+                                    echo '</tr>';
+                                        }
+                                        elseif($isAdminReservation == true)
+                                        {
+                                             echo '<td>
+                                            <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
+                                            <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
                                         </td>';
                                     echo '</tr>';
                                         }

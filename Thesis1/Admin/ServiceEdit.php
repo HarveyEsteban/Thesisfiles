@@ -59,7 +59,7 @@ session_start();
             {
                 if($fileError === 0)
                 {
-                    if($fileSize < 500000)
+                    if($fileSize < 1000000)
                     {
                         $fileNameNew = uniqid('', true). "." . $fileActualExt;
                         $fileDestination = 'upload/' . $fileNameNew;

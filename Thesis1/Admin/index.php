@@ -90,11 +90,11 @@ if (isset($_GET['logout_code'])) {
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 14){
+                if($totalBookings == 7){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
     
                 }else{
-                    $avaislots = 14 - $totalBookings;
+                    $avaislots = 7 - $totalBookings;
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookAdmin.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
     
                 }
@@ -353,10 +353,6 @@ if (isset($_GET['logout_code'])) {
                       <a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Listofpatients.php">
                         <i class="fas fa-table" style="color: #3e3d1a;font-size: 13px;"></i>
                         <span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">List of Patients</span>
-                      </a>
-                      <a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="patientstoday.php">
-                        <i class="fas fa-user" style="color: #3e3d1a;font-size: 13px;"></i>
-                        <span style="color: #3e3d1a;font-family: 'Albert Sans', sans-serif;">Patient's Schedule</span>
                       </a>
                       <a class="nav-link" style="background: #ffffff;font-weight: bold;color: var(--bs-black);border-radius: 8px;border-bottom: 1px outset rgba(149,148,124,0.49);box-shadow: 0px 0px 10px rgb(159,152,117);" href="Servicemaintenance.php">
                         <i class="icon ion-settings" style="color: #3e3d1a;font-size: 18px;"></i>

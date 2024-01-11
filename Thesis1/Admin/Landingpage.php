@@ -78,11 +78,11 @@
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 14){
+                if($totalBookings == 7){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' disabled class='btn btn-danger btn-lg'>No Slots</a>";
     
                 }else{
-                    $avaislots = 14 - $totalBookings;
+                    $avaislots = 7 - $totalBookings;
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='register.php' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }

@@ -111,18 +111,18 @@ if (isset($_GET['logout_code'])) {
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 14){
+                if($totalBookings == 7){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-lg'>No Slots</a>";
     
                 }
-                elseif (!isset($_GET['service'])){
-                    $avaislots = 14 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='patientServices.php' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
+                elseif (isset($_GET['service'])){
+                    $avaislots = 7 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date." &service=".$serviceSelected."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
 
                 }
                 else{
-                    $avaislots = 14 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."&service=".$serviceSelected."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
+                    $avaislots = 7 - $totalBookings;
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='patientServices.php?date=".$date."' class='btn btn-success btn-l'> <span class='glyphicon glyphicon-ok'></span>Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }
              }

@@ -5,7 +5,6 @@
       
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
-  
     
     
   
@@ -20,9 +19,14 @@
         $phone = $_POST['phone'];
         $hash = md5( rand(0,1000) ); // generate random hashnumber
         $password = rand(1000,5000); // generate random password 
-  
+        $userbirthdate = $_POST['birthday']; 
+        date_default_timezone_set('Asia/Manila');
+
         $checkEmail = isValidEmail($_POST['email']); // pass the value of email to be check in emailValidation.php
-  
+        $birthdate = new DateTime($userbirthdate);
+        $birthdateCurrent = new DateTime();
+
+        $age = $birthdateCurrent->diff($birthdate)->y;
         
         if(empty($name) || empty($email) || empty($address) || empty($phone) )
         {
@@ -46,67 +50,76 @@
   
         }
         else {
-            $sql = "INSERT INTO `patients_user` (`Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `activation_timestamp`)
-            VALUES ('$email', '$name', '$address', '$phone', '$password', '$hash', 'User', NOW());
-            ";
-              
-                $useradd = $con->query($sql) or die($con->error); //add user to data base
-  
-  
-                // --------------SEND EMAIL FUNCTION
-  
-                require 'phpmailer/src/Exception.php';
-                require 'phpmailer/src/PHPMailer.php';
-                require 'phpmailer/src/SMTP.php';
-        
-                $mail = new PHPMailer(true);    
-        
-                //Server settings
-                $mail->isSMTP();                                     
-                $mail->Host = 'smtp.gmail.com';                      
-                $mail->SMTPAuth = true;                             
-                $mail->Username = 'TheDentalPod@gmail.com';     
-                $mail->Password = 'nndcoqvggmmlenhq';             
-                $mail->SMTPOptions = array(
-                    'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                    )
-                );                         
-                $mail->SMTPSecure = 'ssl';                           
-                $mail->Port = 465;                                   
-        
-                //Send Email
-                $mail->setFrom('1dummy2020@gmail.com');
-                //Recipients
-                $mail->addAddress($email);              
-                //Content
-                
-                $to      = $email; // Send email to our user 
-                $subject = 'Signup | Verification'; // Give the email a subject 
-                $message = ' 
-        
-                    Thanks for signing up! 
-                    Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. 
-        
-                    ------------------------ 
-                    Username: '.$email.' 
-                    Password: '.$password.' 
-                    ------------------------ 
-        
-                    Please click this link to activate your account: 
-                    http://localhost:8080/THESIS1/Admin/verify.php?email='.$email.'&hash='.$hash.' 
-  
-        
-                    '; // Our message above including the link (Remember to change the port of localhost depns on laptop or computer)
-        
-                    $mail->Subject = $subject;
-                    $mail->Body  = $message;
-        
-                $mail->send();
-  
-                echo '<script>alert("Please Check your email for confirmation")</script>';
+
+            if($age >= 18)
+            {
+                $sql = "INSERT INTO `patients_user` (`Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `activation_timestamp`)
+                VALUES ('$email', '$name', '$address', '$phone', '$password', '$hash', 'User', NOW());
+                ";
+                  
+                    $useradd = $con->query($sql) or die($con->error); //add user to data base
+      
+      
+                    // --------------SEND EMAIL FUNCTION
+      
+                    require 'phpmailer/src/Exception.php';
+                    require 'phpmailer/src/PHPMailer.php';
+                    require 'phpmailer/src/SMTP.php';
+            
+                    $mail = new PHPMailer(true);    
+            
+                    //Server settings
+                    $mail->isSMTP();                                     
+                    $mail->Host = 'smtp.gmail.com';                      
+                    $mail->SMTPAuth = true;                             
+                    $mail->Username = 'TheDentalPod@gmail.com';     
+                    $mail->Password = 'nndcoqvggmmlenhq';             
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                        )
+                    );                         
+                    $mail->SMTPSecure = 'ssl';                           
+                    $mail->Port = 465;                                   
+            
+                    //Send Email
+                    $mail->setFrom('1dummy2020@gmail.com');
+                    //Recipients
+                    $mail->addAddress($email);              
+                    //Content
+                    
+                    $to      = $email; // Send email to our user 
+                    $subject = 'Signup | Verification'; // Give the email a subject 
+                    $message = ' 
+            
+                        Thanks for signing up! 
+                        Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. 
+            
+                        ------------------------ 
+                        Username: '.$email.' 
+                        Password: '.$password.' 
+                        ------------------------ 
+            
+                        Please click this link to activate your account: 
+                        http://localhost:8080/THESIS1/Admin/verify.php?email='.$email.'&hash='.$hash.' 
+      
+            
+                        '; // Our message above including the link (Remember to change the port of localhost depns on laptop or computer)
+            
+                        $mail->Subject = $subject;
+                        $mail->Body  = $message;
+            
+                    $mail->send();
+      
+                    echo '<script>alert("Please Check your email for confirmation")</script>';
+            }
+            else{
+                echo '<script>alert("You need to be above 18 to register")</script>';
+
+            }
+
         }
                 
             }else{
@@ -181,60 +194,118 @@
             </div>
         </nav>
     </div>
-   <div class="card shadow-lg o-hidden border-0 my-5">
-        <div class="card-body p-0">
-            <div class="row">
-                <div class="col-lg-5 d-none d-lg-flex">
-                    <div class="flex-grow-1 bg-register-image"
-                        style="background-image: url(&quot;assets/img/easy.jpeg.&quot;);"></div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="p-5" style="margin-left: -9px;">
-                        <div class="text-center">
-                            <h4 class="text-dark mb-4">Sign Up</h4>
+    <div class="card shadow-lg o-hidden border-0 my-5">
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-lg-5 d-none d-lg-flex">
+                <div class="flex-grow-1 bg-register-image"
+                    style="background-image: url('assets/img/easy.jpeg');"></div>
+            </div>
+            <div class="col-lg-7">
+                <div class="p-5" style="margin-left: -9px;">
+                    <div class="text-center">
+                        <h4 class="text-dark mb-4">Sign Up</h4>
+                    </div>
+                    <form class="user" method="post">
+                        <div class="form-group">
+                            <input class="form-control form-control-user" type="text" id="exampleFirstName-1"
+                                placeholder="Full Name" name="name" />
                         </div>
-                        <form class="user" method="post">
-
-                            <div class="form-group">
-                                <input class="form-control form-control-user" type="text" id="exampleFirstName-1"
-                                    placeholder="Full Name" name="name" />
-                            </div>
-
-                            <div class="form-group">
-                                <input class="form-control form-control-user" type="email" id="exampleInputEmail"
-                                    aria-describedby="emailHelp" placeholder="Email" name="email" />
-                            </div>
-
-                            <div class="form-group">
-                                <input class="form-control form-control-user" type="tel" id="examplePasswordInput"
-                                    maxlength="11" placeholder="Phone Number" name="phone" />
-                            </div>
-
-                            <div class="form-group">
-                                <input class="form-control form-control-user" type="text"
-                                    id="exampleRepeatPasswordInput" placeholder="Address" name="address" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ageCertification" class="form-check-label">
-                                    <input type="checkbox" id="ageCertification" name="ageCertification"
-                                        class="form-check-input" required>
-                                    I certify that I am 18 years of age or older.
+                        <div class="form-group">
+                            <input class="form-control form-control-user" type="email" id="exampleInputEmail"
+                                aria-describedby="emailHelp" placeholder="Email" name="email" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control form-control-user" type="tel" id="examplePasswordInput"
+                                maxlength="11" placeholder="Phone Number" name="phone" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control form-control-user" type="text" id="exampleRepeatPasswordInput"
+                                placeholder="Address" name="address" />
+                        </div>
+                        <div class="form-group">
+                        <small class="form-text text-muted">Birthdate</small>
+                            <input type="date" id="birthday" name="birthday" class="form-control" max="<?php echo date('Y-m-d'); ?>" />
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="ageCertification" name="ageCertification"
+                                    class="form-check-input" required>
+                                <label class="form-check-label" for="ageCertification">
+                                  By ticking, you are confirming that you have read , understood and agree to The Dental Pod <a href="#exampleModalLong" data-toggle="modal">terms and conditions</a>
                                 </label>
                             </div>
-
-                            <button class="btn btn-primary btn-user w-100" type="submit"
-                                name="signup-button">Sign Up</button>
-
-                        </form>
-                        <div class="text-center"><a class="small" href="Landingpage.php">Home</a></div>
-                        <div class="text-center"><a class="small" href="loginpage.php">Already have an account? Login!</a>
                         </div>
-                    </div>
+                        <button class="btn btn-primary btn-user w-100" type="submit" name="signup-button">Sign Up</button>
+                    </form>
+                    <div class="text-center"><a class="small" href="Landingpage.php">Home</a></div>
+                    <div class="text-center"><a class="small" href="loginpage.php">Already have an account? Login!</a></div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Terms and Conditions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Upon signing in or reserving our services, users affirm that they are 18 years or older. Minors must secure parental consent to proceed.</p>
+
+        <p>Reservations necessitate timely confirmation; failure to confirm within the specified time results in automatic cancellation. The responsibility lies with users under 18 to obtain consent and promptly confirm reservations.</p>
+
+        <p>Notifications are provided as guides; however, missed alerts do not excuse confirmation lapses. We retain the right to modify or terminate the agreement, and users will be notified of any changes.</p>
+
+        <p><strong>Agreement for Users Under 18, Registration, and Reservation Confirmation</strong></p>
+
+        <ol>
+          <li>
+            <p><strong>Age Confirmation:</strong><br>
+              By signing in or reserving our services, users acknowledge that they must be 18 years or older. Individuals below the age of 18 must obtain consent from a parent or legal guardian before signing in or making reservations.</p>
+          </li>
+          <li>
+            <p><strong>Reservation Confirmation:</strong><br>
+              a. Users are required to confirm their reservations within a specified time.<br>
+              b. Confirmation should be completed by responding to the confirmation email or following the provided confirmation process on our platform.</p>
+          </li>
+          <li>
+            <p><strong>Automatic Cancellation:</strong><br>
+              a. Failure to confirm the reservation within the stipulated time will result in automatic cancellation.<br>
+              b. Canceled reservations may lead to the release of reserved slots or services to other users.</p>
+          </li>
+          <li>
+            <p><strong>Responsibility:</strong><br>
+              a. Users under 18 are responsible for obtaining the necessary consent.<br>
+              b. It is the user's responsibility to ensure timely confirmation to avoid automatic cancellation.</p>
+          </li>
+          <li>
+            <p><strong>Notification:</strong><br>
+              a. Users will receive notification emails or messages with clear instructions on the confirmation process.<br>
+              b. Failure to receive notifications does not exempt users from the confirmation requirement.</p>
+          </li>
+          <li>
+            <p><strong>Modification or Termination:</strong><br>
+              a. We reserve the right to modify or terminate this agreement at our discretion.<br>
+              b. Users will be notified of any changes to the agreement.</p>
+          </li>
+        </ol>
+
+        <p>By signing in or reserving our services, users agree to adhere to the terms outlined in this agreement. Failure to comply may result in the automatic cancellation of reservations. For any inquiries or concerns, please contact our customer support.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <script src = "https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity = "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin = "anonymous"></script>
     <script src = "https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity = "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin = "anonymous"></script>

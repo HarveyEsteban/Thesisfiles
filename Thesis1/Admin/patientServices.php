@@ -15,6 +15,11 @@ if (isset($_GET['logout_code'])) {
     header("Location: Landingpage.php");
     exit(); // Make sure to exit after sending the header
 }
+
+if(isset($_GET['date'])){
+    $date = $_GET['date'];
+    global $date;
+}
 ?>
 
 
@@ -163,7 +168,13 @@ if (isset($_GET['logout_code'])) {
                                                 echo "<h5 class='card-title'><strong>" .$row['serviceName']. "</strong></h5>";
                                                 echo "<p class='card-text'>&nbsp;₱" . $row['price'] . "</p>";
                                                 echo "<p class='card-text'>" . $row['description'] . "</p>";
-                                                echo "<a class='btn btn-success btn-lg' href='patientInterface.php?service=".$row['serviceName']."'>Select</a>";
+                                                if(!isset($_GET['date'])){
+                                                    echo "<a class='btn btn-success btn-lg' href='patientInterface.php?service=".$row['serviceName']."'>Select</a>";
+
+                                                }else{
+
+                                                    echo "<a class='btn btn-success btn-lg' href='book.php?service=".$row['serviceName']." &date=".$date."'>Select</a>";
+                                                }
                                                 echo "</div>"; // card-body
                                                 echo "</div>"; // card
                                                 echo "</div>"; // col-md-6

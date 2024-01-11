@@ -63,7 +63,7 @@ if ( isset( $_POST['submit'] ) ) {
    
 }
 
-$duration = 30;
+$duration = 60;
 $cleanup = 0;
 $start = "09:00";
 $end = "17:00";
@@ -230,7 +230,7 @@ foreach ($timeslots as $ts) {
 
 
 <div class="space-below">
-    <a href="patientServices.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
+    <a href="patientInterface.php" class="btn btn-lg" style="background-color: #bab395;">Go Back</a>
 </div>
 
     <div id="user_model_details"></div>

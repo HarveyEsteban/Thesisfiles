@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2024 at 04:53 PM
+-- Generation Time: Jan 11, 2024 at 04:58 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -48,18 +48,11 @@ CREATE TABLE `bookinglog` (
 --
 
 INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`, `totalServicePay`) VALUES
-(164, 12, 'Braces', '2023-12-10', '04:00 PM - 04:30 PM', 'x', 'None', 'arsadasd', 'Done', 'N/A', '', '2023-12-10 09:57:46', 0),
-(165, 12, 'Braces', '2023-12-10', '04:30 PM - 05:00 PM', 'sss', 'None', 'ssss', 'Done', 'N/A', '', '2023-12-10 09:57:55', 0),
-(166, 2, 'Bunot', '2023-12-12', '04:30 PM - 05:00 PM', 'sssssss', 'Vovx', '', 'Done', 'N/A', '', '2023-12-10 09:56:25', 0),
-(167, 12, 'Braces', '2023-12-12', '02:00 PM - 02:30 PM', 'Kupal', 'None', 'ssss', 'Pending', 'N/A', '', '2024-01-01 18:41:28', 0),
-(168, 4, 'Bunot', '2024-01-02', '10:00 AM - 10:30 AM', 'mark', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:04:21', 0),
-(169, 1, 'Braces', '2023-12-24', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-23 17:16:07', 0),
-(170, 26, 'Braces', '2023-12-15', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2023-12-14 17:40:39', 0),
-(171, 1, 'Braces', '2023-12-18', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:03:38', 0),
-(172, 6, 'Braces', '2024-01-02', '09:00 AM - 09:30 AM', 'Dhan dhns', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:03:42', 0),
-(173, 1, 'Braces', '2023-12-25', '09:30 AM - 10:00 AM', '', 'None', 'None', 'Done', 'None', '', '2023-12-23 17:10:55', 5800),
-(174, 1, 'mcDo', '2024-01-05', '09:30 AM - 10:00 AM', 'x', 'None', 'None', 'Pending', 'None', '', '2024-01-01 19:03:48', 0),
-(175, 2, 'Ortho', '2024-01-05', '10:00 AM - 10:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-01 17:32:58', 0);
+(176, 1, 'Dental Braces', '2024-01-11', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 13:21:31', 0),
+(177, 2, 'Tooth Extraction', '2024-01-11', '02:00 PM - 02:30 PM', '', 'None', 'None', 'Done', 'None', '', '2024-01-11 13:29:30', 800),
+(178, 6, 'Dentures (Pustiso)', '2024-01-16', '02:30 PM - 03:00 PM', 'Doc not avail', 'None', 'None', 'Cancel', 'None', '', '2024-01-11 14:22:42', 0),
+(179, 32, 'Dental Braces', '2024-01-14', '09:00 AM - 09:30 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 13:56:53', 0),
+(180, 12, 'Dental Braces ', '2024-01-11', '01:00 PM - 02:00 PM', '', 'None', 'Juan Dela Cruz', 'Pending', 'Juan Dela Cruz', '', '2024-01-11 15:52:28', 0);
 
 -- --------------------------------------------------------
 
@@ -163,8 +156,12 @@ INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `ch
 (0, 1, 3, 'ddd', '2023-12-10 13:51:24', 0),
 (0, 1, 3, 'asddd', '2023-12-10 13:51:36', 0),
 (0, 3, 1, 'assdwwww', '2023-12-10 13:51:50', 0),
-(0, 3, 1, 'asddsw', '2023-12-10 13:53:00', 1),
-(0, 3, 1, 'sssss', '2023-12-10 17:39:58', 1);
+(0, 3, 1, 'asddsw', '2023-12-10 13:53:00', 0),
+(0, 3, 1, 'sssss', '2023-12-10 17:39:58', 0),
+(0, 1, 3, 'gago', '2024-01-11 13:17:52', 0),
+(0, 1, 3, 'Utut mo', '2024-01-11 13:18:34', 0),
+(0, 3, 32, 'Hello there, I would like to ask a mother fucking question', '2024-01-11 14:16:18', 0),
+(0, 32, 3, 'Hello what can i do for you', '2024-01-11 14:17:03', 0);
 
 -- --------------------------------------------------------
 
@@ -241,25 +238,26 @@ CREATE TABLE `patients_user` (
 --
 
 INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`, `activation_timestamp`, `ForgotPass`, `forgot_expiration`) VALUES
-(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '1241231254123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2023-12-09 18:48:48', '2023-12-07 15:19:04', '1321987590', NULL),
+(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '09785233123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2024-01-11 14:06:01', '2023-12-07 15:19:04', '1321987590', NULL),
 (2, 'mobs.dominiquemartinez@gmail.com', 'Crizsabel Castillo', 'Abar 1st esteban blk San jose City Nueva Ecija', '09959866117', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-08 17:17:43', '2023-12-07 15:19:04', '', NULL),
 (3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04', '', NULL),
 (4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
-(5, 'SS@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
+(5, 'SS@gmail.com', 'Aeron Ruivivar', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2024-01-11 14:08:00', '2023-12-07 15:19:04', '', NULL),
 (6, 'ewan@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Eggy123', 'asdwefs1231tsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (7, 'asdasd@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '1401', '06eb61b839a0cefee4967c67ccb099dc', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (8, '12315123@gmail.com', 'Lee Harvey Esteban', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '3063', 'c7e1249ffc03eb9ded908c236bd1996d', 'User', 0, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (12, 'Recept@gmail.com', 'Harvey', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'Helloworld123', '', 'Receptionist', 1, '', '2023-12-10 09:45:48', '2023-12-07 15:19:04', '', NULL),
-(20, 'harveybucod21@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', 'Harveybucod21', 'e5841df2166dd424a57127423d276bbe', 'User', 1, '', '2023-12-10 02:31:32', '2023-12-07 16:06:05', '554070821', '2023-12-10 02:59:49'),
 (21, 'robartos@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2023-12-07 16:14:40', '2023-12-07 16:14:40', '', NULL),
 (22, 'Pople@gmail.com', 'New', '', '', 'NewPanda123', '', 'Receptionist', 1, '', '2023-12-10 09:22:59', '2023-12-10 09:22:59', '', NULL),
 (23, 'Pople@gmail.com', 'New', '', '', 'NewPanda123', '', 'Receptionist', 1, '', '2023-12-10 09:23:41', '2023-12-10 09:23:41', '', NULL),
 (24, 'harveybucod2s1@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '4643', 'ad13a2a07ca4b7642959dc0c4c740ab6', 'User', 0, '', '2023-12-10 18:47:23', '2023-12-10 18:47:23', '', NULL),
-(26, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:19:07', '2023-12-10 20:19:07', '', NULL),
+(26, 'dellleebucod@gmail.com', 'Harvey Bien Bucod', '', '', '', '', 'User', 0, '', '2024-01-11 14:24:05', '2023-12-10 20:19:07', '', NULL),
 (27, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:20:41', '2023-12-10 20:20:41', '', NULL),
 (28, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:21:38', '2023-12-10 20:21:38', '', NULL),
 (29, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:23:18', '2023-12-10 20:23:18', '', NULL),
-(30, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:39:43', '2023-12-10 20:39:43', '', NULL);
+(30, 'dellleebucod@gmail.com', 'Lee Bucod', '', '', '', '', 'User', 0, '', '2023-12-10 20:39:43', '2023-12-10 20:39:43', '', NULL),
+(31, 'harveybucod22221@gmail.com', 'Harvey Bucod', 'Abar 1st esteban blk', '09154571800', '2562', '7d04bbbe5494ae9d2f5a76aa1c00fa2f', 'User', 0, '', '2024-01-11 11:45:14', '2024-01-11 11:45:14', '', NULL),
+(32, 'harveybucod21@gmail.com', 'Maximus Harvey bucod', 'Abar 1st esteban blk, Sanjose City, Nueva Ecija', '09154571800', '4378', '0336dcbab05b9d5ad24f4333c7658a0e', 'User', 1, '', '2024-01-11 13:53:52', '2024-01-11 13:52:37', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -281,10 +279,13 @@ CREATE TABLE `servicetbl` (
 --
 
 INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`, `status`, `duration`) VALUES
-('Braces', 4000, 'upload/6575603406fa67.06864760.png', 'Bakal', 'Un-Archive', 0),
-('Bunot', 700, 'upload/65756645bebd45.61223826.jpg', 'Tangal ngipin', 'Un-Archive', 0),
-('mcDo', 50, 'upload/6575604935cc12.43900192.png', 'mcChiken', 'Un-Archive', 0),
-('Ortho', 222, 'upload/657582b9050441.19550374.jpg', 'asdasafwd', 'Un-Archive', 0);
+('Dental Braces', 5000, 'upload/659fddb2d00e30.02864361.png', 'Help correct problems with your teeth, like crowding, crooked teeth, or teeth that are out of alignment, 5000 down payment', 'Un-Archive', 0),
+('Dentures (Pustiso)', 3000, 'upload/659fdd2ea58614.55243010.png', 'A timeless solution for replacing missing teeth, Price vary based on case and material of your choice', 'Un-Archive', 0),
+('Oral Prophylaxis', 600, 'upload/659fdbc858cbc6.87548151.png', 'Thorough examination of your oral health combined with a scale and clean 30-min', 'Un-Archive', 0),
+('Root Canal Treatment', 6500, 'upload/659fde7693f5b0.51682227.jpg', 'For a cracked tooth from injury or genetics, a deep cavity, or issues from a previous filling.', 'Un-Archive', 0),
+('Teeth Whitening', 12000, 'upload/659fde1c96d798.13556970.png', 'Makes your teeth lighter so you can have a confident smile', 'Un-Archive', 0),
+('Tooth Extraction', 450, 'upload/659fdccb497425.31493558.png', 'Removal of teeth', 'Un-Archive', 0),
+('Tooth Restoration (Pasta)', 600, 'upload/659fdc524dce27.21430468.png', 'Fill cavities in teeth that are caused by decay. Price may vary base on numbers of tooth, price is per tooth', 'Un-Archive', 0);
 
 --
 -- Indexes for dumped tables
@@ -324,7 +325,7 @@ ALTER TABLE `servicetbl`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`
@@ -336,7 +337,7 @@ ALTER TABLE `confirmation_data`
 -- AUTO_INCREMENT for table `patients_user`
 --
 ALTER TABLE `patients_user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

@@ -130,9 +130,9 @@ date_default_timezone_set('Asia/Manila');
                     </div>
                 </nav>
 
-                        <div class="container-fluid">
+                           <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon1Modal">
                                 <div class="text-center">
                                     <i class="fa fa-users fa-3x text-primary"></i>
@@ -141,7 +141,17 @@ date_default_timezone_set('Asia/Manila');
                             </a>
                         </div>
 
-                        <div class="col-md-3">
+
+                        <div class="col-md-4">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon5Modal">
+                                <div class="text-center">
+                                    <i class="fa fa-money fa-3x text-primary">$</i>
+                                    <p class="mt-2">Sales</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
                             <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon4Modal">
                                 <div class="text-center">
                                     <i class="fa fa-users fa-3x text-info"></i>
@@ -150,7 +160,7 @@ date_default_timezone_set('Asia/Manila');
                             </a>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon2Modal">
                                 <div class="text-center">
                                     <i class="fa fa-check-circle fa-3x text-success"></i>
@@ -158,7 +168,7 @@ date_default_timezone_set('Asia/Manila');
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon3Modal">
                                 <div class="text-center">
                                     <i class="fa fa-exclamation fa-3x text-danger"></i>
@@ -166,6 +176,18 @@ date_default_timezone_set('Asia/Manila');
                                 </div>
                             </a>
                         </div>
+
+                        <div class="col-md-4">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon6Modal">
+                                <div class="text-center">
+                                    <i class="fa fa-users fa-3x text-success"></i>
+                                    <p class="mt-2">Walk-In Patients</p>
+                                </div>
+                            </a>
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -223,6 +245,123 @@ date_default_timezone_set('Asia/Manila');
                                             <td>' . $Phone . '</td>
                                             <td>' . $Address . '</td>
                                             <td>' . $dateOnly . '</td>
+                                        </tr>';
+                                }
+                                ?>
+                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="icon5Modal" tabindex="-1" role="dialog" aria-labelledby="icon5ModalLabel" aria-hidden="true">
+                    <!-- Add your modal content for Icon 1 here -->
+                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Sales</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="container">
+                            <div class="table-responsive">
+                            <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Service</th>
+                                    <th>Payed</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $retrieveServices = "SELECT servicetbl.serviceName, patients_user.Name, bookinglog.totalServicePay
+                                FROM bookinglog
+                                JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
+                                JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                WHERE bookinglog.date >= CURDATE() - INTERVAL 1 WEEK AND bookinglog.status = 'Done'";
+                                $result = $con->query($retrieveServices);
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Extracting data from the row
+                                    $name = $row['Name'];
+                                    $servicename = $row['serviceName'];
+                                    $pay = $row['totalServicePay'];
+
+                                    // Displaying the data in a table row
+                                    echo '
+                                        <tr>
+                                            <td>' . $name . '</td>
+                                            <td>' . $servicename . '</td>
+                                            <td>' . $pay . '</td>
+                                        </tr>';
+                                }
+                                ?>
+                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                 <div class="modal fade" id="icon6Modal" tabindex="-1" role="dialog" aria-labelledby="icon6ModalLabel" aria-hidden="true">
+                    <!-- Add your modal content for Icon 1 here -->
+                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Walk-In Patients</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="container">
+                            <div class="table-responsive">
+                            <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Walk-In Name</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Payed</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $retrieveServices = "SELECT * FROM bookinglog WHERE walk_in_name != 'None' AND status = 'Done' AND date >= CURDATE() - INTERVAL 1 WEEK";
+                                $result = $con->query($retrieveServices);
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Extracting data from the row
+                                    $name = $row['walk_in_name'];
+                                    $servicename = $row['serviceName'];
+                                    $pay = $row['totalServicePay'];
+                                    $date = $row['date'];
+                                    $time = $row['timeslot'];
+
+                                    // Displaying the data in a table row
+                                    echo '
+                                        <tr>
+                                            <td>' . $name . '</td>
+                                            <td>' . $servicename .'</td>
+                                            <td>' . $date .'</td>
+                                            <td>' . $time .'</td>
+                                            <td>' . $pay . '</td>
                                         </tr>';
                                 }
                                 ?>
@@ -317,7 +456,7 @@ date_default_timezone_set('Asia/Manila');
                                             $getWeeklyUser = "SELECT bookinglog.serviceName, bookinglog.date, bookinglog.timeslot, bookinglog.remarks, patients_user.Name 
                                             FROM `bookinglog` 
                                             JOIN patients_user ON bookinglog.userID = patients_user.userID
-                                            WHERE date >= CURDATE() - INTERVAL 1 WEEK";
+                                            WHERE date >= CURDATE() - INTERVAL 1 WEEK AND status = 'Done'";
                                             $resultUser = $con -> query($getWeeklyUser);
 
                                             while ($rowUser = mysqli_fetch_assoc($resultUser)) {

@@ -81,11 +81,11 @@ $userID = $_SESSION['UserID'];
              else{
     
                 $totalBookings =checkSlots($mysqli,$date);
-                if($totalBookings == 14){
+                if($totalBookings == 7){
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>No Slots</a>";
     
                 }else{
-                    $avaislots = 14 - $totalBookings;
+                    $avaislots = 7 - $totalBookings;
                     $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookReceptionist.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
     
                 }
