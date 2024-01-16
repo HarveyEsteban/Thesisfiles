@@ -335,7 +335,7 @@
                                     echo '
                 <tr>
                     <td>' . $name . '</td>
-                    <td>' . $price . '</td>
+                    <td>₱' . number_format($price, 2) . '</td>
                     <td>' . $est . '</td>
                     <td>
                         <img src="' . $pic . '" alt="' . $name . '" style="max-width: 100px; max-height: 100px;">

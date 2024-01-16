@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2024 at 01:54 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jan 16, 2024 at 06:49 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,15 +48,23 @@ CREATE TABLE `bookinglog` (
 --
 
 INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`, `totalServicePay`) VALUES
-(181, 21, 'Dentures (Pustiso) ', '2024-01-12', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-12 01:43:10', 0),
-(182, 5, 'Dentures (Pustiso) ', '2024-01-15', '10:00 AM - 11:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:59', 0),
-(183, 1, 'Dentures (Pustiso) ', '2024-01-12', '11:00 AM - 12:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-12 01:43:20', 0),
-(184, 4, 'Dentures (Pustiso) ', '2024-01-15', '01:00 PM - 02:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:11', 0),
-(185, 2, 'Dentures (Pustiso) ', '2024-01-15', '02:00 PM - 03:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:18', 0),
-(186, 2, 'Dentures (Pustiso) ', '2024-01-12', '03:00 PM - 04:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-12 01:43:26', 0),
-(187, 1, 'Dentures (Pustiso) ', '2024-01-15', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:11', 0),
-(189, 1, 'Dental Braces', '2024-01-16', '11:00 AM - 12:00 PM', '', 'frncs', 'None', 'Done', 'N/A', '', '2024-01-12 02:25:58', 5500),
-(190, 39, 'Dentures (Pustiso) ', '2024-01-16', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'Francis', '', '2024-01-12 03:18:22', 0);
+(194, 4, 'Dental Braces ', '2024-01-22', '01:00 PM - 02:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:19:53', 0),
+(195, 4, 'Dental Braces ', '2024-01-22', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:20:35', 0),
+(196, 4, 'Dental Braces ', '2024-01-22', '11:00 AM - 12:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:20:35', 0),
+(197, 4, 'Dental Braces ', '2024-01-22', '03:00 PM - 04:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:20:35', 0),
+(198, 4, 'Dental Braces ', '2024-01-22', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:20:35', 0),
+(199, 4, 'Dentures (Pustiso) ', '2024-01-22', '02:00 PM - 03:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:20:35', 0),
+(200, 4, 'Dentures (Pustiso) ', '2024-01-22', '10:00 AM - 11:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:20:35', 0),
+(202, 1, 'retainer ', '2024-01-17', '11:00 AM - 12:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:22:25', 0),
+(203, 39, 'retainer ', '2024-01-17', '02:00 PM - 03:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:22:31', 0),
+(204, 2, 'retainer ', '2024-01-17', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-16 17:23:03', 0),
+(205, 33, 'Dental Braces ', '2024-01-12', '01:00 PM - 02:00 PM', '', 'None', 'Juan Dela Cruz', 'Done', 'None', '', '2024-01-16 17:34:25', 5000),
+(206, 4, 'Root Canal Treatment ', '2024-01-13', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Done', 'None', '', '2024-01-16 17:34:41', 6500),
+(207, 4, 'Teeth Whitening ', '2024-01-13', '03:00 PM - 04:00 PM', '', 'None', 'None', 'Cancel', 'None', '', '2024-01-16 17:32:51', 0),
+(208, 4, 'Teeth Whitening ', '2024-01-15', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Cancel', 'None', '', '2024-01-16 17:33:01', 0),
+(209, 33, 'Dentures (Pustiso) ', '2024-01-15', '11:00 AM - 12:00 PM', '', 'None', 'Carlos Nunez', 'Done', 'None', '', '2024-01-16 17:34:58', 3000),
+(210, 4, 'Tooth Restoration (Pasta) ', '2024-01-16', '10:00 AM - 11:00 AM', '', 'None', 'None', 'Cancel', 'None', '', '2024-01-16 17:32:47', 0),
+(211, 33, 'Tooth Restoration (Pasta) ', '1900-01-14', '02:00 PM - 03:00 PM', '', 'None', 'Ian Piolo Pascual', 'Done', 'None', '', '2024-01-16 17:35:21', 1200);
 
 -- --------------------------------------------------------
 
@@ -81,7 +89,11 @@ CREATE TABLE `chat_message` (
 INSERT INTO `chat_message` (`Chatidpk`, `chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
 (89, 0, 1, 3, 'Hello', '2024-01-11 16:09:48', 0),
 (90, 0, 3, 1, 'Hello', '2024-01-11 16:10:21', 0),
-(91, 0, 3, 3, 'hello\n', '2024-01-12 03:23:57', 0);
+(91, 0, 3, 3, 'hello\n', '2024-01-12 03:23:57', 0),
+(92, 0, 1, 3, 'Good eve', '2024-01-16 14:23:58', 0),
+(93, 0, 3, 39, 'Hello', '2024-01-16 14:25:00', 0),
+(94, 0, 3, 39, 'May i ask if i could, select multiple services', '2024-01-16 14:25:26', 0),
+(95, 0, 39, 3, 'Of course you could, what services would you like to aquire so that i can reserve it for you', '2024-01-16 14:25:59', 0);
 
 -- --------------------------------------------------------
 
@@ -161,12 +173,10 @@ INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`
 (1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '09630643245', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2024-01-12 03:20:48', '2023-12-07 15:19:04', '1321987590', NULL),
 (2, 'mobs.dominiquemartinez@gmail.com', 'Crizsabel Castillo', 'Abar 1st esteban blk San jose City Nueva Ecija', '09959866117', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-08 17:17:43', '2023-12-07 15:19:04', '', NULL),
 (3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04', '', NULL),
-(4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
-(5, 'SS@gmail.com', 'Aeron Ruivivar', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2024-01-11 14:08:00', '2023-12-07 15:19:04', '', NULL),
-(21, 'robartos@gmail.com', 'Steve Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2024-01-11 16:02:36', '2023-12-07 16:14:40', '', NULL),
-(33, 'Recept1@gmail.com', 'Koala', '', '', 'Koala123', '', 'Receptionist', 1, '', '2024-01-11 16:03:27', '2024-01-11 16:03:27', '', NULL),
+(4, 'Jologs@gmail.com', 'Maximus Harvey', 'Malasin, San Jose, City, Nueva Ecija', '09152342234', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2024-01-16 17:37:32', '2023-12-07 15:19:04', '', NULL),
+(21, 'Steve@gmail.com', 'Steve Bucod', 'Abar 1st esteban blk', '09154571800', 'steve123', '8d317bdcf4aafcfc22149d77babee96d', 'User', 1, '', '2024-01-16 17:17:07', '2023-12-07 16:14:40', '', NULL),
+(33, 'Recept@gmail.com', 'Koala', '', '', 'Koala123', '', 'Receptionist', 1, '', '2024-01-16 17:13:28', '2024-01-11 16:03:27', '', NULL),
 (34, 'ianpiolopascual29@gmail.com', 'ian piolo', '', '', 'pascual123', '', 'Receptionist', 1, '', '2024-01-12 00:26:53', '2024-01-12 00:26:29', '', NULL),
-(38, 'harveybucod21@gmail.com', 'Aeron Andrei Ruivivar', 'Abar 1st Est blk', '09154571800', '1030', '68264bdb65b97eeae6788aa3348e553c', 'User', 0, '', '2024-01-12 03:11:47', '2024-01-12 03:11:47', '', NULL),
 (39, 'shakrambrook19@gmail.com', 'Aeron Ruivivar', 'Abar 1st Est blk', '0915123523', '4217', 'd395771085aab05244a4fb8fd91bf4ee', 'User', 1, '', '2024-01-12 03:16:10', '2024-01-12 03:15:19', '', NULL);
 
 -- --------------------------------------------------------
@@ -242,13 +252,13 @@ ALTER TABLE `servicetbl`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
 -- AUTO_INCREMENT for table `chat_message`
 --
 ALTER TABLE `chat_message`
-  MODIFY `Chatidpk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `Chatidpk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`

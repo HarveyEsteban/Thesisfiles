@@ -16,7 +16,7 @@ $reminderDate = date('Y-m-d', strtotime($currentDate . ' + 3 days'));
 $sql = "SELECT DISTINCT patients_user.Email,patients_user.Name
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE date = '$reminderDate'";
+        WHERE date = '$reminderDate' AND admin_remarks = 'None'";
 $exe = $con->query($sql);
 
 while ($row = $exe->fetch_assoc()) {

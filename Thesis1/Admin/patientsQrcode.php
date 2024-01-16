@@ -88,7 +88,9 @@
       // Lets echo the image
      echo '<img name="qrCode" class="img-fluid" src="'.$file.'" width="450" height="400">';
     ?>
-
+    <div class="form-group">
+    <a href="./<?php echo $file ;?>" class="btn btn-lg btn-block" download="" style="background-color:rgb(187,177,114) ;">Download Qrcode</a>
+    </div>
     <div class="form-group">
     <a href="PatientsOwnReservation.php" class="btn btn-lg btn-block" style="background-color:rgb(187,177,114) ;">Go back</a>
     </div>

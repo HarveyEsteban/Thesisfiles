@@ -67,7 +67,7 @@ if ( isset( $_POST['submit'] ) ) {
    
 }
 
-$duration = 60;
+$duration = 30;
 $cleanup = 0;
 $start = "09:00";
 $end = "17:00";

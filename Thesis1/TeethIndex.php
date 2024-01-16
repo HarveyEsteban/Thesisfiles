@@ -1,97 +1,136 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .teeth-container {
-            border: 1px solid #000;
-            padding: 10px;
-            width: 70%; /* Adjust the width as needed */
-            margin: auto;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<style>
+    *,*:after,*:before{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+body{
+	font-family: arial;
+	font-size: 16px;
+	margin: 0;
+	background: #fff;
+	color: #000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        td {
-            width: 25px;
-            height: 25px;
-            border: 1px solid #000;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .present-tooth {
-            background-color: #c8e6c9; /* Light green for present teeth */
-        }
-
-        .pulled-tooth {
-            background-color: #ffcdd2; /* Light red for pulled teeth */
-        }
-
-        .x-mark {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
-    <title>Teeth Visualizer</title>
+.container{
+	max-width: 1100px;
+	width: 100%;
+}
+</style>
 </head>
 <body>
 
-<div class="teeth-container">
-    <?php
-    include_once("connection/connection.php");
-    $con = connection();
-
-    // Fetch upper and lower teeth data
-    $upperTeethData = fetchData($con, 'Upper');
-    $lowerTeethData = fetchData($con, 'Lower');
-
-    // Display upper teeth table
-    displayTeethTable($upperTeethData, 'Upper');
-
-    // Display lower teeth table
-    displayTeethTable($lowerTeethData, 'Lower');
-
-    $con->close();
-
-    function fetchData($con, $position)
-    {
-        $sql = "SELECT * FROM teeth WHERE position = '$position' ORDER BY tooth_number";
-        $result = $con->query($sql);
-
-        $teethData = [];
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $teethData[] = $row;
-            }
-        }
-
-        return $teethData;
-    }
-
-    function displayTeethTable($teethData, $position)
-    {
-        echo "<h2>$position Teeth</h2>";
-        echo "<table>";
-        foreach ($teethData as $tooth) {
-            $status = $tooth['status'];
-            $toothType = $tooth['tooth_type'];
-
-            $toothClass = strtolower($status) . '-tooth';
-
-            echo "<td class='$toothClass'>";
-            echo $status === 'Pulled' ? '<span class="x-mark">X</span>' : $toothType;
-            echo "</td>";
-        }
-        echo "</table>";
-    }
-    ?>
+<div class="container">
+	<table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+                <td>$170,750</td>
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009/01/12</td>
+                <td>$86,000</td>
+            </tr>
+            <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>Edinburgh</td>
+                <td>22</td>
+                <td>2012/03/29</td>
+                <td>$433,060</td>
+            </tr>
+            
+            <tr>
+                <td>Michael Bruce</td>
+                <td>Javascript Developer</td>
+                <td>Singapore</td>
+                <td>29</td>
+                <td>2011/06/27</td>
+                <td>$183,000</td>
+            </tr>
+            <tr>
+                <td>Donna Snider</td>
+                <td>Customer Support</td>
+                <td>New York</td>
+                <td>27</td>
+                <td>2011/01/25</td>
+                <td>$112,000</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'pdf'
+        ]
+    } );
+} );
+</script>
 
 </body>
 </html>

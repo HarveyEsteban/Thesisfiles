@@ -166,7 +166,7 @@ if(isset($_GET['date'])){
                                                 echo "<img class='img-fluid card-img-top' style='height: 300px; object-fit: ; border-top-left-radius: 7.6px;' src='" . $row['filename'] . "' alt='".$row['serviceName']."' width='600' height='300'>";
                                                 echo "<div class='card-body'>";
                                                 echo "<h5 class='card-title'><strong>" .$row['serviceName']. "</strong></h5>";
-                                                echo "<p class='card-text'>&nbsp;₱" . $row['price'] . "</p>";
+                                                echo "<p class='card-text'>&nbsp;₱" . number_format($row['price'],2) . "</p>";
                                                 echo "<p class='card-text'>" . $row['description'] . "</p>";
                                                 if(!isset($_GET['date'])){
                                                     echo "<a class='btn btn-success btn-lg' href='patientInterface.php?service=".$row['serviceName']."'>Select</a>";

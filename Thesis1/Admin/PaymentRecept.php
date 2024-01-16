@@ -136,7 +136,7 @@
         $additionalCharge = $_POST['charges'];
 
 
-        $additionalCharge = empty($additionalCharge) ? $Sprice : $additionalCharge;
+        $additionalCharge = empty($additionalCharge) ? $Sprice : $additionalCharge + $Sprice;
 
         $updatestmt = "UPDATE `bookinglog` SET `status`='Done',`totalServicePay`='$additionalCharge' WHERE resID = '$paymentID'";
         $exeUpdate = $con -> query($updatestmt);

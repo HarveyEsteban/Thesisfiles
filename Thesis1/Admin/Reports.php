@@ -47,6 +47,9 @@ date_default_timezone_set('Asia/Manila');
     <link rel="stylesheet" href="https://djpsoftwarecdn.azureedge.net/availabilitycss-v1/availability.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="assets/css/Ultimate-Event-Calendar.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-BBf4y1cZCf74iifZr1eMm3z2llQjZ5C+2a+nY8v1GCpkePhhBjiid8s1pL4N2pL" crossorigin="anonymous">
       <style>
 
@@ -187,7 +190,7 @@ date_default_timezone_set('Asia/Manila');
                     <div class="centered-div">
                         <h1 class="text-dark">Welcome to your Weekly Report</h1>
                         <br>
-                        <p class="mt-2">In here you can view different reports by cling the Icon above</p>
+                        <p class="mt-2">In here you can view different reports by clicking the Icon above</p>
                     </div>
 
                 <div class="modal fade" id="icon1Modal" tabindex="-1" role="dialog" aria-labelledby="icon1ModalLabel" aria-hidden="true">
@@ -203,7 +206,7 @@ date_default_timezone_set('Asia/Manila');
                             <div class="modal-body">
                                 <div class="container">
                             <div class="table-responsive">
-                            <table class="table">
+                            <table id="ActiveUsers" class="table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Name</th>
@@ -243,6 +246,8 @@ date_default_timezone_set('Asia/Manila');
                             </tbody>
                                         </table>
                                     </div>
+
+                                    
                                 </div>
                             </div>
 
@@ -251,62 +256,77 @@ date_default_timezone_set('Asia/Manila');
                 </div>
 
 
+
                 <div class="modal fade" id="icon5Modal" tabindex="-1" role="dialog" aria-labelledby="icon5ModalLabel" aria-hidden="true">
-                    <!-- Add your modal content for Icon 1 here -->
-                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Sales</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                            <div class="container">
-                            <div class="table-responsive">
-                            <table class="table">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Sales</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table id="Sales" class="table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Name</th>
                                     <th>Service</th>
+                                    <th>Walk in Patient</th>
                                     <th>Payed</th>
-
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $retrieveServices = "SELECT servicetbl.serviceName, patients_user.Name, bookinglog.totalServicePay
-                                FROM bookinglog
-                                JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
-                                JOIN patients_user ON bookinglog.userID = patients_user.userID
-                                WHERE bookinglog.date >= CURDATE() - INTERVAL 1 WEEK AND bookinglog.status = 'Done'";
+                                $retrieveServices = "SELECT servicetbl.serviceName, patients_user.Name, bookinglog.totalServicePay, bookinglog.walk_in_name
+                                    FROM bookinglog
+                                    JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
+                                    JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                    WHERE bookinglog.date >= CURDATE() - INTERVAL 1 WEEK AND bookinglog.status = 'Done'";
                                 $result = $con->query($retrieveServices);
+
+                                $totalSales = 0; // Initialize total sales variable
+
                                 // Loop through the rows of the table to display data
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     // Extracting data from the row
                                     $name = $row['Name'];
+                                    $walk = $row['walk_in_name'];
                                     $servicename = $row['serviceName'];
                                     $pay = $row['totalServicePay'];
+
+                                    // Add the pay to total sales
+                                    $totalSales += $pay;
 
                                     // Displaying the data in a table row
                                     echo '
                                         <tr>
                                             <td>' . $name . '</td>
                                             <td>' . $servicename . '</td>
-                                            <td>' . $pay . '</td>
+                                            <td>' . $walk . '</td>
+                                            <td>₱' . number_format($pay, 2) . '</td>
                                         </tr>';
                                 }
+
+                                // Display Total Sales row
+                                echo '
+                                    <tr>
+                                        <td>Total Sales</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>₱' . number_format($totalSales, 2) . '</td>
+                                    </tr>';
                                 ?>
                             </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        </table>
                     </div>
                 </div>
-
+            </div>
+        </div>
+    </div>
+</div>
 
 
                  <div class="modal fade" id="icon6Modal" tabindex="-1" role="dialog" aria-labelledby="icon6ModalLabel" aria-hidden="true">
@@ -322,7 +342,7 @@ date_default_timezone_set('Asia/Manila');
                             <div class="modal-body">
                             <div class="container">
                             <div class="table-responsive">
-                            <table class="table">
+                            <table id="WalkIn" class="table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Walk-In Name</th>
@@ -360,6 +380,9 @@ date_default_timezone_set('Asia/Manila');
                             </tbody>
                                         </table>
                                     </div>
+
+
+                                    
                                 </div>
                             </div>
 
@@ -379,7 +402,7 @@ date_default_timezone_set('Asia/Manila');
             <div class="modal-body">
                 <div class="container">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table id="TopService" class="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Service Name</th>
@@ -432,7 +455,7 @@ date_default_timezone_set('Asia/Manila');
                           </div>
                           <div class="modal-body">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table id="DoneRes" class="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Name</th>
@@ -495,7 +518,7 @@ date_default_timezone_set('Asia/Manila');
                       <div class="modal-body">
                          <div class="modal-body">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table id="CancelRes" class="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Name</th>
@@ -564,6 +587,100 @@ date_default_timezone_set('Asia/Manila');
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>                                        
+    <script>
+$(document).ready(function() {
+    $('#ActiveUsers').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Active Users'
+            }
+        ],
+        paging: false
+    });
+});
+
+$(document).ready(function() {
+    $('#Sales').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Sales'
+            }
+        ],
+        paging: false
+    });
+});
+
+$(document).ready(function() {
+    $('#TopService').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Top pick Services'
+            }
+        ],
+        paging: false
+    });
+});
+
+$(document).ready(function() {
+    $('#DoneRes').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Done Reservations'
+            }
+        ],
+        paging: false
+    });
+});
+
+$(document).ready(function() {
+    $('#CancelRes').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Caceled Reservations'
+            }
+        ],
+        paging: false
+    });
+});
+
+$(document).ready(function() {
+    $('#WalkIn').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Walk-In Patients'
+            }
+        ],
+        paging: false
+    });
+});
+
+</script>
 </body>
 
 </html>
