@@ -86,7 +86,7 @@ $userID = $_SESSION['UserID'];
     
                 }else{
                     $avaislots = 7 - $totalBookings;
-                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookReceptionist.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a><small><i>$avaislots slots</i></small>";
+                    $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='bookReceptionist.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Reserve Now</a><small><i>$avaislots slots</i></small>";
     
                 }
              }

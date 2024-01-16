@@ -137,7 +137,7 @@ session_start();
         </div>
 
 		 <div class="form-group mb-3">
-		    <input required type="file" name="image" id="image">
+		    <input  type="file" name="image" id="image">
 		</div>
 
 <button type="submit" name="btn-update" class="btn btn-primary btn-lg d-block mx-auto">Update</button>

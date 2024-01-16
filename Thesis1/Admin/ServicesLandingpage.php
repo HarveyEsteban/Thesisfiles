@@ -86,7 +86,7 @@ $con = connection();
                                                 echo "<div class='card-body'>";
                                                 echo "<h5 class='card-title'><strong>" . $row['serviceName'] . "</strong></h5>";
                                                 echo "<p class='card-text'>&nbsp;₱". $row['price'] . "</p>";
-                                                echo "<p class='card-text'>" . $row['description'] . "</p>";
+                                                echo "<p class='card-text'>" . $row['description']."</p>";
                                                 echo "</div>"; // card-body
                                                 echo "</div>"; // card
                                                 echo "</div>"; // col-md-6

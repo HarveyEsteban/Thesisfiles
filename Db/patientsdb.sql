@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2024 at 05:13 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Jan 16, 2024 at 01:54 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,13 +48,15 @@ CREATE TABLE `bookinglog` (
 --
 
 INSERT INTO `bookinglog` (`resID`, `userID`, `serviceName`, `date`, `timeslot`, `remarks`, `admin_remarks`, `walk_in_name`, `status`, `FamMemberName`, `confirmationHash`, `timestamp`, `totalServicePay`) VALUES
-(181, 21, 'Dentures (Pustiso) ', '2024-01-15', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:49', 0),
+(181, 21, 'Dentures (Pustiso) ', '2024-01-12', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-12 01:43:10', 0),
 (182, 5, 'Dentures (Pustiso) ', '2024-01-15', '10:00 AM - 11:00 AM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:59', 0),
-(183, 1, 'Dentures (Pustiso) ', '2024-01-15', '11:00 AM - 12:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:05', 0),
+(183, 1, 'Dentures (Pustiso) ', '2024-01-12', '11:00 AM - 12:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-12 01:43:20', 0),
 (184, 4, 'Dentures (Pustiso) ', '2024-01-15', '01:00 PM - 02:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:11', 0),
 (185, 2, 'Dentures (Pustiso) ', '2024-01-15', '02:00 PM - 03:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:18', 0),
-(186, 2, 'Dentures (Pustiso) ', '2024-01-15', '03:00 PM - 04:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:12:25', 0),
-(187, 1, 'Dentures (Pustiso) ', '2024-01-15', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:11', 0);
+(186, 2, 'Dentures (Pustiso) ', '2024-01-12', '03:00 PM - 04:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-12 01:43:26', 0),
+(187, 1, 'Dentures (Pustiso) ', '2024-01-15', '04:00 PM - 05:00 PM', '', 'None', 'None', 'Pending', 'None', '', '2024-01-11 16:11:11', 0),
+(189, 1, 'Dental Braces', '2024-01-16', '11:00 AM - 12:00 PM', '', 'frncs', 'None', 'Done', 'N/A', '', '2024-01-12 02:25:58', 5500),
+(190, 39, 'Dentures (Pustiso) ', '2024-01-16', '09:00 AM - 10:00 AM', '', 'None', 'None', 'Pending', 'Francis', '', '2024-01-12 03:18:22', 0);
 
 -- --------------------------------------------------------
 
@@ -78,7 +80,8 @@ CREATE TABLE `chat_message` (
 
 INSERT INTO `chat_message` (`Chatidpk`, `chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
 (89, 0, 1, 3, 'Hello', '2024-01-11 16:09:48', 0),
-(90, 0, 3, 1, 'Hello', '2024-01-11 16:10:21', 0);
+(90, 0, 3, 1, 'Hello', '2024-01-11 16:10:21', 0),
+(91, 0, 3, 3, 'hello\n', '2024-01-12 03:23:57', 0);
 
 -- --------------------------------------------------------
 
@@ -155,13 +158,16 @@ CREATE TABLE `patients_user` (
 --
 
 INSERT INTO `patients_user` (`userID`, `Email`, `Name`, `Address`, `PhoneNumber`, `Password`, `Hash`, `Access`, `Active`, `profilePic`, `last_activity`, `activation_timestamp`, `ForgotPass`, `forgot_expiration`) VALUES
-(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '09785233123', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2024-01-11 14:06:01', '2023-12-07 15:19:04', '1321987590', NULL),
+(1, 'Sample@gmail.com', 'Lee Harvey Esteban Bucod', 'Abar 1st esteban blk San jose City Nueva Ecija', '09630643245', 'leeharvey21', 'sdfghjksdgeokbnkw1231512lkasd', 'User', 1, 'upload/65689a9a3d7072.24885433.jpg', '2024-01-12 03:20:48', '2023-12-07 15:19:04', '1321987590', NULL),
 (2, 'mobs.dominiquemartinez@gmail.com', 'Crizsabel Castillo', 'Abar 1st esteban blk San jose City Nueva Ecija', '09959866117', 'pass1234', 'asdqwrgqwrhsdas123', 'User', 1, 'upload/6564c53f0ee517.53334648.jpg', '2023-12-08 17:17:43', '2023-12-07 15:19:04', '', NULL),
 (3, 'admin@admin', 'Admin', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', 'admin123', '', 'Administrator', 1, '', '2023-11-30 17:29:34', '2023-12-07 15:19:04', '', NULL),
 (4, 'Jologs@gmail.com', 'Mark Reggie Francis Lauriano', 'Planet Pluto', '223333232323', 'pass123', 'asfhwewdgwsf', 'User', 1, '', '2023-11-30 15:36:48', '2023-12-07 15:19:04', '', NULL),
 (5, 'SS@gmail.com', 'Aeron Ruivivar', 'Abar 1st esteban blk San jose City Nueva Ecija', '09154571800', '123', 'asdasdasd', 'User', 1, '', '2024-01-11 14:08:00', '2023-12-07 15:19:04', '', NULL),
 (21, 'robartos@gmail.com', 'Steve Bucod', 'Abar 1st esteban blk', '09154571800', '1219', '8d317bdcf4aafcfc22149d77babee96d', 'User', 0, '', '2024-01-11 16:02:36', '2023-12-07 16:14:40', '', NULL),
-(33, 'Recept1@gmail.com', 'Koala', '', '', 'Koala123', '', 'Receptionist', 1, '', '2024-01-11 16:03:27', '2024-01-11 16:03:27', '', NULL);
+(33, 'Recept1@gmail.com', 'Koala', '', '', 'Koala123', '', 'Receptionist', 1, '', '2024-01-11 16:03:27', '2024-01-11 16:03:27', '', NULL),
+(34, 'ianpiolopascual29@gmail.com', 'ian piolo', '', '', 'pascual123', '', 'Receptionist', 1, '', '2024-01-12 00:26:53', '2024-01-12 00:26:29', '', NULL),
+(38, 'harveybucod21@gmail.com', 'Aeron Andrei Ruivivar', 'Abar 1st Est blk', '09154571800', '1030', '68264bdb65b97eeae6788aa3348e553c', 'User', 0, '', '2024-01-12 03:11:47', '2024-01-12 03:11:47', '', NULL),
+(39, 'shakrambrook19@gmail.com', 'Aeron Ruivivar', 'Abar 1st Est blk', '0915123523', '4217', 'd395771085aab05244a4fb8fd91bf4ee', 'User', 1, '', '2024-01-12 03:16:10', '2024-01-12 03:15:19', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -183,9 +189,10 @@ CREATE TABLE `servicetbl` (
 --
 
 INSERT INTO `servicetbl` (`serviceName`, `price`, `filename`, `description`, `status`, `duration`) VALUES
-('Dental Braces', 5000, 'upload/659fddb2d00e30.02864361.png', 'Help correct problems with your teeth, like crowding, crooked teeth, or teeth that are out of alignment, 5000 down payment', 'Un-Archive', 0),
+('Dental Braces', 5000, 'upload/65a0b0798d2da7.90569396.png', 'Help correct problems with your teeth, like crowding, crooked teeth, or teeth that are out of alignment, 5000 down payment', 'Un-Archive', 0),
 ('Dentures (Pustiso)', 3000, 'upload/659fdd2ea58614.55243010.png', 'A timeless solution for replacing missing teeth, Price vary based on case and material of your choice', 'Un-Archive', 0),
 ('Oral Prophylaxis', 600, 'upload/659fdbc858cbc6.87548151.png', 'Thorough examination of your oral health combined with a scale and clean 30-min', 'Un-Archive', 0),
+('retainer', 5000, 'upload/65a0b05984b1e0.86459858.png', 'upper ower', 'Un-Archive', 0),
 ('Root Canal Treatment', 6500, 'upload/659fde7693f5b0.51682227.jpg', 'For a cracked tooth from injury or genetics, a deep cavity, or issues from a previous filling.', 'Un-Archive', 0),
 ('Teeth Whitening', 12000, 'upload/659fde1c96d798.13556970.png', 'Makes your teeth lighter so you can have a confident smile', 'Un-Archive', 0),
 ('Tooth Extraction', 450, 'upload/659fdccb497425.31493558.png', 'Removal of teeth', 'Un-Archive', 0),
@@ -235,13 +242,13 @@ ALTER TABLE `servicetbl`
 -- AUTO_INCREMENT for table `bookinglog`
 --
 ALTER TABLE `bookinglog`
-  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `resID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 
 --
 -- AUTO_INCREMENT for table `chat_message`
 --
 ALTER TABLE `chat_message`
-  MODIFY `Chatidpk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `Chatidpk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `confirmation_data`
@@ -253,7 +260,7 @@ ALTER TABLE `confirmation_data`
 -- AUTO_INCREMENT for table `patients_user`
 --
 ALTER TABLE `patients_user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
