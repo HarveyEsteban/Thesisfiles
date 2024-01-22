@@ -1,5 +1,7 @@
 <?php
 include_once("connection/connection.php");
+include_once("emailConfirmation.php");
+include_once("connection/helper.php");
 $con = connection();
 
 session_start();
@@ -8,6 +10,9 @@ date_default_timezone_set('Asia/Manila');
 $user = $_SESSION['UserLogin'];
 $userID = $_SESSION['UserID'];
 $todaysDate = date("Y-m-d"); // add plus one because of timezone.... 
+runOncePerDay();
+// PastTimeslotCancel();
+
 
 if (isset($_GET['logout_code'])) {
     session_unset();
@@ -41,16 +46,18 @@ if (isset($_GET['canID'])) {
 
 
 // Define arrays for table headers
-$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time","Add Remarks"];
+$headerToday = ["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time"];
 $headerAll = ["Reservation ID", "Name", "Type of Service", "Family Member", "Phone Number", "Address", "Date", "Time","Add Remarks"];
 $headerAdminReservation = ["Reservation ID", "Name", "Type of Service", "Admin Remarks", "Phone Number", "Address", "Date", "Time"];
 $headerWalkInPatients = ["Reservation ID", "Walk-in Name", "Type of Service", "Phone Number", "Address", "Date", "Time"];
+$headersIn =["Reservation ID", "Name", "Family Member", "Type of Service", "Phone Number", "Address", "Time","Add Remarks"];
 
 // Determine which set of patients to display
 $isToday = isset($_POST['btn-Patients-Today']);
 $isAdminReservation = isset($_POST['btn-Admin-Reservation']);
 $isAll = isset($_POST['btn-Patients-All']);
 $isWalkInPatients = isset($_POST['btn-Walk-in-Patients']);
+$isIN = isset($_POST['btn-In']);
 
 // Initialize default values
 
@@ -58,35 +65,60 @@ if(isset($_GET['resIDQR']))
 {
     $qrID = $_GET['resIDQR'];
 
-    $header = $headerToday;
-    $istoday = true;
-    $pageTitle = "Today's Patients";
+    $isScannedStmt = "UPDATE `bookinglog` SET `isScanned`='1' WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND resID = '$qrID'";
+    $exe = $con -> query($isScannedStmt);
+
+    $header = $headersIn;
+    $istoday = false;
+    $isAll = false;
+    $isIN = true;
+    $pageTitle = "Patient's in Dental Clinic";
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
     FROM bookinglog
-    INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-    WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND resID = '$qrID'"; // Initialize with an empty string
+    INNER JOIN patients_user ON bookinglog.userID = patients_user.userID 
+    WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND resID = '$qrID' and isScanned = '1'"; // Initialize with an empty string
 
     echo '<script>
     var newUrl = window.location.href.split("?")[0];
     window.history.replaceState({}, document.title, newUrl);
     </script>';
 
-    $stmtCheckToday = "SELECT * from bookinglog where DATE(date) = '$todaysDate' and resID = '$qrID'";
+    $stmtCheckToday = "SELECT * from bookinglog where DATE(date) = '$todaysDate' and resID = '$qrID' AND status = 'Pending' ";
     $exestmt = $con -> query($stmtCheckToday);
     $total = $exestmt -> num_rows;
 
     if($total <= 0)
-    {
+    {   
+        $checkifhasReservation = "SELECT * from bookinglog where resID = '$qrID'";
+        $execheckstmt = $con -> query($checkifhasReservation);
+        $totalcheck = $execheckstmt -> num_rows;
 
-        echo '<div class="alert alert-danger" role="alert">
-        No Reservation found!!
-        </div>';
+        if($totalcheck > 0)
+        {
+            $header = $headersIn;
+            $istoday = false;
+            $isAll = true;
+            $isIN = false;
+            $pageTitle = "All Patients";
+            $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+            FROM bookinglog
+            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID 
+            WHERE status = 'Pending' AND resID = '$qrID'"; // Initialize with an empty string
+    
+    
+            echo '<div class="alert alert-danger" role="alert">
+            Not Scheduled for today
+            </div>';
+        }
 
-        echo "<script>
-        setTimeout(function() {
-            window.location.href='receptionistUI.php';
-        }, 3000); // 3000 milliseconds (3 seconds) delay
-      </script>";    }
+
+    //     echo "<script>
+    //     setTimeout(function() {
+    //         window.location.href='receptionistUI.php';
+    //     }, 3000); // 3000 milliseconds (3 seconds) delay
+    //   </script>";
+
+    }
 
 }else{
 
@@ -106,23 +138,30 @@ if(isset($_GET['resIDQR']))
     }
 
     if(isset($_POST['searchKeywordAll']))
-
     {
         $searchKeywordAll = isset($_POST['searchKeywordAll']) ? $_POST['searchKeywordAll'] : '';
+        $todaysDate = date("Y-m-d");
         $header = $headerAll;
         $pageTitle = "All Patients";
         $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot, bookinglog.admin_remarks, bookinglog.walk_in_name, bookinglog.FamMemberName
-            FROM bookinglog
-            INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-            WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks = 'None' AND walk_in_name = 'None'";
-            $isAll = true;
-            $istoday = false;
-    
+        FROM bookinglog
+        INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+        WHERE status = 'Pending' AND admin_remarks = 'None' AND walk_in_name = 'None'";
+
+        $isAll = true;
+        $istoday = false;
+
+        if (!empty($_POST['start_date'])) {
+            $start_date = $_POST['start_date'];
+            $retrieveQuery .= " AND DATE(bookinglog.date) = '$start_date'";
+        }
+
         if (!empty($searchKeywordAll)) {
             $retrieveQuery .= " AND patients_user.Name LIKE '%$searchKeywordAll%'";
             $isAll = true;
         }
-    
+
+        // Execute your query and display results...
     }
     elseif (isset($_POST['searchKeywordToday'])) {
 
@@ -155,7 +194,7 @@ if(isset($_GET['resIDQR']))
     $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
             FROM bookinglog
             INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'AND admin_remarks = 'None' AND walk_in_name = 'None'"; // Initialize with an empty string
+            WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate'AND admin_remarks = 'None' AND walk_in_name = 'None' AND isScanned = '0'"; // Initialize with an empty string
 
 
 if (!empty($searchKeywordToday)) {
@@ -175,7 +214,21 @@ elseif ($isAdminReservation) {
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
         WHERE status = 'Pending' AND DATE(bookinglog.date) >= '$todaysDate' AND admin_remarks != 'None'";
 
-} elseif ($isWalkInPatients) {
+}
+    elseif ($isIN){
+        $header = $headersIn;
+        $istoday = false;
+        $pageTitle = "Patient's in Dental Clinic";
+        $retrieveQuery = "SELECT bookinglog.resID, bookinglog.serviceName, patients_user.Name, bookinglog.date, patients_user.PhoneNumber, patients_user.Email, patients_user.Address, bookinglog.timeslot,bookinglog.admin_remarks, bookinglog.walk_in_name,bookinglog.FamMemberName
+    FROM bookinglog
+    INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
+    WHERE status = 'Pending' AND DATE(bookinglog.date) = '$todaysDate' AND isScanned = '1'";
+        $isAll = false;
+        $istoday = false;
+
+    }
+
+    elseif ($isWalkInPatients) {
 
     $header = $headerWalkInPatients;
     $isAll = false;
@@ -372,8 +425,11 @@ elseif ($isAll) {
                                     <?php 
                                         if($isAll == true)
                                         {
-                                            echo '<input type="text" class="form-control" placeholder="Search by Name" name="searchKeywordAll">
-                                            <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>';
+                                            echo '
+                                            <input type="date" name="start_date" id="start_date">       
+                                            <input type="text" class="form-control" placeholder="Search by Name" name="searchKeywordAll">
+                                            <button class="btn btn-outline-secondary" type="submit" name="btn-Search">Search</button>
+                                            ';
                                         }
                                         elseif($istoday == true)
                                         {
@@ -386,9 +442,10 @@ elseif ($isAll) {
                            
                             </div>
    <form method="post" action="">
-            <button class="btn btn-primary btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-Today">Show Today's Patients</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-In">Patients currently in dental clinic</button>
             <button class="btn btn-info btn-lg" type="submit" name="btn-Patients-All">Show All Patients</button>
-            <button class="btn btn-primary btn-lg" type="submit" name="btn-Admin-Reservation">Admin Reservation</button>
+            <button class="btn btn-info btn-lg" type="submit" name="btn-Admin-Reservation">Admin Reservation</button>
             <button class="btn btn-info btn-lg" type="submit" name="btn-Walk-in-Patients">Walk-In Patients</button>
 
         </form>
@@ -481,8 +538,6 @@ elseif ($isAll) {
                                         {
                                             echo '<td>
                                             <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
-                                            <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
-                                            <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
                                         </td>';
                                     echo '</tr>';
                                         }
@@ -492,6 +547,16 @@ elseif ($isAll) {
                                             <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
                                         </td>';
                                     echo '</tr>';
+                                        }
+
+                                        elseif($isIN == true){
+                                            echo '<td>
+                                            <input type="hidden" id="resID' . $row['resID'] . '" name="resID" value="' . $row['resID'] . '">
+                                            <button"><a href="PaymentRecept.php?doneID=' . $row['resID'] . '" class="btn btn-danger">Payment</a></button>
+                                           <button"><a href="receptionistUI.php?canID=' . $row['resID'] . '" class="btn btn-warning">Cancel</a></button>
+
+                                        </td>';
+                                            echo '</tr>';
                                         }
                                         elseif($isAdminReservation == true)
                                         {

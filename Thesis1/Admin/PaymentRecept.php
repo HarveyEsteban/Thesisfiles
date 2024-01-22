@@ -3,16 +3,11 @@
     include_once("connection/connection.php");
     $con = connection();
 
-
-
-
     if(isset($_GET['doneID']))
     {
         $paymentID = $_GET['doneID'];
         global $paymentID;
     }
-
-
 
 ?>
 
@@ -121,6 +116,7 @@
         </div>
 
         <button type="submit" name="btn-Payment" class="btn btn-success">Done</button>
+                <a href="receptionistUI.php" class="btn btn-info">Go back</a>
 
 
         <?php
@@ -141,7 +137,7 @@
         $updatestmt = "UPDATE `bookinglog` SET `status`='Done',`totalServicePay`='$additionalCharge' WHERE resID = '$paymentID'";
         $exeUpdate = $con -> query($updatestmt);
 
-        echo header("Location: receptionistUI.php");
+        header("Location: receipt.php?paymentID=$paymentID");
         
     }
     

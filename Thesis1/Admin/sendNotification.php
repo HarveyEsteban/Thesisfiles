@@ -14,11 +14,10 @@ $currentDate = date('Y-m-d');
 $reminderDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
 
 
-
 $sql = "SELECT patients_user.Email,patients_user.Name,bookinglog.serviceName,bookinglog.date,bookinglog.timeslot,bookinglog.resID
         FROM bookinglog
         INNER JOIN patients_user ON bookinglog.userID = patients_user.userID
-        WHERE date = '$reminderDate'";
+        WHERE date = '$reminderDate' AND status = 'Pending'";
 $exe = $con->query($sql);
 
 while ($row = $exe->fetch_assoc()) {
@@ -67,7 +66,7 @@ while ($row = $exe->fetch_assoc()) {
     if (!$mail->send()) {
         echo 'Error sending email to ' . $email . ': ' . $mail->ErrorInfo . '<br>';
     } else {
-        echo 'Email sent to ' . $email . '<br>';
+        // echo 'Email sent to ' . $email . '<br>';
     }
 
     $mail->clearAddresses();

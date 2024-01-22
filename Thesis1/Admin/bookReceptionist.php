@@ -67,7 +67,7 @@ if ( isset( $_POST['submit'] ) ) {
    
 }
 
-$duration = 30;
+$duration = 60;
 $cleanup = 0;
 $start = "09:00";
 $end = "17:00";
@@ -83,7 +83,7 @@ function isPastTimeslot($timeslot) {
     $timeslotDateTime = DateTime::createFromFormat('Y-m-d h:i A', $date . ' ' . explode(' - ', $timeslot)[0], $timezone);
 
     return $timeslotDateTime < $currentDateTime;
-}
+} 
 
 function isCancelled($timeslot)
 {

@@ -306,50 +306,6 @@ if (isset($_GET['logout_code'])) {
                                 </div>
                             </div>
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="text-primary fw-bold m-0"><span style="color: rgb(58, 59, 69);">Reservation History</span></h6>
-                                </div>
-                                <div class="table-responsive" style="height: 268px;border-color: rgb(0,0,0);box-shadow: 0px 0px 4px rgb(170,170,170);">
-
-                                <table class="table" id="dataTable">
-                                    <thead >
-                                        <tr>
-                                        
-                                        <th>Service</th>
-                                        <th>date</th>
-                                        <th>Time</th>
-                                        <th>Status</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <?php
-                                            
-                                        $retrieveQuery = "SELECT `resID`, `serviceName`, `Date`, `status`,`timeslot` FROM bookinglog WHERE userID = '$userID'";
-                                        $result =  $con -> query($retrieveQuery);
-                                        
-                                        while($row = mysqli_fetch_assoc($result)){
-
-                                            $ID = $row['resID'];
-                                            $service = $row['serviceName'];
-                                            $startDate = $row['Date'];
-                                            $timeslot = $row['timeslot'];
-                                            $status = $row['status'];
-                                        echo '<tr>
-                                            
-                                        <td class="hidden-column">'.$ID.'</td>
-                                        <td>'.$service.'</td>
-                                        <td>'.$startDate.'</td>
-                                        <td>'.$timeslot.'</td>
-                                        <td>'.$status.'</td>
-                                        </tr>';
-                                        }
-                                        ?>
-
-                                    </tbody>
-
-                                </table>
-                            </div>
                             </div>
                         </div>
 
@@ -395,7 +351,50 @@ if (isset($_GET['logout_code'])) {
                                         <div class="card-body">
                                             <form>
                                                 <div class="row">
-                                                    <div class="col"></div>
+                                                    <h6 class="text-primary fw-bold m-0"><span style="color: rgb(58, 59, 69);">Reservation History</span></h6>
+                                                    <div class="col">
+                                                        <div class="table-responsive" style="height: 268px;border-color: rgb(0,0,0);box-shadow: 0px 0px 4px rgb(170,170,170);">
+                                                            <table class="table" id="dataTable">
+                                                                <thead >
+                                                                <tr>
+
+                                                                    <th>Service</th>
+                                                                    <th>date</th>
+                                                                    <th>Time</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                <?php
+
+                                                                $retrieveQuery = "SELECT `resID`, `serviceName`, `Date`, `status`,`timeslot` FROM bookinglog WHERE userID = '$userID'";
+                                                                $result =  $con -> query($retrieveQuery);
+
+                                                                while($row = mysqli_fetch_assoc($result)){
+
+                                                                    $ID = $row['resID'];
+                                                                    $service = $row['serviceName'];
+                                                                    $startDate = $row['Date'];
+                                                                    $timeslot = $row['timeslot'];
+                                                                    $status = $row['status'];
+                                                                    echo '<tr>
+                                            
+                                        <td class="hidden-column">'.$ID.'</td>
+                                        <td>'.$service.'</td>
+                                        <td>'.$startDate.'</td>
+                                        <td>'.$timeslot.'</td>
+                                        <td>'.$status.'</td>
+                                        </tr>';
+                                                                }
+                                                                ?>
+
+                                                                </tbody>
+
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3"></div>
                                             </form>

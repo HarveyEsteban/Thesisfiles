@@ -13,6 +13,13 @@ date_default_timezone_set('Asia/Manila');
         header("Location: Landingpage.html");
     }
 
+    $isDaily = true;
+
+
+    $isDaily = isset($_POST['btn-Daily'])? true: false; 
+    $isWeekly = isset($_POST['btn-Weekly'])? true: false; 
+
+
 
 //use this to show the most picked services in a week
 ?>
@@ -116,6 +123,23 @@ date_default_timezone_set('Asia/Manila');
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content" style="background: var(--bs-gray-300);color: var(--bs-black);border-color: var(--bs-yellow);box-shadow: inset 0px 0px 9px var(--bs-gray-500);">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top" style="background: rgb(255,255,255);border-color: rgb(255,0,0);">
+                <form method="post">
+                    <?php
+                    if($isDaily == true)
+                    {
+                        echo '<button class="btn btn-success btn-lg" type="submit" name="btn-Weekly" >Weekly Reports</button> ';
+                        
+
+                    }
+                    elseif($isWeekly == true){
+                        echo ' <button class="btn btn-info btn-lg" type="submit" name="btn-Daily">Daily Reports</button> ';
+                        
+                    }
+                          
+
+                    ?>
+                
+                </form>
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button" style="color: rgb(159,152,117);--bs-primary: #000000;--bs-primary-rgb: 0,0,0;"><i class="fas fa-bars"></i></button>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
@@ -132,7 +156,11 @@ date_default_timezone_set('Asia/Manila');
                     </div>
                 </nav>
 
-                <div class="container-fluid">
+                <?php
+
+                if($isWeekly == true){
+
+               echo '<div class="container-fluid">
                     <div class="row">
                         <div class="col-md-4">
                             <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon1Modal">
@@ -171,7 +199,7 @@ date_default_timezone_set('Asia/Manila');
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#icon3Modal">
+                            <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#TodaysCancel">
                                 <div class="text-center">
                                     <i class="fa fa-exclamation fa-3x text-danger"></i>
                                     <p class="mt-2">Canceled Reservations</p>
@@ -189,14 +217,74 @@ date_default_timezone_set('Asia/Manila');
                         </div>
 
 
+                        </div>
+                        </div>
+                        
+                        ';
+                    }
+                    elseif ($isDaily == true) {
+                        echo '<div class="container-fluid">
+                        <div class="row">
+    
+                            <div class="col-md-4">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#SalesToday">
+                                    <div class="text-center">
+                                        <i class="fa fa-money fa-3x text-primary">$</i>
+                                        <p class="mt-2">Sales</p>
+                                    </div>
+                                </a>
+                            </div>
+    
+                            <div class="col-md-4">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#DoneToday">
+                                    <div class="text-center">
+                                        <i class="fa fa-check-circle fa-3x text-success"></i>
+                                        <p class="mt-2">Done Reservations </p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#TodaysCancel">
+                                    <div class="text-center">
+                                        <i class="fa fa-exclamation fa-3x text-danger"></i>
+                                        <p class="mt-2">Canceled Reservations</p>
+                                    </div>
+                                </a>
+                            </div>
+    
+                            <div class="col-md-4">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#WalkinDaily">
+                                    <div class="text-center">
+                                        <i class="fa fa-users fa-3x text-success"></i>
+                                        <p class="mt-2">Walk-In Patients</p>
+                                    </div>
+                                </a>
+                            </div>
+    
+    
+                            </div>
+                            </div>
+                            
+                            ';
+                    }
 
-                    </div>
-                </div>
+                        ?>
+
+
 
 
                     <div class="centered-div">
-                        <h1 class="text-dark">Welcome to your Weekly Report</h1>
-                        <br>
+                        <?php
+                        if($isWeekly == true)
+                        {
+                        echo '<h1 class="text-dark">Welcome to your Weekly Report</h1>
+                        <br>';
+                        }elseif ($isDaily == true) {
+                            echo '<h1 class="text-dark">Welcome to your Daily Report</h1>
+                            <br>';
+                        }
+                        
+                        ?>
                         <p class="mt-2">In here you can view different reports by clicking the Icon above</p>
                     </div>
 
@@ -280,12 +368,13 @@ date_default_timezone_set('Asia/Manila');
                                     <th>Name</th>
                                     <th>Service</th>
                                     <th>Walk in Patient</th>
+                                    <th>Family Member Name</th>
                                     <th>Payed</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $retrieveServices = "SELECT servicetbl.serviceName, patients_user.Name, bookinglog.totalServicePay, bookinglog.walk_in_name
+                                $retrieveServices = "SELECT servicetbl.serviceName, patients_user.Name, bookinglog.totalServicePay, bookinglog.walk_in_name, bookinglog.FamMemberName
                                     FROM bookinglog
                                     JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
                                     JOIN patients_user ON bookinglog.userID = patients_user.userID
@@ -297,6 +386,7 @@ date_default_timezone_set('Asia/Manila');
                                 // Loop through the rows of the table to display data
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     // Extracting data from the row
+                                    $famMember = $row['FamMemberName'];
                                     $name = $row['Name'];
                                     $walk = $row['walk_in_name'];
                                     $servicename = $row['serviceName'];
@@ -311,6 +401,7 @@ date_default_timezone_set('Asia/Manila');
                                             <td>' . $name . '</td>
                                             <td>' . $servicename . '</td>
                                             <td>' . $walk . '</td>
+                                            <td>'.$famMember.'</td>
                                             <td>₱' . number_format($pay, 2) . '</td>
                                         </tr>';
                                 }
@@ -319,6 +410,7 @@ date_default_timezone_set('Asia/Manila');
                                 echo '
                                     <tr>
                                         <td>Total Sales</td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td>₱' . number_format($totalSales, 2) . '</td>
@@ -576,7 +668,280 @@ date_default_timezone_set('Asia/Manila');
                   </div>
                 </div>
         </div>
+
+        <!-- Below are modals for Daily Reports -->
+
+        <div class="modal fade" id="WalkinDaily" tabindex="-1" role="dialog" aria-labelledby="WalkinDaily" aria-hidden="true">
+                    <!-- Add your modal content for Icon 1 here -->
+                    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Walk-In Patients Today</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="container">
+                            <div class="table-responsive">
+                            <table id="WalkInToday" class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Walk-In Name</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Payed</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $retrieveServices = "SELECT * FROM bookinglog WHERE walk_in_name != 'None' AND status = 'Done' AND date = CURDATE()";
+                                $result = $con->query($retrieveServices);
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Extracting data from the row
+                                    $name = $row['walk_in_name'];
+                                    $servicename = $row['serviceName'];
+                                    $pay = $row['totalServicePay'];
+                                    $date = $row['date'];
+                                    $time = $row['timeslot'];
+
+                                    // Displaying the data in a table row
+                                    echo '
+                                        <tr>
+                                            <td>' . $name . '</td>
+                                            <td>' . $servicename .'</td>
+                                            <td>' . $date .'</td>
+                                            <td>' . $time .'</td>
+                                            <td>' . $pay . '</td>
+                                        </tr>';
+                                }
+                                ?>
+                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Second modal for Todays -->
+
+                <div class="modal fade" id="TodaysCancel" tabindex="-1" role="dialog" aria-labelledby="TodaysCancel" aria-hidden="true">
+                    <!-- Add your modal content for Icon 3 here -->
+                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Canceled Reservations Today</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                         <div class="modal-body">
+                            <div class="table-responsive">
+                                <table id="CancelResToday" class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type of Serive</th>
+                                            <th>date</th>
+                                            <th>Time</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead >
+                                    <tbody>
+                                       <?php
+                                           //Use this code to get the total user weekly
+                                            $getWeeklyUser = "SELECT bookinglog.serviceName, bookinglog.date, bookinglog.timeslot, bookinglog.remarks, patients_user.Name
+                                            FROM `bookinglog` 
+                                            JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                            WHERE date >= CURDATE() AND status = 'Cancel'";
+                                            $resultUser = $con -> query($getWeeklyUser);
+
+                                            while ($rowUser = mysqli_fetch_assoc($resultUser)) {
+                                                    $name = $rowUser['Name'];
+                                                    $service = $rowUser['serviceName'];
+                                                    $date = $rowUser['date'];
+                                                    $time = $rowUser['timeslot'];
+                                                    $remark = $rowUser['remarks'];
+
+                                                    
+
+                                                echo '<tr>
+                                                <td>'.$name.'</td>
+                                                <td>'.$service.'</td>
+                                                <td>'.$date.'</td>
+                                                <td>'.$time.'</td> 
+                                                <td>'.$remark.'</td>   
+                                                </tr>';
+
+                                            }
+
+                                       ?>
+
+
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </div>
+<!-- Third Modal for Today -->
+
+
+<div class="modal fade" id="DoneToday" tabindex="-1" role="dialog" aria-labelledby="DoneToday" aria-hidden="true">
+                    <!-- Add your modal content for Icon 2 here -->
+                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Done Reservation Today</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="table-responsive">
+                                <table id="DoneResToday" class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type of Serive</th>
+                                            <th>date</th>
+                                            <th>Time</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead >
+                                    <tbody>
+                                       <?php
+                                           //Use this code to get the total user weekly
+                                            $getWeeklyUser = "SELECT bookinglog.serviceName, bookinglog.date, bookinglog.timeslot, bookinglog.remarks, patients_user.Name 
+                                            FROM `bookinglog` 
+                                            JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                            WHERE date >= CURDATE() AND status = 'Done'";
+                                            $resultUser = $con -> query($getWeeklyUser);
+
+                                            while ($rowUser = mysqli_fetch_assoc($resultUser)) {
+                                                    $name = $rowUser['Name'];
+                                                    $service = $rowUser['serviceName'];
+                                                    $date = $rowUser['date'];
+                                                    $time = $rowUser['timeslot'];
+                                                    $remark = $rowUser['remarks'];
+                                                    
+
+                                                echo '<tr>
+                                                <td>'.$name.'</td>
+                                                <td>'.$service.'</td>
+                                                <td>'.$date.'</td>
+                                                <td>'.$time.'</td> 
+                                                <td>'.$remark.'</td>   
+                                                </tr>';
+
+                                            }
+
+                                       ?>
+
+
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
                
+<!-- Fourth Modal For Today -->
+
+
+<div class="modal fade" id="SalesToday" tabindex="-1" role="dialog" aria-labelledby="SalesToday" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Sales Today</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table id="SalesTodays" class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Service</th>
+                                    <th>Walk in Patient</th>
+                                    <th>Family Member Name</th>
+                                    <th>Payed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $retrieveServices = "SELECT servicetbl.serviceName, patients_user.Name, bookinglog.totalServicePay, bookinglog.walk_in_name, bookinglog.FamMemberName
+                                    FROM bookinglog
+                                    JOIN servicetbl ON bookinglog.serviceName = servicetbl.serviceName
+                                    JOIN patients_user ON bookinglog.userID = patients_user.userID
+                                    WHERE bookinglog.date >= CURDATE() AND bookinglog.status = 'Done'";
+                                $result = $con->query($retrieveServices);
+
+                                $totalSales = 0; // Initialize total sales variable
+
+                                // Loop through the rows of the table to display data
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    // Extracting data from the row
+                                    $famMember = $row['FamMemberName'];
+                                    $name = $row['Name'];
+                                    $walk = $row['walk_in_name'];
+                                    $servicename = $row['serviceName'];
+                                    $pay = $row['totalServicePay'];
+
+                                    // Add the pay to total sales
+                                    $totalSales += $pay;
+
+                                    // Displaying the data in a table row
+                                    echo '
+                                        <tr>
+                                            <td>' . $name . '</td>
+                                            <td>' . $servicename . '</td>
+                                            <td>' . $walk . '</td>
+                                            <td>'.$famMember.'</td>
+                                            <td>₱' . number_format($pay, 2) . '</td>
+                                        </tr>';
+                                }
+
+                                // Display Total Sales row
+                                echo '
+                                    <tr>
+                                        <td>Total Sales</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>₱' . number_format($totalSales, 2) . '</td>
+                                    </tr>';
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
            
                
@@ -684,6 +1049,66 @@ $(document).ready(function() {
         paging: false
     });
 });
+
+$(document).ready(function() {
+    $('#SalesTodays').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Sales Today'
+            }
+        ],
+        paging: false
+    });
+});
+
+
+$(document).ready(function() {
+    $('#DoneResToday').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Done Reservation Today'
+            }
+        ],
+        paging: false
+    });
+});
+
+
+$(document).ready(function() {
+    $('#CancelResToday').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Cancel Reservation today'
+            }
+        ],
+        paging: false
+    });
+});
+
+
+$(document).ready(function() {
+    $('#WalkInToday').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                text: 'Download PDF',
+                title: 'Walk in Patients Today'
+            }
+        ],
+        paging: false
+    });
+});
+
 
 </script>
 </body>
