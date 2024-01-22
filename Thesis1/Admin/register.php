@@ -264,39 +264,87 @@
 
         <p>Notifications are provided as guides; however, missed alerts do not excuse confirmation lapses. We retain the right to modify or terminate the agreement, and users will be notified of any changes.</p>
 
-        <p><strong>Agreement for Users Under 18, Registration, and Reservation Confirmation</strong></p>
+        <strong>Agreement for Users Under 18, Registration, and Reservation Confirmation</strong>
 
         <ol>
           <li>
-            <p><strong>Age Confirmation:</strong><br>
-              By signing in or reserving our services, users acknowledge that they must be 18 years or older. Individuals below the age of 18 must obtain consent from a parent or legal guardian before signing in or making reservations.</p>
+            <strong>Age Confirmation:</strong><br>
+            By signing in or reserving our services, users acknowledge that they must be 18 years or older. Individuals below the age of 18 must obtain consent from a parent or legal guardian before signing in or making reservations.
           </li>
           <li>
-            <p><strong>Reservation Confirmation:</strong><br>
-              a. Users are required to confirm their reservations within a specified time.<br>
-              b. Confirmation should be completed by responding to the confirmation email or following the provided confirmation process on our platform.</p>
+            <strong>Reservation Confirmation:</strong><br>
+            a. Users are required to confirm their reservations within a specified time.<br>
+            b. Confirmation should be completed by responding to the confirmation email or following the provided confirmation process on our platform.
           </li>
           <li>
-            <p><strong>Automatic Cancellation:</strong><br>
-              a. Failure to confirm the reservation within the stipulated time will result in automatic cancellation.<br>
-              b. Canceled reservations may lead to the release of reserved slots or services to other users.</p>
+            <strong>Automatic Cancellation:</strong><br>
+            a. Failure to confirm the reservation within the stipulated time will result in automatic cancellation.<br>
+            b. Canceled reservations may lead to the release of reserved slots or services to other users.
           </li>
           <li>
-            <p><strong>Responsibility:</strong><br>
-              a. Users under 18 are responsible for obtaining the necessary consent.<br>
-              b. It is the user's responsibility to ensure timely confirmation to avoid automatic cancellation.</p>
+            <strong>Responsibility:</strong><br>
+            a. Users under 18 are responsible for obtaining the necessary consent.<br>
+            b. It is the user's responsibility to ensure timely confirmation to avoid automatic cancellation.
           </li>
           <li>
-            <p><strong>Notification:</strong><br>
-              a. Users will receive notification emails or messages with clear instructions on the confirmation process.<br>
-              b. Failure to receive notifications does not exempt users from the confirmation requirement.</p>
+            <strong>Notification:</strong><br>
+            a. Users will receive notification emails or messages with clear instructions on the confirmation process.<br>
+            b. Failure to receive notifications does not exempt users from the confirmation requirement.
           </li>
           <li>
-            <p><strong>Modification or Termination:</strong><br>
-              a. We reserve the right to modify or terminate this agreement at our discretion.<br>
-              b. Users will be notified of any changes to the agreement.</p>
+            <strong>Modification or Termination:</strong><br>
+            a. We reserve the right to modify or terminate this agreement at our discretion.<br>
+            b. Users will be notified of any changes to the agreement.
           </li>
         </ol>
+
+        <p><strong>Terms and Conditions for Late Arrival or Non-Attendance at Dental Appointments:</strong></p>
+
+        <strong>Late Arrival:</strong>
+
+        <ul>
+          <li>Patients are expected to arrive on time for their scheduled appointments.</li>
+          <li>A grace period of [X] minutes may be allowed, after which the appointment may be rescheduled or shortened.</li>
+        </ul>
+
+        <strong>Rescheduling Policy:</strong>
+
+        <ul>
+          <li>Patients must notify the dental clinic at least [Y] hours in advance if they need to reschedule their appointment.</li>
+          <li>Failure to provide sufficient notice may result in a rescheduling fee.</li>
+        </ul>
+
+        <strong>Non-Attendance:</strong>
+
+        <ul>
+          <li>If a patient fails to attend a scheduled appointment without prior notification, the clinic reserves the right to charge a non-attendance fee.</li>
+        </ul>
+
+        <strong>Fees:</strong>
+
+        <ul>
+          <li>Late arrival, rescheduling, and non-attendance fees will be outlined and communicated to the patient before the appointment.</li>
+        </ul>
+
+        <strong>Consequences of Non-Payment:</strong>
+
+        <ul>
+          <li>Failure to pay applicable fees within [Z] days may result in additional charges or limitations on future appointments.</li>
+        </ul>
+
+        <strong>Emergency Situations:</strong>
+
+        <ul>
+          <li>Exceptions to these policies may be considered in case of emergencies, subject to verification.</li>
+        </ul>
+
+        <strong>Communication:</strong>
+
+        <ul>
+          <li>Open and timely communication between the patient and the clinic is encouraged to address any concerns or unforeseen circumstances.</li>
+        </ul>
+
+        <p>By scheduling an appointment with our dental clinic, the patient agrees to abide by these terms and conditions. The clinic reserves the right to modify these terms with advance notice.</p>
 
         <p>By signing in or reserving our services, users agree to adhere to the terms outlined in this agreement. Failure to comply may result in the automatic cancellation of reservations. For any inquiries or concerns, please contact our customer support.</p>
       </div>
